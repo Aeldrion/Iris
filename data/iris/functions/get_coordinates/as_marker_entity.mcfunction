@@ -15,7 +15,7 @@ execute align x run function iris:get_coordinates/x/0
 execute align z run function iris:get_coordinates/z/0
 
 # Get rotation
-execute positioned 0 0 0 rotated ~ ~ run teleport @s ^ ^ ^1000000
+execute positioned 0.0 0.0 0.0 run teleport @s ^ ^ ^1000000
 data modify storage iris:data Pos set from entity @s Pos
 execute store result score $dx iris run data get storage iris:data Pos[0]
 execute store result score $dy iris run data get storage iris:data Pos[1]
