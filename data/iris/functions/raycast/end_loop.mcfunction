@@ -21,5 +21,3 @@ execute store result storage iris:output PlacingPosition[2] int 1 run scoreboard
 
 # Exit loop
 scoreboard players operation $depth iris = $max_depth iris
-
-function iris:according_to_all_known_laws_of_aviation_there_is_no_way_a_bee_should_be_able_to_fly_its_wings_are_too_small_to_get_its_fat_little_body_off_the_ground_the_bee_of_course_flies_anyway_because_bees_dont_care_what_humans_think_is_impossible_yellow_b

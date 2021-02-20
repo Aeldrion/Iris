@@ -29,7 +29,7 @@ execute if score $block.is_sapling iris matches 1 run function iris:get_block_su
 
 # Standing signs, banners
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_standing_sign_or_banner iris if block ~ ~ ~ #iris:standing_signs_and_banners
-execute if score $block.is_standing_sign iris matches 1 run function iris:get_block_surfaces/block/standing_signs_and_banners
+execute if score $block.is_standing_sign_or_banner iris matches 1 run function iris:get_block_surfaces/block/standing_signs_and_banners
 
 # Carpets
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_carpet iris if block ~ ~ ~ #minecraft:carpets
