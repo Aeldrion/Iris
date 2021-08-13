@@ -44,9 +44,13 @@ Below is a list of all the information that Iris will save to storage every time
 
 # Including Iris in your data pack
 
-## How to add Iris to your own data pack
+## How to
 
-To add Iris to your data pack, copy the `iris` namespace folder to your own data pack folder. Also copy the `minecraft` namespace folder or, if your pack uses the `#minecraft:load` function tag, make sure to include `iris:setup/load`. Crediting is not required, but if you wish to credit me nonetheless, you can do so with the following notice wherever you please:
+To add Iris to your data pack, copy the `iris` namespace folder to your own data pack folder. Also copy the `minecraft` namespace folder or, if your pack uses the `#minecraft:load` function tag, make sure to include `iris:setup/load`.
+
+## Crediting
+
+Crediting is not required, but if you wish to credit me nonetheless, you can do so with the following notice wherever you please:
 
 > Uses Iris by Aeldrion \
 > https://github.com/Aeldrion/Iris \
