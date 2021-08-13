@@ -1,3 +1,10 @@
+#> iris:setup/load
+#
+# Defines scoreboard objectives and sets up storage if it has not already been done
+#
+# @handles #minecraft:load
+# @context any
+
 # You've got to define those somewhere, right?
 #define storage iris:data
 #define storage iris:block

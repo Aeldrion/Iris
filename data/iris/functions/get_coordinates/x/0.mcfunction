@@ -1,5 +1,10 @@
-# This function gets the fractional part of the x coordinate, executed as an area effect cloud by iris:get_coordinates/as_marker_entity
-# Due to overflows, storing with a high scale was not possible. This method compares the executing position - aligned to the block grid - to the executing entity
+#> iris:get_coordinates/x/0
+#
+# This function gets the fractional part of the x coordinate
+# It is not possible to retrieve position with high precision with only a few commands due to overflows. This method 
+#
+# @context a marker entity, and its position after alignment to the x axis
+# @within iris:get_coordinates/as_marker
 
 execute store success score $get_coordinates.within_524288 iris if entity @s[distance=..0.524288]
 

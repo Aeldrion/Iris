@@ -1,4 +1,4 @@
-# This function gets the fractional part of the z coordinate, executed as an area effect cloud by iris:get_coordinates/as_marker_entity
+# This function gets the fractional part of the z coordinate, executed as an area effect cloud by iris:get_coordinates/as_marker
 # Due to overflows, storing with a high scale was not possible. This method compares the executing position - aligned to the block grid - to the executing entity
 
 execute store result score $get_coordinates.within_524288 iris if entity @s[distance=..0.524288]

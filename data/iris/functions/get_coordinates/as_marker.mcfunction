@@ -1,4 +1,9 @@
-# Gets the current coordinates and rotation, executed as/at an area effect cloud by iris:get_coordinates/main
+#> iris:get_coordinates/as_marker
+#
+# Gets the current coordinates and rotation using a marker.
+#
+# @context a marker entity at context position and a rotation
+# @within iris:get_coordinates/main
 
 # Get position (integer coordinates)
 data modify storage iris:data Pos set from entity @s Pos
