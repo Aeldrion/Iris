@@ -1,3 +1,7 @@
+#> iris:get_block_surfaces/block/buttons
+#
+# @within iris:get_block_surfaces/main
+
 # face=floor, powered=false
 execute if block ~ ~ ~ #minecraft:buttons[face=floor, facing=west, powered=false] run data modify storage iris:block Surfaces set value {Top: [[375000, 125000, 312500, 625000, 125000, 687500]], Bottom: [[375000, 0, 312500, 625000, 0, 687500]], West: [[375000, 0, 312500, 375000, 125000, 687500]], East: [[625000, 0, 312500, 625000, 125000, 687500]], North: [[375000, 0, 312500, 625000, 125000, 312500]], South: [[375000, 0, 687500, 625000, 125000, 687500]]}
 execute if block ~ ~ ~ #minecraft:buttons[face=floor, facing=east, powered=false] run data modify storage iris:block Surfaces set value {Top: [[375000, 125000, 312500, 625000, 125000, 687500]], Bottom: [[375000, 0, 312500, 625000, 0, 687500]], West: [[375000, 0, 312500, 375000, 125000, 687500]], East: [[625000, 0, 312500, 625000, 125000, 687500]], North: [[375000, 0, 312500, 625000, 125000, 312500]], South: [[375000, 0, 687500, 625000, 125000, 687500]]}

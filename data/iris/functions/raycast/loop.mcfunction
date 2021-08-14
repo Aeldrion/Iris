@@ -1,5 +1,10 @@
+#> iris:raycast/loop
+#
 # Loops forward until a contact surface is found or until the maximum recursion depth has been reached
-# Executed by iris:raycast/on_block_found and by this function itself
+#
+# @context a marker and the current ray position
+# @within iris:raycast/loop
+# @within iris:raycast/on_block_found
 
 # Proceed to the next block
 function iris:get_side_of_intersection/main

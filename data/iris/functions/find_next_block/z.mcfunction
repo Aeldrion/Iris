@@ -1,3 +1,9 @@
+#> iris:find_next_block/z
+#
+# Calculates the position of the ray when it hits the next block, assuming that the next block is north or south of the current block
+#
+# @within iris:find_next_block/main
+
 # Move z position at the border of the block
 execute if score $dz iris matches 0.. run scoreboard players add $[z] iris 1
 execute if score $dz iris matches 0.. run scoreboard players set ${z} iris 0

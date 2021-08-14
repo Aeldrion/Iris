@@ -1,3 +1,9 @@
+#> iris:get_block_surfaces/block/cubic
+#
+# Runs for 1x1x1 cubic blocks and for any other block that isn't supported by Iris
+#
+# @within iris:get_block_surfaces/main
+
 data modify storage iris:block Surfaces.Top set value [[    0,       1000000, 0,       1000000, 1000000, 1000000 ]]
 data modify storage iris:block Surfaces.Bottom set value [[ 0,       0,       0,       1000000, 0,       1000000 ]]
 data modify storage iris:block Surfaces.West set value [[   0,       0,       0,       0,       1000000, 1000000 ]]

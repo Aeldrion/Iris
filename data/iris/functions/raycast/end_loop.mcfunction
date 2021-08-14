@@ -1,4 +1,10 @@
-# Contact surface:
+#> iris:raycast/end_loop
+#
+# Runs when the ray hits a solid surface and outputs every available information to storage
+#
+# @within iris:raycast/on_block_found
+
+# Contact surface
 data modify storage iris:output ContactSurface set from storage iris:data ContactSurface
 
 # Contact coordinates

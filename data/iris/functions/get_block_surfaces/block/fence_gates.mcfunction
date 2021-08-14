@@ -1,3 +1,7 @@
+#> iris:get_block_surfaces/block/fence_gates
+#
+# @within iris:get_block_surfaces/main
+
 # in_wall=false
 execute if block ~ ~ ~ #minecraft:fence_gates[facing=east, in_wall=false] run data modify storage iris:block Surfaces set value {Top: [[375000, 1000000, 0, 625000, 1000000, 1000000]], Bottom: [[375000, 0, 0, 625000, 0, 1000000]], West: [[375000, 0, 0, 375000, 1000000, 1000000]], East: [[625000, 0, 0, 625000, 1000000, 1000000]], North: [[375000, 0, 0, 625000, 1000000, 0]], South: [[375000, 0, 1000000, 625000, 1000000, 1000000]]}
 execute if block ~ ~ ~ #minecraft:fence_gates[facing=west, in_wall=false] run data modify storage iris:block Surfaces set value {Top: [[375000, 1000000, 0, 625000, 1000000, 1000000]], Bottom: [[375000, 0, 0, 625000, 0, 1000000]], West: [[375000, 0, 0, 375000, 1000000, 1000000]], East: [[625000, 0, 0, 625000, 1000000, 1000000]], North: [[375000, 0, 0, 625000, 1000000, 0]], South: [[375000, 0, 1000000, 625000, 1000000, 1000000]]}

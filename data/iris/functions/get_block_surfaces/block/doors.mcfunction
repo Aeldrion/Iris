@@ -1,3 +1,7 @@
+#> iris:get_block_surfaces/block/doors
+#
+# @within iris:get_block_surfaces/main
+
 # open=false
 execute if block ~ ~ ~ #minecraft:doors[facing=east, open=false] run data modify storage iris:block Surfaces set value {Top: [[0, 1000000, 0, 187500, 1000000, 1000000]], Bottom: [[0, 0, 0, 187500, 0, 1000000]], West: [[0, 0, 0, 0, 1000000, 1000000]], East: [[187500, 0, 0, 187500, 1000000, 1000000]], North: [[0, 0, 0, 187500, 1000000, 0]], South: [[0, 0, 1000000, 187500, 1000000, 1000000]]}
 execute if block ~ ~ ~ #minecraft:doors[facing=west, open=false] run data modify storage iris:block Surfaces set value {Top: [[812500, 1000000, 0, 1000000, 1000000, 1000000]], Bottom: [[812500, 0, 0, 1000000, 0, 1000000]], West: [[812500, 0, 0, 812500, 1000000, 1000000]], East: [[1000000, 0, 0, 1000000, 1000000, 1000000]], North: [[812500, 0, 0, 1000000, 1000000, 0]], South: [[812500, 0, 1000000, 1000000, 1000000, 1000000]]}
