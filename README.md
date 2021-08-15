@@ -24,6 +24,10 @@ execute at @e[type=minecraft:marker, tag=iris.ray] run particle minecraft:end_ro
 
 Below is a list of all the information that Iris will save to storage every time `iris:get_targeted_block` is executed.
 
+#### Distance
+
+`Distance` is a double corresponding to the distance the ray needs to travel before hitting a solid surface. This value is also stored to the `$total_distance iris` score with a scale of 1,000,000.
+
 #### Contact surface
 
 `ContactSurface` is a list of six doubles between 0.0d and 1.0d. The first three numbers and the last three numbers are the coordinates of two opposite corners of the surface area the ray hits. Origin is the Wwest, North, bottom corner of the 1x1x1 tile that is hit.
