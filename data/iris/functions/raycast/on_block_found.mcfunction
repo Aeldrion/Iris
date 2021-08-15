@@ -14,5 +14,6 @@ function iris:get_block_surfaces/main
 
 # Determine whether or not the ray hits a surface, and if it does, identify the closest surface and stop the loop
 execute if data storage iris:block Surfaces run function iris:find_closest_surface/main
+execute if score $rau_hits_surface iris matches 1 run scoreboard players operation $total_distance iris += $min_distance_to_surface iris
 execute if score $ray_hits_surface iris matches 1 run function iris:raycast/end_loop
 data remove storage iris:block Surfaces

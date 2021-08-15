@@ -6,6 +6,8 @@
 # @api
 # @context a position and a rotation
 # @output
+#	score $total_distance iris
+#		The distance travelled by the ray before it hits a block. 1,000,000 corresponds to one block. Unset if the maximum recursion depth is reached (i.e. if the ray travels at least 20 blocks).
 #	storage iris:output
 #		ContactSurface: double[]
 #			The surface of the block the ray hits (six coordinates between 0 and 1000000, where 0 0 0 and 1000000 1000000 1000000 are opposite corners of the block)
@@ -16,8 +18,9 @@
 #		PlacingPosition: int[]
 #			The integer coordinates of the block before the ray hits something (i.e. where a block would be placed, if a player were to place a block)
 
-# Kill any previously summoned ray marker
+# Kill any previously summoned ray marker and reset total distance
 kill @e[type=minecraft:marker, tag=iris.ray]
+scoreboard players set $total_distance iris 0
 
 # Get coordinates and rotation of the initial position
 function iris:get_coordinates/main

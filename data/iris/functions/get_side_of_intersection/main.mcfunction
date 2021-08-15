@@ -5,7 +5,7 @@
 # @within iris:raycast/loop
 # @output
 #	score $distance_to_next_block iris
-#		A number between 0 and 1732. The distance in millimetres between the current position and the next block.
+#		A number between 0 and 1733000. The distance between the current position and the next block.
 #	storage iris:data
 #		ShortestDistanceAxis: string
 #			The ooordinate that differs between the current block and the next block that the ray will hit.
@@ -24,3 +24,7 @@ execute if score $distance_to_next_block_on_z_axis iris <= $distance_to_next_blo
 execute if data storage iris:data {ShortestDistanceAxis: "x"} run scoreboard players operation $distance_to_next_block iris = $distance_to_next_block_on_x_axis iris
 execute if data storage iris:data {ShortestDistanceAxis: "y"} run scoreboard players operation $distance_to_next_block iris = $distance_to_next_block_on_y_axis iris
 execute if data storage iris:data {ShortestDistanceAxis: "z"} run scoreboard players operation $distance_to_next_block iris = $distance_to_next_block_on_z_axis iris
+
+# Add distance to total distance
+scoreboard players operation $distance_to_next_block iris *= $1000 iris
+scoreboard players operation $total_distance iris += $distance_to_next_block iris
