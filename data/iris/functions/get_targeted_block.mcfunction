@@ -16,6 +16,9 @@
 #		PlacingPosition: int[]
 #			The integer coordinates of the block before the ray hits something (i.e. where a block would be placed, if a player were to place a block)
 
+# Kill any previously summoned ray marker
+kill @e[type=minecraft:marker, tag=iris.ray]
+
 # Get coordinates and rotation of the initial position
 function iris:get_coordinates/main
 summon minecraft:marker ~ ~ ~ {Tags: ["iris", "iris.ray"]}
