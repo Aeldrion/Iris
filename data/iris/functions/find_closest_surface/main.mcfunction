@@ -22,9 +22,9 @@
 #		ContactSurface: int[]
 #			Might not be set. The rectangular surface the ray hits. The surface is defined by six numbers between 0 and 1,000,000, two sets of coordinates corresponding to opposite corners of the surface.
 #	score $min_distance_to_surface iris
-#		How much more the ray needs to progress to hit a surface within this block, as a number between 0 and 1,733,000. 1,000,000 corresponds to one block.
+#		How much more the ray needs to progress to hit a surface within this block, as a number between 0 and 1,733. 1,000 corresponds to one block.
 
-scoreboard players set $min_distance_to_surface iris 1733000
+scoreboard players set $min_distance_to_surface iris 1733
 
 execute if score $dx iris matches 1.. unless score $min_distance_to_surface iris matches 0 run function iris:find_closest_surface/west/main
 execute if score $dx iris matches ..-1 unless score $min_distance_to_surface iris matches 0 run function iris:find_closest_surface/east/main

@@ -26,6 +26,7 @@ execute store result storage iris:output PlacingPosition[1] int 1 run scoreboard
 execute store result storage iris:output PlacingPosition[2] int 1 run scoreboard players get $previous_[z] iris
 
 # Total distance
+scoreboard players operation $min_distance_to_surface iris *= $1000 iris
 scoreboard players operation $total_distance iris += $min_distance_to_surface iris
 execute store result storage iris:output Distance double 0.000001 run scoreboard players get $total_distance iris
 
