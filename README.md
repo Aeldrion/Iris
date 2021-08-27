@@ -64,6 +64,8 @@ Crediting is not required, but if you wish to credit me nonetheless, you can do 
 
 You are free to redistribute Iris or modified versions of Iris as a part of your own data packs. The latter can be useful, for example, if you want to detect where one specific block is being placed and want to avoid running unnecessary commands when raycasting. However, since multiple data packs might be using Iris on the same world, it is recommended to distribute modified versions of Iris with a modified namespace as well (e.g. `iris_mypack`) so not to cause compatibility issues with other data packs. You can do so by replacing all occurrences of `iris:` with `iris_mypack:` in the data pack using a code editor's "Replace in folder" feature for example, then renaming the `iris` namespace folder to `iris_mypack`.
 
+For an example of how to make a data pack with a modified version of Iris, see [Banners on beds](https://www.planetminecraft.com/data-pack/banners-on-beds/). Two functions are modified to remove unnecessary checks, and the `iris` namespace was replaced with `iris_bob`.
+
 ---
 
 # How does it work?
