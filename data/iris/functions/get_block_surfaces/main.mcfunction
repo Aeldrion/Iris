@@ -20,7 +20,7 @@
 #			A list of rectangular surfaces facing south. Each surface is defined by six numbers, two sets of coordinates corresponding to opposite corners of the surface.
 
 data remove storage iris:block Surfaces
-execute store result score $block.is_cubic iris store result score $block.is_conduit iris store result score $block.is_composter iris store result score $block.is_cauldron iris store result score $block.is_campfire iris store result score $block.is_slab iris store result score $block.is_chest iris store result score $block.is_cactus iris store result score $block.is_stairs iris store result score $block.is_bed iris store result score $block.is_button iris store result score $block.is_door iris store result score $block.is_pressure_plate iris store result score $block.is_saplings iris store result score $block.is_standing_sign_or_banner iris store result score $block.is_carpet iris store result score $block.is_fence iris store result score $block.is_fence_gate iris store result score $block.is_anvil iris store result score $block.is_attached_stem iris store result score $block.is_beetroots iris store result score $block.is_special_rail iris store result score $block.is_trapdoor iris store result score $block.is_wall_sign iris store result score $block.is_wall iris run scoreboard players set $block_found iris 0
+execute store result score $block.is_cubic iris store result score $block.is_farmland iris store result score $block.is_conduit iris store result score $block.is_composter iris store result score $block.is_cauldron iris store result score $block.is_campfire iris store result score $block.is_slab iris store result score $block.is_chest iris store result score $block.is_cactus iris store result score $block.is_stairs iris store result score $block.is_bed iris store result score $block.is_button iris store result score $block.is_door iris store result score $block.is_pressure_plate iris store result score $block.is_saplings iris store result score $block.is_standing_sign_or_banner iris store result score $block.is_carpet iris store result score $block.is_fence iris store result score $block.is_fence_gate iris store result score $block.is_anvil iris store result score $block.is_attached_stem iris store result score $block.is_beetroots iris store result score $block.is_special_rail iris store result score $block.is_trapdoor iris store result score $block.is_wall_sign iris store result score $block.is_wall iris run scoreboard players set $block_found iris 0
 
 # Anvils
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_anvil iris if block ~ ~ ~ #minecraft:anvil
@@ -74,6 +74,10 @@ execute if score $block.is_conduit iris matches 1 run function iris:get_block_su
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_door iris if block ~ ~ ~ #minecraft:doors
 execute if score $block.is_door iris matches 1 run function iris:get_block_surfaces/block/doors
 
+# Farmland, dirt paths
+execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_farmland iris if block ~ ~ ~ #iris:farmland_shaped
+execute if score $block.is_farmland iris matches 1 run function iris:get_block_surfaces/block/farmland
+
 # Fences
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_fence iris if block ~ ~ ~ #minecraft:fences
 execute if score $block.is_fence iris matches 1 run function iris:get_block_surfaces/block/fences
@@ -90,7 +94,7 @@ execute if score $block.is_pressure_plate iris matches 1 run function iris:get_b
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_sapling iris if block ~ ~ ~ #minecraft:saplings
 execute if score $block.is_sapling iris matches 1 run function iris:get_block_surfaces/block/saplings
 
-# Saplings
+# Stairs
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_stairs iris if block ~ ~ ~ #minecraft:stairs
 execute if score $block.is_stairs iris matches 1 run function iris:get_block_surfaces/block/stairs
 
