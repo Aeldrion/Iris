@@ -27,7 +27,7 @@ execute if score $block.is_anvil iris matches 1 run function iris:get_block_surf
 
 # Attached stems
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_attached_stem iris if block ~ ~ ~ #iris:attached_stems
-execute if score $block.is_anvil iris matches 1 run function iris:get_block_surfaces/block/attached_stems
+execute if score $block.is_attached_stem iris matches 1 run function iris:get_block_surfaces/block/attached_stems
 
 # Beds
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_bed iris if block ~ ~ ~ #minecraft:beds
