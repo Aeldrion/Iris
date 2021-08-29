@@ -16,4 +16,4 @@ execute at @s unless block ~ ~ ~ #iris:air run function iris:raycast/on_block_fo
 # Loop this function, if the maximum recursion depth has not been reached yet
 scoreboard players add $depth iris 1
 execute if score $depth iris < $max_depth iris at @s run function iris:raycast/loop
-execute if score $depth iris >= $max_depth iris run scoreboard players reset $total_distance iris
+execute if score $depth iris = $max_depth iris run scoreboard players reset $total_distance iris
