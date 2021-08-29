@@ -7,7 +7,6 @@
 # @within iris:raycast/on_block_found
 
 # Proceed to the next block
-function iris:get_side_of_intersection/main
 function iris:find_next_block/main
 function iris:set_coordinates/main
 

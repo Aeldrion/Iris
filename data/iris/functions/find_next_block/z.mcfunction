@@ -4,6 +4,9 @@
 #
 # @within iris:find_next_block/main
 
+# Set the distance to the next block on the z axis as the distance to the next block
+scoreboard players operation $distance_to_next_block iris = $distance_to_next_block_on_z_axis iris
+
 # Move z position at the border of the block
 execute if score $dz iris matches 0.. run scoreboard players add $[z] iris 1
 execute if score $dz iris matches 0.. run scoreboard players set ${z} iris 0
