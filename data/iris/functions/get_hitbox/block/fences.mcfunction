@@ -1,6 +1,6 @@
-#> iris:get_block_surfaces/block/fences
+#> iris:get_hitbox/block/fences
 #
-# @within iris:get_block_surfaces/main
+# @within iris:get_hitbox/main
 
 data modify storage iris:block Surfaces set value {Top: [[375000, 1000000, 375000, 625000, 1000000, 625000]], Bottom: [[375000, 0, 375000, 625000, 0, 625000]], West: [[375000, 0, 375000, 375000, 1000000, 625000]], East: [[625000, 0, 375000, 625000, 1000000, 625000]], North: [[375000, 0, 375000, 625000, 1000000, 375000]], South: [[375000, 0, 625000, 625000, 1000000, 625000]]}
 

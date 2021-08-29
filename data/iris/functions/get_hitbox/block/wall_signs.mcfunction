@@ -1,6 +1,6 @@
-#> iris:get_block_surfaces/block/wall_signs
+#> iris:get_hitbox/block/wall_signs
 #
-# @within iris:get_block_surfaces/main
+# @within iris:get_hitbox/main
 
 execute if block ~ ~ ~ #minecraft:wall_signs[facing=east] run data modify storage iris:block Surfaces set value {Top: [[0, 781250, 0, 125000, 781250, 1000000]], Bottom: [[0, 218750, 0, 125000, 218750, 1000000]], West: [[0, 218750, 0, 0, 781250, 1000000]], East: [[125000, 218750, 0, 125000, 781250, 1000000]], North: [[0, 218750, 0, 125000, 781250, 0]], South: [[0, 218750, 1000000, 125000, 781250, 1000000]]}
 execute if block ~ ~ ~ #minecraft:wall_signs[facing=west] run data modify storage iris:block Surfaces set value {Top: [[875000, 781250, 0, 1000000, 781250, 1000000]], Bottom: [[875000, 218750, 0, 1000000, 218750, 1000000]], West: [[875000, 218750, 0, 875000, 781250, 1000000]], East: [[1000000, 218750, 0, 1000000, 781250, 1000000]], North: [[875000, 218750, 0, 1000000, 781250, 0]], South: [[875000, 218750, 1000000, 1000000, 781250, 1000000]]}

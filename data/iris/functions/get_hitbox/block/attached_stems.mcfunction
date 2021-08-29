@@ -1,6 +1,6 @@
-#> iris:get_block_surfaces/block/attached_stems
+#> iris:get_hitbox/block/attached_stems
 #
-# @within iris:get_block_surfaces/main
+# @within iris:get_hitbox/main
 
 execute if block ~ ~ ~ #iris:attached_stems[facing=east] run data modify storage iris:block Surfaces set value {Top: [[375000, 625000, 375000, 1000000, 625000, 625000]], Bottom: [[375000, 0, 375000, 1000000, 0, 625000]], West: [[375000, 0, 375000, 375000, 625000, 625000]], East: [[1000000, 0, 375000, 1000000, 625000, 625000]], North: [[375000, 0, 375000, 1000000, 625000, 375000]], South: [[375000, 0, 625000, 1000000, 625000, 625000]]}
 execute if block ~ ~ ~ #iris:attached_stems[facing=west] run data modify storage iris:block Surfaces set value {Top: [[0, 625000, 375000, 625000, 625000, 625000]], Bottom: [[0, 0, 375000, 625000, 0, 625000]], West: [[0, 0, 375000, 0, 625000, 625000]], East: [[625000, 0, 375000, 625000, 625000, 625000]], North: [[0, 0, 375000, 625000, 625000, 375000]], South: [[0, 0, 625000, 625000, 625000, 625000]]}
