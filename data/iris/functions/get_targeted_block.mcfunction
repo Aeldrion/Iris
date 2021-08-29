@@ -29,5 +29,5 @@ teleport @e[type=minecraft:marker, tag=iris.ray] ~ ~ ~ ~ ~
 
 # Start the loop
 scoreboard players set $depth iris 0
-scoreboard players set $max_depth iris 20
+scoreboard players set $max_depth iris 50
 execute as @e[type=minecraft:marker, tag=iris.ray] at @s run function iris:raycast/loop
