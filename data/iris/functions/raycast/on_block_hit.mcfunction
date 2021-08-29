@@ -1,6 +1,6 @@
 #> iris:raycast/on_block_hit
 #
-# Runs when the ray hits a solid surface and outputs every available information to storage
+# Runs when the ray hits a solid surface and outputs all available information to storage
 #
 # @within iris:raycast/on_block_found
 
