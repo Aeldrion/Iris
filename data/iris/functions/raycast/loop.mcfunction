@@ -3,8 +3,8 @@
 # Loops forward until a contact surface is found or until the maximum recursion depth has been reached
 #
 # @context a marker and the current ray position
+# @within iris:get_targeted_block
 # @within iris:raycast/loop
-# @within iris:raycast/on_block_found
 
 # Proceed to the next block
 function iris:find_next_block/main
