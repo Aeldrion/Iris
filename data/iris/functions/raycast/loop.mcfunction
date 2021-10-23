@@ -10,8 +10,16 @@
 function iris:find_next_block/main
 function iris:set_coordinates/main
 
-# If the new block is not an air block, see if the ray intersects with any of its surfaces
+# See if there is a non transparent block or an entity at the new position
+data remove storage iris:block Surfaces
 execute at @s unless block ~ ~ ~ #iris:air run function iris:raycast/on_block_found
+execute at @s if data storage iris:input {TargetEntities: true} as @e[tag=!iris.executing, type=!#iris:ignore, dx=0, dy=0, dz=0] run function iris:raycast/on_entity_found
+
+# See if the ray hits any surface
+scoreboard players set $ray_hits_surface iris 0
+execute if data storage iris:block Surfaces run function iris:find_closest_surface/main
+execute if score $ray_hits_surface iris matches 1 run function iris:raycast/hit
+data remove storage iris:block Surfaces
 
 # Loop this function, if the maximum recursion depth has not been reached yet
 scoreboard players add $depth iris 1

@@ -1,6 +1,7 @@
-#> iris:get_hitbox/main
+#> iris:get_hitbox/block
 #
 # Returns a list of surfaces of the current block
+# Note: because this function always runs before iris:get_hibox/entity, we can simply replace the contents of storage iris:block instead of appending
 # TODO Organise non-cubic blocks in a block tag tree for logarithmic search
 #
 # @within iris:raycast/on_block_found
@@ -19,7 +20,6 @@
 #		South: int[][]
 #			A list of rectangular surfaces facing south. Each surface is defined by six numbers, two sets of coordinates corresponding to opposite corners of the surface.
 
-data remove storage iris:block Surfaces
 execute store result score $block.is_cubic iris store result score $block.is_anvil iris store result score $block.is_attached_stem iris store result score $block.is_bed iris store result score $block.is_beetroots iris store result score $block.is_brewing_stand iris store result score $block.is_button iris store result score $block.is_cactus iris store result score $block.is_campfire iris store result score $block.is_carpet iris store result score $block.is_cauldron iris store result score $block.is_chest iris store result score $block.is_composter iris store result score $block.is_conduit iris store result score $block.is_door iris store result score $block.is_farmland iris store result score $block.is_fence iris store result score $block.is_fence_gate iris store result score $block.is_grass iris store result score $block.is_mushroom iris store result score $block.is_pressure_plate iris store result score $block.is_saplings iris store result score $block.is_slab iris store result score $block.is_special_rail iris store result score $block.is_stairs iris store result score $block.is_standing_sign_or_banner iris store result score $block.is_trapdoor iris store result score $block.is_wall iris store result score $block.is_wall_sign iris run scoreboard players set $block_found iris 0
 
 # Anvils

@@ -6,8 +6,7 @@
 #	storage iris:data
 #		is_setup: bool Whether storage has already been setup
 #	storage iris:input
-#		skip_entities: bool Unused
-#		distance: int Unused
+#		TargetEntities: bool Whether or not to look for entities on the path of the ray
 
 data merge storage iris:data {is_setup: 1b}
-data merge storage iris:input {skip_entities: 0b, distance: 16}
+data merge storage iris:input {TargetEntities: false}

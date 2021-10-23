@@ -1,8 +1,8 @@
-#> iris:raycast/on_block_hit
+#> iris:raycast/hit
 #
 # Runs when the ray hits a solid surface and outputs all available information to storage
 #
-# @within iris:raycast/on_block_found
+# @within iris:raycast/loop
 
 # Contact surface
 data modify storage iris:output ContactSurface set from storage iris:data ContactSurface

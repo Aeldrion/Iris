@@ -10,9 +10,4 @@
 
 # Identify the block and get a list of surfaces
 scoreboard players set $ray_hits_surface iris 0
-function iris:get_hitbox/main
-
-# Determine whether or not the ray hits a surface, and if it does, identify the closest surface and stop the loop
-execute if data storage iris:block Surfaces run function iris:find_closest_surface/main
-execute if score $ray_hits_surface iris matches 1 run function iris:raycast/on_block_hit
-data remove storage iris:block Surfaces
+function iris:get_hitbox/block
