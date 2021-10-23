@@ -2,7 +2,7 @@
 #
 # Runs for 1x1x1 cubic blocks and for any other block that isn't supported by Iris
 #
-# @within iris:get_hitbox/main
+# @within iris:get_hitbox/block
 
 data modify storage iris:block Surfaces.Top set value [[    0,       1000000, 0,       1000000, 1000000, 1000000 ]]
 data modify storage iris:block Surfaces.Bottom set value [[ 0,       0,       0,       1000000, 0,       1000000 ]]

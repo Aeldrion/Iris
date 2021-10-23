@@ -1,6 +1,6 @@
 #> iris:get_hitbox/block/doors
 #
-# @within iris:get_hitbox/main
+# @within iris:get_hitbox/block
 
 # open=false
 execute if block ~ ~ ~ #minecraft:doors[facing=east, open=false] run data modify storage iris:block Surfaces set value {Top: [[0, 1000000, 0, 187500, 1000000, 1000000]], Bottom: [[0, 0, 0, 187500, 0, 1000000]], West: [[0, 0, 0, 0, 1000000, 1000000]], East: [[187500, 0, 0, 187500, 1000000, 1000000]], North: [[0, 0, 0, 187500, 1000000, 0]], South: [[0, 0, 1000000, 187500, 1000000, 1000000]]}

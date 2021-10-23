@@ -1,6 +1,6 @@
 #> iris:get_hitbox/block/stairs
 #
-# @within iris:get_hitbox/main
+# @within iris:get_hitbox/block
 
 # half=bottom, shape=straight
 execute if block ~ ~ ~ #minecraft:stairs[half=bottom, facing=east, shape=straight] run data modify storage iris:block Surfaces set value {Top: [[0, 500000, 0, 1000000, 500000, 1000000], [500000, 1000000, 0, 1000000, 1000000, 1000000]], Bottom: [[0, 0, 0, 1000000, 0, 1000000], [500000, 500000, 0, 1000000, 500000, 1000000]], West: [[0, 0, 0, 0, 500000, 1000000], [500000, 500000, 0, 500000, 1000000, 1000000]], East: [[1000000, 0, 0, 1000000, 500000, 1000000], [1000000, 500000, 0, 1000000, 1000000, 1000000]], North: [[0, 0, 0, 1000000, 500000, 0], [500000, 500000, 0, 1000000, 1000000, 0]], South: [[0, 0, 1000000, 1000000, 500000, 1000000], [500000, 500000, 1000000, 1000000, 1000000, 1000000]]}
