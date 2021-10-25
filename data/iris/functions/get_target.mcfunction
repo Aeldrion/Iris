@@ -9,6 +9,8 @@
 #	storage iris:input
 #		TargetEntities: byte
 #			Whether or not to look for entities. Defaults to false.
+#		MaxRecursionDepth: int
+#			How many blocks to traverse before giving up. Defaults to 16.
 # @output
 #	score $total_distance iris
 #		The distance travelled by the ray before it hits a block. 1,000,000 corresponds to one block. Unset if the maximum recursion depth is reached (i.e. if the ray travels at least 20 blocks).
@@ -41,7 +43,6 @@ data remove storage iris:output ContactSurface
 data remove storage iris:output ContactCoordinates
 data remove storage iris:output PlacingPosition
 scoreboard players set $depth iris 0
-scoreboard players set $max_depth iris 50
 scoreboard players set $total_distance iris 0
 scoreboard players set $ray_hits_block iris 0
 scoreboard players set $ray_hits_entity iris 0
@@ -53,5 +54,6 @@ summon minecraft:marker ~ ~ ~ {Tags: ["iris", "iris.ray"]}
 
 # Start the loop
 tag @s add iris.executing
+execute store result score $max_depth iris run data get storage iris:input MaxRecursionDepth
 execute as @e[type=minecraft:marker, tag=iris.ray] at @s run function iris:raycast/loop
 tag @s remove iris.executing

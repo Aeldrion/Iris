@@ -17,14 +17,23 @@ Iris provides two functions for other data packs to use: `iris:get_target` and `
 The `iris:get_target` function casts a ray from the current position, oriented with the current rotation, and returns coordinates of the block or entity that is found. To tell where a player is facing, anchoring to the eye position is needed:
 
 ```mcfunction
-execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_targeted_block
+execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
 ```
 
-Available information about the targeted position is saved to the `iris:output` storage. Additionally, a marker with the `iris.ray` tag is summoned at the corner of the block where the ray lands.
+Available information about the targeted position is saved to the `iris:output` storage. Additionally, a marker with the `iris.ray` tag is summoned at the corner of the block where the ray lands until it is killed or the function is run again.
 
 ```mcfunction
-# Detecting when the player is looking at stone
+# Detect when the player is looking at stone
+execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
 execute at @e[type=minecraft:marker, tag=iris.ray] if block ~ ~ ~ minecraft:stone run tellraw @a "Looking at stone"
+```
+
+Furthermore, if the ray hits an entity, it will have the `iris.target` tag until the function is run again.
+
+```mcfunction
+# Give levitation to cows the player is looking at
+execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
+effect give @e[type=minecraft:cow, tag=iris.target] minecraft:levitation 1 0
 ```
 
 ### Set coordinates
@@ -33,6 +42,7 @@ The `iris:set_coordinates` function teleports the executing entity to the exact 
 
 ```mcfunction
 # Play a particle effect where the player is looking
+execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
 execute as @e[type=minecraft:marker, tag=iris.ray] run function iris:set_coordinates
 execute at @e[type=minecraft:marker, tag=iris.ray] run particle minecraft:flame
 ```
@@ -48,6 +58,16 @@ data modify storage iris:input TargetEntities set value true
 ```
 
 If `TargetEntities` is true, the ray will stop if it hits an entity. Entities through which a block can be placed are ignored. For example, mobs, minecarts or falling blocks may be detected, but items and arrows are ignored. The executing entity itself is ignored as well.
+
+### Maximum recursion depth
+
+By default, the ray will traverse up to 16 blocks and give up if no block or entity is found. This limit can be modified by changing the value of `MaxRecursionDepth`:
+
+```mcfunction
+data modify storage iris:input MaxRecursionDepth 40
+```
+
+Values under 10 may fail to detect blocks that are within arm reach of the player.
 
 ## Output
 

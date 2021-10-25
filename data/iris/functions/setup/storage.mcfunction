@@ -7,4 +7,4 @@
 #		is_setup: bool Whether storage has already been setup
 
 data merge storage iris:data {is_setup: 1b}
-data merge storage iris:input {TargetEntities: false}
+data merge storage iris:input {TargetEntities: false, MaxRecursionDepth: 16}
