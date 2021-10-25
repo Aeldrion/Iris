@@ -1,4 +1,4 @@
-#> iris:set_coordinates/main
+#> iris:raycast/teleport_marker
 #
 # Sets coordinates of the ray marker to the calculated block coordinates (int only)
 # The entity is teleported at the corner of the block
@@ -19,5 +19,5 @@ execute store result storage iris:data EntityTag.Pos[0] double 1 run scoreboard 
 execute store result storage iris:data EntityTag.Pos[1] double 1 run scoreboard players get $[y] iris
 execute store result storage iris:data EntityTag.Pos[2] double 1 run scoreboard players get $[z] iris
 
-# Apply
+# Apply position
 data modify entity @s Pos set from storage iris:data EntityTag.Pos

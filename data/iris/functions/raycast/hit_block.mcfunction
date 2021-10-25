@@ -27,6 +27,9 @@ data modify storage iris:output ContactCoordinates set value [0.0d, 0.0d, 0.0d]
 execute store result storage iris:output ContactCoordinates[0] double 0.000001 run scoreboard players get $targeted_x iris
 execute store result storage iris:output ContactCoordinates[1] double 0.000001 run scoreboard players get $targeted_y iris
 execute store result storage iris:output ContactCoordinates[2] double 0.000001 run scoreboard players get $targeted_z iris
+scoreboard players operation ${x} iris = $targeted_x iris
+scoreboard players operation ${y} iris = $targeted_y iris
+scoreboard players operation ${z} iris = $targeted_z iris
 
 # Total distance
 scoreboard players operation $block_distance iris *= $1000 iris

@@ -17,7 +17,7 @@ data remove storage iris:data Surfaces
 
 # Otherwise, proceed to the next block
 execute unless score $ray_hits_block iris matches 1 unless score $ray_hits_entity iris matches 1 run function iris:find_next_block/main
-execute unless score $ray_hits_block iris matches 1 unless score $ray_hits_entity iris matches 1 run function iris:set_coordinates/main
+execute unless score $ray_hits_block iris matches 1 unless score $ray_hits_entity iris matches 1 run function iris:raycast/teleport_marker
 
 # Loop this function, if the maximum recursion depth has not been reached yet
 scoreboard players add $depth iris 1
