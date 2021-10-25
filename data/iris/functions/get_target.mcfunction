@@ -45,6 +45,7 @@ scoreboard players set $max_depth iris 50
 scoreboard players set $total_distance iris 0
 scoreboard players set $ray_hits_block iris 0
 scoreboard players set $ray_hits_entity iris 0
+scoreboard players set $ray_hits_surface iris 0
 
 # Get coordinates and rotation of the initial position
 function iris:get_coordinates/main

@@ -6,11 +6,7 @@
 # @within iris:get_target
 # @within iris:raycast/loop
 
-# Proceed to the next block
-function iris:find_next_block/main
-function iris:set_coordinates/main
-
-# See if there is a non transparent block or an entity at the new position
+# See if there is a non transparent block or an entity at the current position
 execute at @s unless block ~ ~ ~ #iris:air run function iris:raycast/on_block_found
 execute at @s if data storage iris:input {TargetEntities: true} if entity @e[type=!#iris:ignore, tag=!iris.executing, dx=0, dy=0, dz=0] run function iris:raycast/on_entity_found
 
@@ -18,6 +14,10 @@ execute at @s if data storage iris:input {TargetEntities: true} if entity @e[typ
 execute if score $ray_hits_block iris matches 1 run function iris:raycast/hit_block
 execute if score $ray_hits_entity iris matches 1 run function iris:raycast/hit_entity
 data remove storage iris:data Surfaces
+
+# Otherwise, proceed to the next block
+execute unless score $ray_hits_block iris matches 1 unless score $ray_hits_entity iris matches 1 run function iris:find_next_block/main
+execute unless score $ray_hits_block iris matches 1 unless score $ray_hits_entity iris matches 1 run function iris:set_coordinates/main
 
 # Loop this function, if the maximum recursion depth has not been reached yet
 scoreboard players add $depth iris 1
