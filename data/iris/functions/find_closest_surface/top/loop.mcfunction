@@ -1,4 +1,9 @@
+#> iris:find_closest_surface/top/loop
+#
 # Determines if the ray hits the current surface
+#
+# @within iris:find_closest_surface/top/main
+# @within iris:find_closest_surface/top/loop
 
 # Store all coordinates to scores (List[1] and List[4] should have the same values)
 execute store result score $x0 iris run data get storage iris:data List[-1][0]
@@ -16,4 +21,5 @@ execute if score ${y} iris > $y0 iris run function iris:find_closest_surface/top
 # Loop this function
 data remove storage iris:data List[-1]
 scoreboard players remove $surfaces iris 1
+scoreboard players remove $cuboid_id iris 1
 execute if score $surfaces iris matches 1.. run function iris:find_closest_surface/top/loop

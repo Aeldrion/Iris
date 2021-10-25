@@ -1,3 +1,9 @@
+#> iris:find_closest_surface/bottom/find_intersection
+#
+# Get position of the intersection, and see if that position is within the current surface
+#
+# @within iris:find_closest_surface/bottom/get_distance
+
 # Get x position of the intersection
 scoreboard players operation $x_intersection iris = $distance iris
 scoreboard players operation $x_intersection iris *= $dx iris

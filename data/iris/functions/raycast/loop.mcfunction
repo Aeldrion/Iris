@@ -3,7 +3,7 @@
 # Loops forward until a contact surface is found or until the maximum recursion depth has been reached
 #
 # @context a marker and the current ray position
-# @within iris:get_targeted_block
+# @within iris:get_target
 # @within iris:raycast/loop
 
 # Proceed to the next block
@@ -11,15 +11,13 @@ function iris:find_next_block/main
 function iris:set_coordinates/main
 
 # See if there is a non transparent block or an entity at the new position
-data remove storage iris:block Surfaces
 execute at @s unless block ~ ~ ~ #iris:air run function iris:raycast/on_block_found
-execute at @s if data storage iris:input {TargetEntities: true} as @e[tag=!iris.executing, type=!#iris:ignore, dx=0, dy=0, dz=0] run function iris:raycast/on_entity_found
+execute at @s if data storage iris:input {TargetEntities: true} if entity @e[type=!#iris:ignore, tag=!iris.executing, dx=0, dy=0, dz=0] run function iris:raycast/on_entity_found
 
-# See if the ray hits any surface
-scoreboard players set $ray_hits_surface iris 0
-execute if data storage iris:block Surfaces run function iris:find_closest_surface/main
-execute if score $ray_hits_surface iris matches 1 run function iris:raycast/hit
-data remove storage iris:block Surfaces
+# If the ray hit something, break the loop and return relevant information
+execute if score $ray_hits_block iris matches 1 run function iris:raycast/hit_block
+execute if score $ray_hits_entity iris matches 1 run function iris:raycast/hit_entity
+data remove storage iris:data Surfaces
 
 # Loop this function, if the maximum recursion depth has not been reached yet
 scoreboard players add $depth iris 1

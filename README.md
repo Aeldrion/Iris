@@ -1,6 +1,6 @@
 # Iris Raycasting
 
-Iris is a utility data pack for Minecraft: Java Edition 1.16+ designed to determine the block a player is facing, with micrometric precision and taking into account unusual block geometries. As of now, Iris is unfinished and will only work for the few blocks it currently supports (beds, buttons, carpets, doors, fence gates, pressure plates, sapling, slabs, stairs, standing signs and standing banners). Other blocks will be treated as 1x1x1 cubes.
+Iris is a utility data pack for Minecraft: Java Edition 1.17+ designed to determine the place a player is facing, with micrometric precision and taking into account unusual block geometries. As of now, Iris is unfinished and will only work for the few blocks it currently supports (anvils, attached stems, beds, beetroots, brewing stands, buttons, cactus, campfires, carpets, cauldrons, chests, composters, conduits, doors, farmland, fence gates, fences, grass, mushrooms, pressure plates, saplings, slabs, stairs, standing signs and standing banners, trapdoors, wall signs, walls, activator rails, detector rails, and powered rails). Other blocks will be treated as 1x1x1 cubes.
 
 ---
 
@@ -14,35 +14,59 @@ The only function that other data packs should use is `iris:get_targeted_block`.
 execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_targeted_block
 ```
 
+## Settings
+
+### Target entities
+
+By default, the ray will traverse entities and will only attempt to find blocks. If you want to detect entities the player is looking at, set `TargetEntities` to `true` (`1b`):
+
+```mcfunction
+data modify storage iris:input TargetEntities set value true
+```
+
+If `TargetEntities` is true, the ray will stop if it hits an entity on which a block cannot be placed. For example, mobs, minecarts or falling blocks may be detected, but a marker or an arrow will not interrupt raycasting. The executing entity itself is ignored as well.
+
 ## Output
 
-Iris stores output data to command storage `iris:output`. Additionally, a marker entity with the `iris.ray` tag is placed where the ray hits.
+Iris returns relevant information to command storage `iris:output`. Additionally, a marker entity with the `iris.ray` tag is placed at the corner of the tile where the ray stops.
 
 ```mcfunction
 execute at @e[type=minecraft:marker, tag=iris.ray] run particle minecraft:end_rod ~ ~ ~ 0 0 0 0 1
 ```
 
-Below is a list of all the information that Iris will save to storage every time `iris:get_targeted_block` is executed.
+Below is a list of all the information that Iris will save to storage every time `iris:get_targeted_block` is executed. Note: if `TargetEntities` is true and the ray hits an entity before hitting a block, "the block that is hit" refers to the tile that the ray was in before hitting an entity.
 
-#### Distance
+### Distance
 
 `Distance` is a double corresponding to the distance the ray needs to travel before hitting a solid surface. This value is also stored to the `$total_distance iris` score with a scale of 1,000,000.
 
-#### Contact surface
+### Contact surface
 
-`ContactSurface` is a list of six doubles between 0.0d and 1.0d. The first three numbers and the last three numbers are the coordinates of two opposite corners of the surface area the ray hits. Origin is the Wwest, North, bottom corner of the 1x1x1 tile that is hit.
+`ContactSurface` is a list of six doubles between 0.0d and 1.0d. The first three numbers and the last three numbers are the coordinates of two opposite corners of the surface area the ray hits. Origin is the West, North, bottom corner of the 1x1x1 tile that is hit.
 
-#### Contact coordinates
+If no block or entity is found, this will be unset.
+
+### Contact coordinates
 
 `ContactCoordinates` is a list of three doubles between 0.0 and 1.0d, corresponding to the coordinates where the ray hits. Origin is the West, North, bottom corner of the 1x1x1 tile that is hit.
 
-#### Targeted block
+If no block or entity is found, this will be unset.
+
+### Targeted block
 
 `TargetedBlock` is a list of three integers, corresponding to the world coordinates of the block that the ray hits.
 
-#### Placed position
+If no block or entity is found, this will be unset.
+
+### Placed position
 
 `PlacedPosition` is a list of three integers, corresponding to the world coordinates of the block the ray was in before entering the tile it hit. In other words, if a player were to place a block, this is the position where the block would be placed, unless the player is placing a block behind them (e.g. placing a block against a climbed ladder).
+
+If `TargetEntities` is true and the ray hits an entity before hitting a block, or if no block is found, this will be unset.
+
+### Targeted entity
+
+`TargetedEntity` is the UUID of the entity that the ray hits. If `TargetEntities` is false or if the ray hits a block before hitting an entity, this will be unset.
 
 ---
 

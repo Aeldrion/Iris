@@ -5,7 +5,8 @@
 # Rotation is returned as a steering vector of magnitude 1000000.
 #
 # @context a position and a rotation
-# @within iris:get_targeted_block
+# @within iris:get_target
+# @within iris:get_hitbox/entity
 # @output
 #	score $[x] iris
 #		The integer x coordinate of the current position

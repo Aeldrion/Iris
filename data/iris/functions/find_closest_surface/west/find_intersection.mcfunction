@@ -1,4 +1,10 @@
-# Get x position of the intersection (useful for iris:find_closest_surface/ray_intersects_with_surface)
+#> iris:find_closest_surface/west/find_intersection
+#
+# Get position of the intersection, and see if that position is within the current surface
+#
+# @within iris:find_closest_surface/west/get_distance
+
+# Get x position of the intersection
 scoreboard players operation $x_intersection iris = $x0 iris
 
 # Get y position of the intersection

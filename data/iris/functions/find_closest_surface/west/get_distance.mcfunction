@@ -1,4 +1,8 @@
+#> iris:find_closest_surface/west/get_distance
+#
 # Gets distance to the plane containing the surface and determines whether the intersection of the ray on the plane is inside the surface
+#
+# @within iris:find_closest_surface/west/loop
 
 # Get distance to the plane containing the surface
 scoreboard players operation $distance iris = $x0 iris

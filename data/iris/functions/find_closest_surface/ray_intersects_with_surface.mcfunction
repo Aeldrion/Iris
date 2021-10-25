@@ -11,6 +11,7 @@
 # @within iris:find_closest_surface/west/find_intersection
 
 scoreboard players set $ray_hits_surface iris 1
+scoreboard players operation $closest_cuboid_id iris = $cuboid_id iris
 scoreboard players operation $min_distance_to_surface iris = $distance iris
 
 # The three following scores are eventually sent to output storage

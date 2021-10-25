@@ -3,14 +3,15 @@
 # Establishes the current surface as the first the ray will hit.
 # This function only runs if the ray is already within a surface, guaranteeing that this surface is the contact surface.
 #
-# @within iris:find_closest_surface/bottom/find_intersection
-# @within iris:find_closest_surface/east/find_intersection
-# @within iris:find_closest_surface/north/find_intersection
-# @within iris:find_closest_surface/south/find_intersection
-# @within iris:find_closest_surface/top/find_intersection
-# @within iris:find_closest_surface/west/find_intersection
+# @within iris:find_closest_surface/bottom/loop
+# @within iris:find_closest_surface/east/loop
+# @within iris:find_closest_surface/north/loop
+# @within iris:find_closest_surface/south/loop
+# @within iris:find_closest_surface/top/loop
+# @within iris:find_closest_surface/west/loop
 
 scoreboard players set $ray_hits_surface iris 1
+scoreboard players operation $closest_cuboid_id iris = $cuboid_id iris
 scoreboard players set $min_distance_to_surface iris 0
 data modify storage iris:data ContactSurface set from storage iris:data List[-1]
 
