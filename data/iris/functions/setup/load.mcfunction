@@ -7,8 +7,6 @@
 
 # Data-pack Helper Plus storage definitions
 #define storage iris:data
-#define storage iris:block
-#define storage iris:entity
 #define storage iris:input
 #define storage iris:output
 

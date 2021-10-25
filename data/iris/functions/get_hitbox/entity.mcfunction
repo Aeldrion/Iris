@@ -4,7 +4,7 @@
 #
 # @within iris:raycast/on_entity_found
 # @output
-#	storage iris:block Surfaces
+#	storage iris:data Surfaces
 #		Top: int[][]
 #			A list of rectangular surfaces visible from above. Each surface is defined by six numbers, two sets of coordinates corresponding to opposite corners of the surface.
 #		Bottom: int[][]
@@ -105,54 +105,54 @@ scoreboard players operation $entity_z1 iris += $entity_half_width iris
 execute if score $entity_z1 iris matches 1000000.. run scoreboard players set $entity_z1 iris 1000000
 
 # Store these coordinates to storage
-data modify storage iris:entity Surfaces.Top append value [0, 0, 0, 0, 0, 0]
-data modify storage iris:entity Surfaces.Bottom append value [0, 0, 0, 0, 0, 0]
-data modify storage iris:entity Surfaces.West append value [0, 0, 0, 0, 0, 0]
-data modify storage iris:entity Surfaces.East append value [0, 0, 0, 0, 0, 0]
-data modify storage iris:entity Surfaces.North append value [0, 0, 0, 0, 0, 0]
-data modify storage iris:entity Surfaces.South append value [0, 0, 0, 0, 0, 0]
+data modify storage iris:data Surfaces.Top append value [0, 0, 0, 0, 0, 0]
+data modify storage iris:data Surfaces.Bottom append value [0, 0, 0, 0, 0, 0]
+data modify storage iris:data Surfaces.West append value [0, 0, 0, 0, 0, 0]
+data modify storage iris:data Surfaces.East append value [0, 0, 0, 0, 0, 0]
+data modify storage iris:data Surfaces.North append value [0, 0, 0, 0, 0, 0]
+data modify storage iris:data Surfaces.South append value [0, 0, 0, 0, 0, 0]
 
-execute store result storage iris:entity Surfaces.Top[-1][0] int 1 run scoreboard players get $entity_x0 iris
-execute store result storage iris:entity Surfaces.Top[-1][1] int 1 run scoreboard players get $entity_y1 iris
-execute store result storage iris:entity Surfaces.Top[-1][2] int 1 run scoreboard players get $entity_z0 iris
-execute store result storage iris:entity Surfaces.Top[-1][3] int 1 run scoreboard players get $entity_x1 iris
-execute store result storage iris:entity Surfaces.Top[-1][4] int 1 run scoreboard players get $entity_y1 iris
-execute store result storage iris:entity Surfaces.Top[-1][5] int 1 run scoreboard players get $entity_z1 iris
+execute store result storage iris:data Surfaces.Top[-1][0] int 1 run scoreboard players get $entity_x0 iris
+execute store result storage iris:data Surfaces.Top[-1][1] int 1 run scoreboard players get $entity_y1 iris
+execute store result storage iris:data Surfaces.Top[-1][2] int 1 run scoreboard players get $entity_z0 iris
+execute store result storage iris:data Surfaces.Top[-1][3] int 1 run scoreboard players get $entity_x1 iris
+execute store result storage iris:data Surfaces.Top[-1][4] int 1 run scoreboard players get $entity_y1 iris
+execute store result storage iris:data Surfaces.Top[-1][5] int 1 run scoreboard players get $entity_z1 iris
 
-execute store result storage iris:entity Surfaces.Bottom[-1][0] int 1 run scoreboard players get $entity_x0 iris
-execute store result storage iris:entity Surfaces.Bottom[-1][1] int 1 run scoreboard players get $entity_y0 iris
-execute store result storage iris:entity Surfaces.Bottom[-1][2] int 1 run scoreboard players get $entity_z0 iris
-execute store result storage iris:entity Surfaces.Bottom[-1][3] int 1 run scoreboard players get $entity_x1 iris
-execute store result storage iris:entity Surfaces.Bottom[-1][4] int 1 run scoreboard players get $entity_y0 iris
-execute store result storage iris:entity Surfaces.Bottom[-1][5] int 1 run scoreboard players get $entity_z1 iris
+execute store result storage iris:data Surfaces.Bottom[-1][0] int 1 run scoreboard players get $entity_x0 iris
+execute store result storage iris:data Surfaces.Bottom[-1][1] int 1 run scoreboard players get $entity_y0 iris
+execute store result storage iris:data Surfaces.Bottom[-1][2] int 1 run scoreboard players get $entity_z0 iris
+execute store result storage iris:data Surfaces.Bottom[-1][3] int 1 run scoreboard players get $entity_x1 iris
+execute store result storage iris:data Surfaces.Bottom[-1][4] int 1 run scoreboard players get $entity_y0 iris
+execute store result storage iris:data Surfaces.Bottom[-1][5] int 1 run scoreboard players get $entity_z1 iris
 
-execute store result storage iris:entity Surfaces.West[-1][0] int 1 run scoreboard players get $entity_x0 iris
-execute store result storage iris:entity Surfaces.West[-1][1] int 1 run scoreboard players get $entity_y0 iris
-execute store result storage iris:entity Surfaces.West[-1][2] int 1 run scoreboard players get $entity_z0 iris
-execute store result storage iris:entity Surfaces.West[-1][3] int 1 run scoreboard players get $entity_x0 iris
-execute store result storage iris:entity Surfaces.West[-1][4] int 1 run scoreboard players get $entity_y1 iris
-execute store result storage iris:entity Surfaces.West[-1][5] int 1 run scoreboard players get $entity_z1 iris
+execute store result storage iris:data Surfaces.West[-1][0] int 1 run scoreboard players get $entity_x0 iris
+execute store result storage iris:data Surfaces.West[-1][1] int 1 run scoreboard players get $entity_y0 iris
+execute store result storage iris:data Surfaces.West[-1][2] int 1 run scoreboard players get $entity_z0 iris
+execute store result storage iris:data Surfaces.West[-1][3] int 1 run scoreboard players get $entity_x0 iris
+execute store result storage iris:data Surfaces.West[-1][4] int 1 run scoreboard players get $entity_y1 iris
+execute store result storage iris:data Surfaces.West[-1][5] int 1 run scoreboard players get $entity_z1 iris
 
-execute store result storage iris:entity Surfaces.East[-1][0] int 1 run scoreboard players get $entity_x1 iris
-execute store result storage iris:entity Surfaces.East[-1][1] int 1 run scoreboard players get $entity_y0 iris
-execute store result storage iris:entity Surfaces.East[-1][2] int 1 run scoreboard players get $entity_z0 iris
-execute store result storage iris:entity Surfaces.East[-1][3] int 1 run scoreboard players get $entity_x1 iris
-execute store result storage iris:entity Surfaces.East[-1][4] int 1 run scoreboard players get $entity_y1 iris
-execute store result storage iris:entity Surfaces.East[-1][5] int 1 run scoreboard players get $entity_z1 iris
+execute store result storage iris:data Surfaces.East[-1][0] int 1 run scoreboard players get $entity_x1 iris
+execute store result storage iris:data Surfaces.East[-1][1] int 1 run scoreboard players get $entity_y0 iris
+execute store result storage iris:data Surfaces.East[-1][2] int 1 run scoreboard players get $entity_z0 iris
+execute store result storage iris:data Surfaces.East[-1][3] int 1 run scoreboard players get $entity_x1 iris
+execute store result storage iris:data Surfaces.East[-1][4] int 1 run scoreboard players get $entity_y1 iris
+execute store result storage iris:data Surfaces.East[-1][5] int 1 run scoreboard players get $entity_z1 iris
 
-execute store result storage iris:entity Surfaces.North[-1][0] int 1 run scoreboard players get $entity_x0 iris
-execute store result storage iris:entity Surfaces.North[-1][1] int 1 run scoreboard players get $entity_y0 iris
-execute store result storage iris:entity Surfaces.North[-1][2] int 1 run scoreboard players get $entity_z0 iris
-execute store result storage iris:entity Surfaces.North[-1][3] int 1 run scoreboard players get $entity_x1 iris
-execute store result storage iris:entity Surfaces.North[-1][4] int 1 run scoreboard players get $entity_y1 iris
-execute store result storage iris:entity Surfaces.North[-1][5] int 1 run scoreboard players get $entity_z0 iris
+execute store result storage iris:data Surfaces.North[-1][0] int 1 run scoreboard players get $entity_x0 iris
+execute store result storage iris:data Surfaces.North[-1][1] int 1 run scoreboard players get $entity_y0 iris
+execute store result storage iris:data Surfaces.North[-1][2] int 1 run scoreboard players get $entity_z0 iris
+execute store result storage iris:data Surfaces.North[-1][3] int 1 run scoreboard players get $entity_x1 iris
+execute store result storage iris:data Surfaces.North[-1][4] int 1 run scoreboard players get $entity_y1 iris
+execute store result storage iris:data Surfaces.North[-1][5] int 1 run scoreboard players get $entity_z0 iris
 
-execute store result storage iris:entity Surfaces.South[-1][0] int 1 run scoreboard players get $entity_x0 iris
-execute store result storage iris:entity Surfaces.South[-1][1] int 1 run scoreboard players get $entity_y0 iris
-execute store result storage iris:entity Surfaces.South[-1][2] int 1 run scoreboard players get $entity_z1 iris
-execute store result storage iris:entity Surfaces.South[-1][3] int 1 run scoreboard players get $entity_x1 iris
-execute store result storage iris:entity Surfaces.South[-1][4] int 1 run scoreboard players get $entity_y1 iris
-execute store result storage iris:entity Surfaces.South[-1][5] int 1 run scoreboard players get $entity_z1 iris
+execute store result storage iris:data Surfaces.South[-1][0] int 1 run scoreboard players get $entity_x0 iris
+execute store result storage iris:data Surfaces.South[-1][1] int 1 run scoreboard players get $entity_y0 iris
+execute store result storage iris:data Surfaces.South[-1][2] int 1 run scoreboard players get $entity_z1 iris
+execute store result storage iris:data Surfaces.South[-1][3] int 1 run scoreboard players get $entity_x1 iris
+execute store result storage iris:data Surfaces.South[-1][4] int 1 run scoreboard players get $entity_y1 iris
+execute store result storage iris:data Surfaces.South[-1][5] int 1 run scoreboard players get $entity_z1 iris
 
 # Give this entity a tag and an ID
 tag @s add iris.possible_target

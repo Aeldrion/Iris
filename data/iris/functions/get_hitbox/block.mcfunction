@@ -1,12 +1,11 @@
 #> iris:get_hitbox/block
 #
-# Returns a list of surfaces of the current block
-# Note: because this function always runs before iris:get_hibox/entity, we can simply replace the contents of storage iris:block instead of appending
+# Returns a list of surfaces of the current blockg
 # TODO Organise non-cubic blocks in a block tag tree for logarithmic search
 #
 # @within iris:raycast/on_block_found
 # @output
-#	storage iris:block Surfaces
+#	storage iris:data Surfaces
 #		Top: int[][]
 #			A list of rectangular surfaces visible from above. Each surface is defined by six numbers, two sets of coordinates corresponding to opposite corners of the surface.
 #		Bottom: int[][]
