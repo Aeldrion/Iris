@@ -3,7 +3,7 @@
 # Returns the position of the block targeted
 # To tell where a player is looking, anchoring to the eye position is needed: execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target_block
 #
-# @api
+# @public
 # @context a position and a rotation
 # @input
 #	storage iris:input
