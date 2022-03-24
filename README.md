@@ -1,6 +1,6 @@
 # Iris Raycasting
 
-**Iris** is a utility data pack for Minecraft: Java Edition 1.16+ designed to determine where a player is facing, with micrometric precision and taking into account unusual block geometries.
+**Iris** is a utility data pack for Minecraft: Java Edition 1.17+ designed to determine where a player is facing, with micrometric precision and taking into account unusual block geometries.
 
 Iris is still in development and does not support all blocks and entities yet.
 
