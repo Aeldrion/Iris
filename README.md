@@ -1,6 +1,6 @@
 # Iris Raycasting
 
-**Iris** is a utility data pack for Minecraft: Java Edition 1.16+ designed to determine where a player is facing, with micrometric precision and taking into account unusual block geometries.
+**Iris** is a utility data pack for Minecraft: Java Edition 1.17+ designed to determine where a player is facing, with micrometric precision and taking into account unusual block geometries.
 
 Iris is still in development and does not support all blocks and entities yet.
 
@@ -64,7 +64,7 @@ If `TargetEntities` is true, the ray will stop if it hits an entity. Entities th
 By default, the ray will traverse up to 16 blocks and give up if no block or entity is found. This limit can be modified by changing the value of `MaxRecursionDepth`:
 
 ```mcfunction
-data modify storage iris:input MaxRecursionDepth 40
+data modify storage iris:input MaxRecursionDepth set value 40
 ```
 
 Values under 10 may fail to detect blocks that are within arm reach of the player.
