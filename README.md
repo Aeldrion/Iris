@@ -48,9 +48,9 @@ execute as @e[type=minecraft:marker, tag=retina.ray] run function retina:set_coo
 execute at @e[type=minecraft:marker, tag=retina.ray] run particle minecraft:flame
 ```
 
-### Set coordinates
+### Run racyast
 
-The `retina:set_coordinates` function teleports the executing entity to the exact position where the ray lands.
+The `retina:run_raycast` function goes through all the motions of doing a raycast, and uses scoreboard variables to determine regular raycast, multi raycast, or random offset raycast.
 
 ```mcfunction
 # Play a particle effect where the player is looking
