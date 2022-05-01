@@ -1,50 +1,62 @@
-# Iris Raycasting
+# Retina Raycasting
 
-**Iris** is a utility data pack for Minecraft: Java Edition 1.17+ designed to determine where a player is facing, with micrometric precision and taking into account unusual block geometries.
+**Retina** is a fork of Aeldrion's original [Iris](https://github.com/Aeldrion/Iris) raycasting data pack for Minecraft: Java Edition 1.18+ with additional front-end (ironic because in an eye, the iris is in front of the retina) features for other datapacks to use, including raycasts with particle lines, randomly offset raycasts, and multi-raycasting. 
 
-Iris is still in development and does not support all blocks and entities yet.
+Retina's features are mostly [bodges](https://en.wiktionary.org/wiki/bodge#Verb), so don't expect great functionality.
+Also, keep in mind that the original Iris datapack is still in development and does not yet support all blocks and entities.
 
 ---
 
 # How to use
 
-## Using Iris
+## Using Retina
 
-Iris provides two functions for other data packs to use: `iris:get_target` and `iris:set_coordinates`.
+For other data packs to use, Retina provides three low-level functions `retina:get_target`, `retina:set_coordinates`, and `retina:display_particle`, and one high-level function `retina:run_raycast`.
 
 ### Get target
 
-The `iris:get_target` function casts a ray from the current position, oriented with the current rotation, and returns coordinates of the block or entity that is found. To tell where a player is facing, anchoring to the eye position is needed:
+The `retina:get_target` function casts a ray from the current position, oriented with the current rotation, and returns coordinates of the block or entity that is found. To tell where a player is facing, anchoring to the eye position is needed:
 
 ```mcfunction
-execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
+execute as <player> at @s anchored eyes positioned ^ ^ ^ run function retina:get_target
 ```
 
-Available information about the targeted position is saved to the `iris:output` storage. Additionally, a marker with the `iris.ray` tag is summoned at the corner of the block where the ray lands until it is killed or the function is run again.
+Available information about the targeted position is saved to the `retina:output` storage. Additionally, a marker with the `retina.ray` tag is summoned at the corner of the block where the ray lands until it is killed or the function is run again.
 
 ```mcfunction
 # Detect when the player is looking at stone
-execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
-execute at @e[type=minecraft:marker, tag=iris.ray] if block ~ ~ ~ minecraft:stone run tellraw @a "Looking at stone"
+execute as <player> at @s anchored eyes positioned ^ ^ ^ run function retina:get_target
+execute at @e[type=minecraft:marker, tag=retina.ray] if block ~ ~ ~ minecraft:stone run tellraw @a "Looking at stone"
 ```
 
-Furthermore, if the ray hits an entity, it will have the `iris.target` tag until the function is run again.
+Furthermore, if the ray hits an entity, it will have the `retina.target` tag until the function is run again.
 
 ```mcfunction
 # Give levitation to cows the player is looking at
-execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
-effect give @e[type=minecraft:cow, tag=iris.target] minecraft:levitation 1 0
+execute as <player> at @s anchored eyes positioned ^ ^ ^ run function retina:get_target
+effect give @e[type=minecraft:cow, tag=retina.target] minecraft:levitation 1 0
 ```
 
 ### Set coordinates
 
-The `iris:set_coordinates` function teleports the executing entity to the exact position where the ray lands.
+The `retina:set_coordinates` function teleports the executing entity to the exact position where the ray lands.
 
 ```mcfunction
 # Play a particle effect where the player is looking
-execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
-execute as @e[type=minecraft:marker, tag=iris.ray] run function iris:set_coordinates
-execute at @e[type=minecraft:marker, tag=iris.ray] run particle minecraft:flame
+execute as <player> at @s anchored eyes positioned ^ ^ ^ run function retina:get_target
+execute as @e[type=minecraft:marker, tag=retina.ray] run function retina:set_coordinates
+execute at @e[type=minecraft:marker, tag=retina.ray] run particle minecraft:flame
+```
+
+### Set coordinates
+
+The `retina:set_coordinates` function teleports the executing entity to the exact position where the ray lands.
+
+```mcfunction
+# Play a particle effect where the player is looking
+execute as <player> at @s anchored eyes positioned ^ ^ ^ run function retina:get_target
+execute as @e[type=minecraft:marker, tag=retina.ray] run function retina:set_coordinates
+execute at @e[type=minecraft:marker, tag=retina.ray] run particle minecraft:flame
 ```
 
 ## Settings
