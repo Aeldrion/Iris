@@ -53,10 +53,8 @@ execute at @e[type=minecraft:marker, tag=retina.ray] run particle minecraft:flam
 The `retina:run_raycast` function goes through all the motions of doing a raycast, and uses scoreboard variables to determine regular raycast, multi raycast, or random offset raycast.
 
 ```mcfunction
-# Play a particle effect where the player is looking
-execute as <player> at @s anchored eyes positioned ^ ^ ^ run function retina:get_target
-execute as @e[type=minecraft:marker, tag=retina.ray] run function retina:set_coordinates
-execute at @e[type=minecraft:marker, tag=retina.ray] run particle minecraft:flame
+# Run a raycast whenever a player right-clicks with a carrot on a stick
+execute at @s if entity @s[nbt={SelectedItem:{id:"minecraft:carrot_on_a_stick"}},scores={rightClicks=1..,}] run function retina:run_raycast
 ```
 
 ## Settings
