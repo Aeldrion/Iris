@@ -24,6 +24,7 @@ execute as @a[nbt={SelectedItem:{id:"minecraft:bow"}}] run function retina:run_r
 
 This function is also highly versatile, using scoreboard information to determine the parameters of the raycast:
 
+`$vertical_count retina`: determines how many raycasts to run (default of 1)
 
 
 ### Display particle
@@ -121,15 +122,5 @@ As an example of this, see [Banners on beds](https://www.planetminecraft.com/dat
 
 # How does it work?
 
-Since this will most likely be used mostly by other data pack nerds, here is a summary of how the original Iris operates.
+Since this will most likely be used mostly by other data pack nerds, [here](https://www.reddit.com/r/YAPms/comments/uh5y3n/since_roe_v_wade_might_get_overturned_here_are/) is a summary of how the original Iris operates.
 Explaining how Retina's new functions operate is left as an exercise to the reader.
-
-## Getting the coordinates/rotation
-
-`execute store` can be used to get an entity's position, however any scale over 70 is unusable for X and Z coordinates due to overflowing. To get the current position with enough detail, a marker is summoned and multiple distance checks from the edge of the current block are done using `align x` and `align z`.
-To get the rotation, a marker is summoned 1,000,000 blocks forward starting from `0.0`, `0.0`, `0.0` using the executing rotation. The marker's position is a steering vector that can be used in later calculations.
-
-## Raycasting
-
-The data pack solves simple linear equations to figure out which tile it hits next (ray/surface intersection), instead of progressing by a fixed length at every iteration like most raycasting functions do. Upon hitting a block other than air (or an entity, if `TargetEntities` is true), it gets a list of its collision surfaces and again checks which ones it hits. Some of these surfaces might not be candidates at all, for example if the ray is going North but the surface can only be hit from the South.
-The raycasting function recursively calls itself for every new block it enters, until a surface is hit or until the maximum depth is reached.
