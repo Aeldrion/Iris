@@ -11,7 +11,7 @@ Also, keep in mind that the original Iris datapack is still in development and d
 
 ## Using Retina
 
-Retina provides four functions for other datapacks to make use of. Two of them, `retina:get_target` and `retina:set_coordinates`, are the same as in the original Iris ([see here](https://github.com/Aeldrion/Iris#using-iris), so I will exclude them for simplicity. The other two, `retina:run_raycast`, and `retina:display_particle` are new.
+Retina provides four functions for other datapacks to make use of. Two of them, `retina:get_target` and `retina:set_coordinates`, are the same as in the original Iris ([see here](https://github.com/Aeldrion/Iris#using-iris)), so I will exclude them for simplicity. The other two, `retina:run_raycast`, and `retina:display_particle` are new.
 
 ### Run racyast
 
@@ -24,10 +24,15 @@ execute as @a[nbt={SelectedItem:{id:"minecraft:bow"}}] run function retina:run_r
 
 This function is also highly versatile, using scoreboard information to determine the parameters of the raycast:
 
-`$vertical_count retina`: determines how many raycasts to run with vertical offset. Defaults to 1.
-`$horizontal_count retina`: determines how many raycasts to run with horizontal offset. Defaults to 1.
+`$vertical_count retina`: Number of raycasts to run with vertical offset. Defaults to 1.
+`$horizontal_count retina`: Number of raycasts to run with horizontal offset. Defaults to 1.
     (ex: setting `$vertical_count` to 2 and `$horizontal_count` to 3 would create a 2x3 grid of raycasts). 
-`$center_count retina`: determines how many extra raycasts 
+`$center_count retina`: Number of extra raycasts to run exactly aligned to the crosshair. Defaults to 0.
+`$offset retina`: How many degrees apart each raycast in a multi-raycast should be spaced. Defaults to 5. 
+`$spread_enabled_global retina`: Enables/disables random spread on ALL multi-raycasts. No effect on single raycasts. Defaults to 1.
+`$spread_enabled_local retina`: Enables/disables random spread on THIS raycast (single or multi!)
+`$spread_min retina`: For single raycasts, determines 
+
 
 ### Display particle
 
