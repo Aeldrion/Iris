@@ -29,18 +29,18 @@ Basic parameters: \
 `$horizontal_count retina`: # of raycasts to run with horizontal offset. Defaults to 1. \
      (ex: setting `$vertical_count` to 2 and `$horizontal_count` to 3 would create a 2x3 grid of raycasts). \
 `$center_count retina`: # of extra raycasts to run exactly aligned to the crosshair. Defaults to 0. \
-`$offset retina`: Angle of spacing (in degrees) between each raycast in a multi-raycast. Defaults to 5. \
+`$offset retina`: Angle of spacing (in degrees) between each raycast in a multi-raycast. Defaults to 5. 
 
 Randomization: \
 `$spread_enabled_global retina`: Enables/disables random spread on ALL multi-raycasts. No effect on single raycasts. Defaults to 1. \
 `$spread_enabled_local retina`: Enables/disables random spread on THIS raycast (single or multi!). Defaults to 0. \
 `$spread_min retina` & `$spread_max retina`: Defaults to 10. \
      Single raycasts -> Min/max number of *degrees* to randomly offset this raycast. \
-     Multi raycasts -> Min/max *multiplier* of `$offset retina`. 10–1 scale. (ie: 20 would mean a x2 multiplier) \
+     Multi raycasts -> Min/max *multiplier* of `$offset retina`. 10–1 scale. (ie: 20 would mean a x2 multiplier) 
 
 Visuals: (applies to all raycasts done by the *entity*) \
 `<executing entity> retina.show_particle`: Enables/disables showing a particle at the *endpoint* of the raycast. \
-`<executing entity> retina.show_particle`: Enables/disables showing a line of particles along the *path* of the raycast. \
+`<executing entity> retina.show_particle`: Enables/disables showing a line of particles along the *path* of the raycast. 
 
 ### Display particle
 
