@@ -1,5 +1,7 @@
 {
 	"values": [
-		"iris:setup/load"
+		"random:private/load", 
+		"retina_vdv/load", 
+		"retina:setup/load"
 	]
 }
