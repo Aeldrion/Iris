@@ -11,51 +11,28 @@ Also, keep in mind that the original Iris datapack is still in development and d
 
 ## Using Retina
 
-For other data packs to use, Retina provides three low-level functions `retina:get_target`, `retina:set_coordinates`, and `retina:display_particle`, and one high-level function `retina:run_raycast`.
-
-### Get target
-
-The `retina:get_target` function casts a ray from the current position, oriented with the current rotation, and returns coordinates of the block or entity that is found. To tell where a player is facing, anchoring to the eye position is needed:
-
-```mcfunction
-execute as <player> at @s anchored eyes positioned ^ ^ ^ run function retina:get_target
-```
-
-Available information about the targeted position is saved to the `retina:output` storage. Additionally, a marker with the `retina.ray` tag is summoned at the corner of the block where the ray lands until it is killed or the function is run again.
-
-```mcfunction
-# Detect when the player is looking at stone
-execute as <player> at @s anchored eyes positioned ^ ^ ^ run function retina:get_target
-execute at @e[type=minecraft:marker, tag=retina.ray] if block ~ ~ ~ minecraft:stone run tellraw @a "Looking at stone"
-```
-
-Furthermore, if the ray hits an entity, it will have the `retina.target` tag until the function is run again.
-
-```mcfunction
-# Give levitation to cows the player is looking at
-execute as <player> at @s anchored eyes positioned ^ ^ ^ run function retina:get_target
-effect give @e[type=minecraft:cow, tag=retina.target] minecraft:levitation 1 0
-```
-
-### Set coordinates
-
-The `retina:set_coordinates` function teleports the executing entity to the exact position where the ray lands.
-
-```mcfunction
-# Play a particle effect where the player is looking
-execute as <player> at @s anchored eyes positioned ^ ^ ^ run function retina:get_target
-execute as @e[type=minecraft:marker, tag=retina.ray] run function retina:set_coordinates
-execute at @e[type=minecraft:marker, tag=retina.ray] run particle minecraft:flame
-```
+Retina provides four functions for other datapacks to make use of. Two of them, `retina:get_target` and `retina:set_coordinates`, are the same as in the original Iris ([see here]([bodges](https://en.wiktionary.org/wiki/bodge#Verb))), so I will exclude them for simplicity. The other two, `retina:run_raycast`, and `retina:display_particle` are new.
 
 ### Run racyast
 
-The `retina:run_raycast` function goes through all the motions of doing a raycast, and uses scoreboard variables to determine regular raycast, multi raycast, or random offset raycast.
+The `retina:run_raycast` function does all the steps of a raycast in a self-contained package. There is no need to specify anything in your command other than the executing entity, as the rest is taken care of.
 
 ```mcfunction
-# Run a raycast whenever a player right-clicks with a carrot on a stick
-execute at @s if entity @s[nbt={SelectedItem:{id:"minecraft:carrot_on_a_stick"}},scores={rightClicks=1..,}] run function retina:run_raycast
+# Run a raycast whenever a player is holding a bow
+execute as @a[nbt={SelectedItem:{id:"minecraft:bow"}}] run function retina:run_raycast
 ```
+
+This function is also highly versatile, using scoreboard information to determine the parameters of the raycast:
+
+
+
+### Display particle
+
+By default the `retina:display_particle` function does absolutely nothing other than run `particle crit`. This isn't exactly the most modular, so you'll have to edit it directly if you want your datapack to include custom particle effects. For example:
+```mcfunction
+execute if score @s <objective> matches 3 run particle minecraft:soul_fire_flame ^ ^ ^ 0 0 0 0.5 20 force @a[team=RED]
+```
+I could have maybe made this a little more modular by summoning markers that get tagged by this function, but A) that is laggy, and B) Occam's Razor says that "entities should not be multiplied beyond necessity".
 
 ## Settings
 
@@ -64,24 +41,24 @@ execute at @s if entity @s[nbt={SelectedItem:{id:"minecraft:carrot_on_a_stick"}}
 By default, the ray will ignore entities and will only attempt to find blocks. If you want to account for entities the player might be looking at, set `TargetEntities` to `true` (`1b`):
 
 ```mcfunction
-data modify storage iris:input TargetEntities set value true
+data modify storage retina:input TargetEntities set value true
 ```
 
 If `TargetEntities` is true, the ray will stop if it hits an entity. Entities through which a block can be placed are ignored. For example, mobs, minecarts or falling blocks may be detected, but items and arrows are ignored. The executing entity itself is ignored as well.
 
 ### Maximum recursion depth
 
-By default, the ray will traverse up to 16 blocks and give up if no block or entity is found. This limit can be modified by changing the value of `MaxRecursionDepth`:
+By default, the ray will traverse up to 25 blocks and give up if no block or entity is found. This limit can be modified by changing the value of `MaxRecursionDepth`:
 
 ```mcfunction
-data modify storage iris:input MaxRecursionDepth set value 40
+data modify storage retina:input MaxRecursionDepth set value 50
 ```
 
 Values under 10 may fail to detect blocks that are within arm reach of the player.
 
 ## Output
 
-Below is a list of all the information that Iris will save to storage every time `iris:get_target` is executed.
+Below is a list of all the information that Retina will save to storage every time `retina:get_target` is executed.
 
 ### Target
 
@@ -89,7 +66,7 @@ Below is a list of all the information that Iris will save to storage every time
 
 ### Distance
 
-`Distance` is a double corresponding to the distance the ray needs to travel before hitting a solid surface. Distance is also stored to the `$total_distance iris` score with a scale of 1,000,000.
+`Distance` is a double corresponding to the distance the ray needs to travel before hitting a solid surface. Distance is also stored to the `$total_distance retina` score with a scale of 1,000,000.
 Only exists if `Target` is `"BLOCK"` or `"ENTITY"`.
 
 ### Targeted block
@@ -119,31 +96,33 @@ Only exists if `Target` is `"BLOCK"` or `"ENTITY"`.
 
 ---
 
-# Including Iris in your data pack
+# Including Retina in your data pack
 
 ## How to
 
-To add Iris to your data pack, copy the `iris` namespace folder to your own data pack folder. Also copy the `minecraft` namespace folder or, if your pack uses the `#minecraft:load` function tag, make sure to include `iris:setup/load`.
+To add Retina to your data pack, copy the `retina` namespace folder to your own data pack folder. Also copy the `minecraft` namespace folder or, if your pack uses the `#minecraft:load` function tag, make sure to include `retina:setup/load`.
 
 ## Crediting
 
-Crediting is not required, but if you wish to credit me nonetheless, you can do so with the following notice wherever you please:
+Crediting is not required, but if you wish to credit me and Aeldrion nonetheless, you can do so with the following notice wherever you please:
 
-> Uses Iris by Aeldrion \
+> Uses Retina by Nicoder (based off Iris by Aeldrion) \
+> https://github.com/Nico314159/Retina \
 > https://github.com/Aeldrion/Iris \
 > https://twitter.com/Aeldrion
 
-## Publishing modified versions of Iris
+## Publishing modified versions of Retina
 
-You are free to redistribute Iris or modified versions of Iris as a part of your own data packs. The latter can be useful, for example, if you want to detect where one specific block is being placed and want to avoid running unnecessary commands when raycasting. However, since multiple data packs might be using Iris on the same world, it is recommended to distribute modified versions of Iris with a modified namespace as well (e.g. `iris_mypack`) to avoid conflicts with other data packs. You can do so by replacing all occurrences of `iris:` with `iris_mypack:` in the data pack using a code editor's "Replace in folder" feature for example, then renaming the `iris` namespace folder to `iris_mypack`.
+You are free to redistribute Retina or modified versions of Retina as a part of your own data packs. The latter can be useful, for example, if you want to detect where one specific block is being placed and want to avoid running unnecessary commands when raycasting. However, since multiple data packs might be using Iris and/or Retina on the same world, it is recommended to distribute modified versions of either pack with a modified namespace as well (e.g. `retina_mypack`) to avoid conflicts with other data packs. You can do so by replacing all occurrences of `retina:` with `retina_mypack:` in the data pack using a code editor's "Replace in folder" feature for example, then renaming the `retina` namespace folder to `retina_mypack`.
 
-As an example of how to make a data pack with a modified version of Iris, see [Banners on beds](https://www.planetminecraft.com/data-pack/banners-on-beds/). Some functions were modified to remove unnecessary checks, and the `iris` namespace was replaced with `iris_bob`.
+As an example of this, see [Banners on beds](https://www.planetminecraft.com/data-pack/banners-on-beds/), which made use of a modified version of the original Iris. Some functions were modified to remove unnecessary checks, and the `iris` namespace was replaced with `iris_bob`.
 
 ---
 
 # How does it work?
 
-Since this will most likely be used mostly by other data pack nerds, here is a summary of how Iris operates.
+Since this will most likely be used mostly by other data pack nerds, here is a summary of how the original Iris operates.
+Explaining how Retina's new functions operate is left as an exercise to the reader.
 
 ## Getting the coordinates/rotation
 
