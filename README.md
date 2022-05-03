@@ -24,23 +24,23 @@ execute as @a[nbt={SelectedItem:{id:"minecraft:bow"}}] run function retina:run_r
 
 This function is also highly versatile, using scoreboard information to determine the parameters of the raycast:
 
-Basic parameters:
-`$vertical_count retina`: # of raycasts to run with vertical offset. Defaults to 1.
-`$horizontal_count retina`: # of raycasts to run with horizontal offset. Defaults to 1.
-    (ex: setting `$vertical_count` to 2 and `$horizontal_count` to 3 would create a 2x3 grid of raycasts). 
-`$center_count retina`: # of extra raycasts to run exactly aligned to the crosshair. Defaults to 0.
-`$offset retina`: Angle of spacing (in degrees) between each raycast in a multi-raycast. Defaults to 5.
+Basic parameters: <br/>
+`$vertical_count retina`: # of raycasts to run with vertical offset. Defaults to 1. <br/>
+`$horizontal_count retina`: # of raycasts to run with horizontal offset. Defaults to 1. <br/>
+    (ex: setting `$vertical_count` to 2 and `$horizontal_count` to 3 would create a 2x3 grid of raycasts). <br/>
+`$center_count retina`: # of extra raycasts to run exactly aligned to the crosshair. Defaults to 0. <br/>
+`$offset retina`: Angle of spacing (in degrees) between each raycast in a multi-raycast. Defaults to 5. <br/>
 
- Randomization:
-`$spread_enabled_global retina`: Enables/disables random spread on ALL multi-raycasts. No effect on single raycasts. Defaults to 1.
-`$spread_enabled_local retina`: Enables/disables random spread on THIS raycast (single or multi!). Defaults to 0.
-`$spread_min retina` & `$spread_max retina`: Defaults to 10.
-    Single raycasts -> Min/max number of *degrees* to randomly offset this raycast. 
-    Multi raycasts -> Min/max *multiplier* of `$offset retina`. 10–1 scale. (ie: 20 would mean a x2 multiplier)
+ Randomization: <br/>
+`$spread_enabled_global retina`: Enables/disables random spread on ALL multi-raycasts. No effect on single raycasts. Defaults to 1. <br/>
+`$spread_enabled_local retina`: Enables/disables random spread on THIS raycast (single or multi!). Defaults to 0. <br/>
+`$spread_min retina` & `$spread_max retina`: Defaults to 10. <br/>
+    Single raycasts -> Min/max number of *degrees* to randomly offset this raycast. <br/>
+    Multi raycasts -> Min/max *multiplier* of `$offset retina`. 10–1 scale. (ie: 20 would mean a x2 multiplier) <br/>
 
-Visuals: (applies to all raycasts done by the *entity*)
-`<executing entity> retina.show_particle`: Enables/disables showing a particle at the *endpoint* of the raycast. 
-`<executing entity> retina.show_particle`: Enables/disables showing a line of particles along the *path* of the raycast. 
+Visuals: (applies to all raycasts done by the *entity*) <br/>
+`<executing entity> retina.show_particle`: Enables/disables showing a particle at the *endpoint* of the raycast. <br/>
+`<executing entity> retina.show_particle`: Enables/disables showing a line of particles along the *path* of the raycast. <br/>
 
 ### Display particle
 
@@ -48,7 +48,7 @@ By default the `retina:display_particle` function does absolutely nothing other 
 ```mcfunction
 execute if score @s <objective> matches 3 run particle minecraft:soul_fire_flame ^ ^ ^ 0 0 0 0.5 20 force @a[team=RED]
 ```
-I could have maybe made this a little more modular by summoning markers that get tagged by this function, but A) that is laggy, and B) Occam's Razor says that "entities should not be multiplied beyond necessity".
+I could have maybe made this a little more modular by summoning markers that get tagged by this function, but that is laggy, and also Occam's Razor says that "entities should not be multiplied beyond necessity".
 
 ## Settings
 
