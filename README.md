@@ -1,6 +1,6 @@
 # Retina Raycasting
 
-**Retina** is a fork of Aeldrion's original [Iris](https://github.com/Aeldrion/Iris) raycasting data pack for Minecraft: Java Edition 1.18+ with additional front-end (ironic because in an eye, the iris is in front of the retina) features for other datapacks to use, including raycasts with particle lines, randomly offset raycasts, and multi-raycasting. 
+**Retina** is a fork of Aeldrion's original [Iris](https://github.com/Aeldrion/Iris) raycasting data pack for Minecraft: Java Edition 1.18+ with additional front-end (ironic because in an actual eye, the iris is in front of the retina) features for other datapacks to use, including raycasts with particle lines, randomly offset raycasts, and multi-raycasting. In the future, I also plan on adding togglable ignores for certain blocks and the ability to differentiate head vs body.
 
 Retina's features are mostly [bodges](https://en.wiktionary.org/wiki/bodge#Verb), so don't expect great functionality.
 Also, keep in mind that the original Iris datapack is still in development and does not yet support all blocks and entities.
@@ -11,7 +11,7 @@ Also, keep in mind that the original Iris datapack is still in development and d
 
 ## Using Retina
 
-Retina provides four functions for other datapacks to make use of. Two of them, `retina:get_target` and `retina:set_coordinates`, are the same as in the original Iris ([see here](https://github.com/Aeldrion/Iris#using-iris)), so I will exclude them for simplicity. The other two, `retina:run_raycast`, and `retina:display_particle` are new.
+Retina provides four functions for other datapacks to make use of. Two of them, `retina:get_target` and `retina:set_coordinates`, are the same as in the original Iris ([see here](https://github.com/Aeldrion/Iris#using-iris)), so I will exclude them for simplicity. The other two functions, `retina:run_raycast` and `retina:display_particle`, are brand new.
 
 ### Run racyast
 
@@ -137,5 +137,5 @@ As an example of this, see [Banners on beds](https://www.planetminecraft.com/dat
 
 # How does it work?
 
-Since this will most likely be used mostly by other data pack nerds, [here](https://github.com/Aeldrion/Iris#how-does-it-work) is a summary of how the original Iris operates.
+Since this will most likely be used mostly by other data pack nerds, [here](https://github.com/Aeldrion/Iris#how-does-it-work) is a summary of how the original Iris operates. \
 Explaining how Retina's new functions operate is left as an exercise to the reader.
