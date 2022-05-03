@@ -24,23 +24,23 @@ execute as @a[nbt={SelectedItem:{id:"minecraft:bow"}}] run function retina:run_r
 
 This function is also highly versatile, using scoreboard information to determine the parameters of the raycast:
 
-Basic parameters: <br/>
-`$vertical_count retina`: # of raycasts to run with vertical offset. Defaults to 1. <br/>
-`$horizontal_count retina`: # of raycasts to run with horizontal offset. Defaults to 1. <br/>
-     (ex: setting `$vertical_count` to 2 and `$horizontal_count` to 3 would create a 2x3 grid of raycasts). <br/>
-`$center_count retina`: # of extra raycasts to run exactly aligned to the crosshair. Defaults to 0. <br/>
-`$offset retina`: Angle of spacing (in degrees) between each raycast in a multi-raycast. Defaults to 5. <br/>
+Basic parameters: \
+`$vertical_count retina`: # of raycasts to run with vertical offset. Defaults to 1. \
+`$horizontal_count retina`: # of raycasts to run with horizontal offset. Defaults to 1. \
+     (ex: setting `$vertical_count` to 2 and `$horizontal_count` to 3 would create a 2x3 grid of raycasts). \
+`$center_count retina`: # of extra raycasts to run exactly aligned to the crosshair. Defaults to 0. \
+`$offset retina`: Angle of spacing (in degrees) between each raycast in a multi-raycast. Defaults to 5. \
 
-Randomization: <br/>
-`$spread_enabled_global retina`: Enables/disables random spread on ALL multi-raycasts. No effect on single raycasts. Defaults to 1. <br/>
-`$spread_enabled_local retina`: Enables/disables random spread on THIS raycast (single or multi!). Defaults to 0. <br/>
-`$spread_min retina` & `$spread_max retina`: Defaults to 10. <br/>
-     Single raycasts -> Min/max number of *degrees* to randomly offset this raycast. <br/>
-     Multi raycasts -> Min/max *multiplier* of `$offset retina`. 10–1 scale. (ie: 20 would mean a x2 multiplier) <br/>
+Randomization: \
+`$spread_enabled_global retina`: Enables/disables random spread on ALL multi-raycasts. No effect on single raycasts. Defaults to 1. \
+`$spread_enabled_local retina`: Enables/disables random spread on THIS raycast (single or multi!). Defaults to 0. \
+`$spread_min retina` & `$spread_max retina`: Defaults to 10. \
+     Single raycasts -> Min/max number of *degrees* to randomly offset this raycast. \
+     Multi raycasts -> Min/max *multiplier* of `$offset retina`. 10–1 scale. (ie: 20 would mean a x2 multiplier) \
 
-Visuals: (applies to all raycasts done by the *entity*) <br/>
-`<executing entity> retina.show_particle`: Enables/disables showing a particle at the *endpoint* of the raycast. <br/>
-`<executing entity> retina.show_particle`: Enables/disables showing a line of particles along the *path* of the raycast. <br/>
+Visuals: (applies to all raycasts done by the *entity*) \
+`<executing entity> retina.show_particle`: Enables/disables showing a particle at the *endpoint* of the raycast. \
+`<executing entity> retina.show_particle`: Enables/disables showing a line of particles along the *path* of the raycast. \
 
 ### Display particle
 
@@ -122,7 +122,7 @@ To add Retina to your data pack, copy the `retina` namespace folder to your own 
 
 Crediting is not required, but if you wish to credit me and Aeldrion nonetheless, you can do so with the following notice wherever you please:
 
-> Uses Retina by Nicoder (based off Iris by Aeldrion) \
+> Uses Retina by Nicoder (based off Iris and Random by Aeldrion) \
 > https://github.com/Nico314159/Retina \
 > https://github.com/Aeldrion/Iris \
 > https://twitter.com/Aeldrion
@@ -137,5 +137,5 @@ As an example of this, see [Banners on beds](https://www.planetminecraft.com/dat
 
 # How does it work?
 
-Since this will most likely be used mostly by other data pack nerds, [here](https://www.reddit.com/r/YAPms/comments/uh5y3n/since_roe_v_wade_might_get_overturned_here_are/) is a summary of how the original Iris operates.
+Since this will most likely be used mostly by other data pack nerds, [here](https://github.com/Aeldrion/Iris#how-does-it-work) is a summary of how the original Iris operates.
 Explaining how Retina's new functions operate is left as an exercise to the reader.
