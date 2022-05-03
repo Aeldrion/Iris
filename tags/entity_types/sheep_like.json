@@ -1,9 +1,0 @@
-{
-    "values": [
-		"minecraft:sheep",
-		{
-			"id": "minecraft:goat",
-			"required": false
-		}
-	]
-}
