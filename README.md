@@ -11,7 +11,7 @@ Also, keep in mind that the original Iris datapack is still in development and d
 
 ## Using Retina
 
-Retina provides four functions for other datapacks to make use of. Two of them, `retina:get_target` and `retina:set_coordinates`, are the same as in the original Iris ([see here]([bodges](https://en.wiktionary.org/wiki/bodge#Verb))), so I will exclude them for simplicity. The other two, `retina:run_raycast`, and `retina:display_particle` are new.
+Retina provides four functions for other datapacks to make use of. Two of them, `retina:get_target` and `retina:set_coordinates`, are the same as in the original Iris ([see here](https://github.com/Aeldrion/Iris#using-iris), so I will exclude them for simplicity. The other two, `retina:run_raycast`, and `retina:display_particle` are new.
 
 ### Run racyast
 
