@@ -24,8 +24,10 @@ execute as @a[nbt={SelectedItem:{id:"minecraft:bow"}}] run function retina:run_r
 
 This function is also highly versatile, using scoreboard information to determine the parameters of the raycast:
 
-`$vertical_count retina`: determines how many raycasts to run (default of 1)
-
+`$vertical_count retina`: determines how many raycasts to run with vertical offset. Defaults to 1.
+`$horizontal_count retina`: determines how many raycasts to run with horizontal offset. Defaults to 1.
+    (ex: setting `$vertical_count` to 2 and `$horizontal_count` to 3 would create a 2x3 grid of raycasts). 
+`$center_count retina`: determines how many extra raycasts 
 
 ### Display particle
 
