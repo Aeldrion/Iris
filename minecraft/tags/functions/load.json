@@ -1,7 +1,0 @@
-{
-	"values": [
-		"random:private/load", 
-		"retina_vdv/load", 
-		"retina:setup/load"
-	]
-}
