@@ -27,7 +27,7 @@ This function is also highly versatile, using scoreboard information to determin
 Basic parameters: <br/>
 `$vertical_count retina`: # of raycasts to run with vertical offset. Defaults to 1. <br/>
 `$horizontal_count retina`: # of raycasts to run with horizontal offset. Defaults to 1. <br/>
-    (ex: setting `$vertical_count` to 2 and `$horizontal_count` to 3 would create a 2x3 grid of raycasts). <br/>
+  (ex: setting `$vertical_count` to 2 and `$horizontal_count` to 3 would create a 2x3 grid of raycasts). <br/>
 `$center_count retina`: # of extra raycasts to run exactly aligned to the crosshair. Defaults to 0. <br/>
 `$offset retina`: Angle of spacing (in degrees) between each raycast in a multi-raycast. Defaults to 5. <br/>
 
@@ -35,8 +35,8 @@ Basic parameters: <br/>
 `$spread_enabled_global retina`: Enables/disables random spread on ALL multi-raycasts. No effect on single raycasts. Defaults to 1. <br/>
 `$spread_enabled_local retina`: Enables/disables random spread on THIS raycast (single or multi!). Defaults to 0. <br/>
 `$spread_min retina` & `$spread_max retina`: Defaults to 10. <br/>
-    Single raycasts -> Min/max number of *degrees* to randomly offset this raycast. <br/>
-    Multi raycasts -> Min/max *multiplier* of `$offset retina`. 10–1 scale. (ie: 20 would mean a x2 multiplier) <br/>
+  Single raycasts -> Min/max number of *degrees* to randomly offset this raycast. <br/>
+  Multi raycasts -> Min/max *multiplier* of `$offset retina`. 10–1 scale. (ie: 20 would mean a x2 multiplier) <br/>
 
 Visuals: (applies to all raycasts done by the *entity*) <br/>
 `<executing entity> retina.show_particle`: Enables/disables showing a particle at the *endpoint* of the raycast. <br/>
