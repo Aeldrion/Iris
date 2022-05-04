@@ -51,5 +51,5 @@ execute if score $horizontal_index retina >= $horizontal_count retina run scoreb
 execute if score $horizontal_index retina < $horizontal_count retina if score $vertical_index retina < $vertical_count retina run function retina:raycast/multicast/loop
 
 
-execute if score $horizontal_index retina >= $horizontal_count retina if score $vertical_index retina >= $vertical_count retina if score $center_count retina matches 1.. run scoreboard players set $center_index retina 0
-execute if score $horizontal_index retina >= $horizontal_count retina if score $vertical_index retina >= $vertical_count retina if score $center_count retina matches 1.. run function retina:raycast/multicast/center
+execute if score $vertical_index retina >= $vertical_count retina if score $center_count retina matches 1.. run scoreboard players set $center_index retina 0
+execute if score $vertical_index retina >= $vertical_count retina if score $center_count retina matches 1.. run function retina:raycast/multicast/center
