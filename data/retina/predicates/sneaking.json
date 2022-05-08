@@ -3,7 +3,7 @@
     "entity": "this",
 	"predicate": {
 		"flags": {
-			"is_sneaking": false
+			"is_sneaking": true
 		}
 	}
 }
