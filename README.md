@@ -1,8 +1,8 @@
 # Iris Raycasting
 
-**Iris** is a utility data pack for Minecraft: Java Edition 1.17+ designed to determine where a player is facing, with micrometric precision and taking into account unusual block geometries.
+**Iris** is a utility data pack for Minecraft: Java Edition 1.17+ designed to determine what block or entity the player is looking at, with micrometric precision and taking into account unusual block geometries.
 
-Iris is still in development and does not support all blocks and entities yet.
+Iris is still in development and does not yet support all blocks and entities.
 
 ---
 
@@ -38,7 +38,7 @@ effect give @e[type=minecraft:cow, tag=iris.target] minecraft:levitation 1 0
 
 ### Set coordinates
 
-The `iris:set_coordinates` function teleports the executing entity to the exact position where the ray lands.
+The `iris:set_coordinates` function teleports the executing entity to the exact position where the ray lands after running `iris:get_target`.
 
 ```mcfunction
 # Play a particle effect where the player is looking
@@ -114,14 +114,6 @@ Only exists if `Target` is `"BLOCK"` or `"ENTITY"`.
 ## How to
 
 To add Iris to your data pack, copy the `iris` namespace folder to your own data pack folder. Also copy the `minecraft` namespace folder or, if your pack uses the `#minecraft:load` function tag, make sure to include `iris:setup/load`.
-
-## Crediting
-
-Crediting is not required, but if you wish to credit me nonetheless, you can do so with the following notice wherever you please:
-
-> Uses Iris by Aeldrion \
-> https://github.com/Aeldrion/Iris \
-> https://twitter.com/Aeldrion
 
 ## Publishing modified versions of Iris
 
