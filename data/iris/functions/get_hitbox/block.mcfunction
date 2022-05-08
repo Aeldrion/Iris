@@ -19,7 +19,7 @@
 #		South: int[][]
 #			A list of rectangular surfaces facing south. Each surface is defined by six numbers, two sets of coordinates corresponding to opposite corners of the surface.
 
-execute store result score $block.is_cubic iris store result score $block.is_anvil iris store result score $block.is_attached_stem iris store result score $block.is_bed iris store result score $block.is_beetroots iris store result score $block.is_brewing_stand iris store result score $block.is_button iris store result score $block.is_cactus iris store result score $block.is_campfire iris store result score $block.is_carpet iris store result score $block.is_cauldron iris store result score $block.is_chest iris store result score $block.is_composter iris store result score $block.is_conduit iris store result score $block.is_door iris store result score $block.is_farmland iris store result score $block.is_fence iris store result score $block.is_fence_gate iris store result score $block.is_grass iris store result score $block.is_mushroom iris store result score $block.is_pressure_plate iris store result score $block.is_saplings iris store result score $block.is_slab iris store result score $block.is_special_rail iris store result score $block.is_stairs iris store result score $block.is_standing_sign_or_banner iris store result score $block.is_trapdoor iris store result score $block.is_wall iris store result score $block.is_wall_sign iris run scoreboard players set $block_found iris 0
+execute store result score $block.is_cubic iris store result score $block.is_anvil iris store result score $block.is_attached_stem iris store result score $block.is_bed iris store result score $block.is_beetroots iris store result score $block.is_brewing_stand iris store result score $block.is_button iris store result score $block.is_cactus iris store result score $block.is_campfire iris store result score $block.is_carpet iris store result score $block.is_cauldron iris store result score $block.is_chain iris store result score $block.is_chest iris store result score $block.is_composter iris store result score $block.is_conduit iris store result score $block.is_door iris store result score $block.is_farmland iris store result score $block.is_fence iris store result score $block.is_fence_gate iris store result score $block.is_grass iris store result score $block.is_iron_bars iris store result score $block.is_ladder iris store result score $is_lantern iris store result score $block.is_mushroom iris store result score $block.is_pressure_plate iris store result score $block.is_saplings iris store result score $block.is_slab iris store result score $block.is_special_rail iris store result score $block.is_sugar_cane iris store result score $block.is_stairs iris store result score $block.is_standing_sign_or_banner iris store result score $block.is_torch iris store result score $block.is_trapdoor iris store result score $block.is_wall iris store result score $block.is_wall_sign iris store result score $block.is_wall_torch iris run scoreboard players set $block_found iris 0
 
 # Anvils
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_anvil iris if block ~ ~ ~ #minecraft:anvil
@@ -61,6 +61,10 @@ execute if score $block.is_carpet iris matches 1 run function iris:get_hitbox/bl
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_cauldron iris if block ~ ~ ~ #minecraft:cauldrons
 execute if score $block.is_cauldron iris matches 1 run function iris:get_hitbox/block/cauldrons
 
+# Chains
+execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_chain iris if block ~ ~ ~ minecraft:chain
+execute if score $block.is_chain iris matches 1 run function iris:get_hitbox/block/chain
+
 # Chests, trapped chests
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_chest iris if block ~ ~ ~ #iris:chests
 execute if score $block.is_chest iris matches 1 run function iris:get_hitbox/block/chest
@@ -93,6 +97,18 @@ execute if score $block.is_fence_gate iris matches 1 run function iris:get_hitbo
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_grass iris if block ~ ~ ~ #iris:grass_shaped
 execute if score $block.is_grass iris matches 1 run function iris:get_hitbox/block/grass
 
+# Iron bars, glass panes
+execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_iron_bars iris if block ~ ~ ~ #iris:iron_bars_and_glass_panes
+execute if score $block.is_iron_bars iris matches 1 run function iris:get_hitbox/block/iron_bars
+
+# Ladders
+execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_ladder iris if block ~ ~ ~ minecraft:ladder
+execute if score $block.is_ladder iris matches 1 run function iris:get_hitbox/block/ladders
+
+# Lanterns, soul lanterns
+execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_lantern iris if block ~ ~ ~ #iris:lanterns
+execute if score $block.is_lantern iris matches 1 run function iris:get_hitbox/block/lanterns
+
 # Brown mushrooms, red mushrooms, flower pots, potted plants
 execute if score $block.found iris matches 0 store success score $block_found iris store success score $block.is_mushroom iris if block ~ ~ ~ #iris:mushroom_shaped
 execute if score $block.is_mushroom iris matches 1 run function iris:get_hitbox/block/mushrooms
@@ -121,6 +137,14 @@ execute if score $block.is_special_rail iris matches 1 run function iris:get_hit
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_standing_sign_or_banner iris if block ~ ~ ~ #iris:standing_signs_and_banners
 execute if score $block.is_standing_sign_or_banner iris matches 1 run function iris:get_hitbox/block/standing_signs_and_banners
 
+# Sugar cane, tall seagrass
+execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_sugar_cane iris if block ~ ~ ~ #iris:sugar_cane_like
+execute if score $block.is_sugar_cane iris matches 1 run function iris:get_hitbox/block/sugar_cane
+
+# Torches, redstone torches, soul torches placed on the ground
+execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_torch iris if block ~ ~ ~ #iris:torches
+execute if score $block.is_torch iris matches 1 run function iris:get_hitbox/block/torches
+
 # Trapdoors
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_trapdoor iris if block ~ ~ ~ #minecraft:trapdoors
 execute if score $block.is_trapdoor iris matches 1 run function iris:get_hitbox/block/trapdoors
@@ -132,6 +156,11 @@ execute if score $block.is_wall iris matches 1 run function iris:get_hitbox/bloc
 # Wall signs
 execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_wall_sign iris if block ~ ~ ~ #minecraft:wall_signs
 execute if score $block.is_wall_sign iris matches 1 run function iris:get_hitbox/block/wall_signs
+
+
+# Wall torches, redstone torches, soul torches
+execute if score $block_found iris matches 0 store success score $block_found iris store success score $block.is_wall_torch iris if block ~ ~ ~ #iris:wall_torches
+execute if score $block.is_wall_torch iris matches 1 run function iris:get_hitbox/block/wall_torches
 
 # 1x1x1 cubic blocks (all other blocks)
 execute if score $block_found iris matches 0 store success score $block_found iris run scoreboard players set $block.is_cubic iris 1
