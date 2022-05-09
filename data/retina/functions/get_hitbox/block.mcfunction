@@ -19,7 +19,7 @@
 #		South: int[][]
 #			A list of rectangular surfaces facing south. Each surface is defined by six numbers, two sets of coordinates corresponding to opposite corners of the surface.
 
-execute store result score $block.is_cubic retina store result score $block.is_anvil retina store result score $block.is_attached_stem retina store result score $block.is_bed retina store result score $block.is_beetroots retina store result score $block.is_brewing_stand retina store result score $block.is_button retina store result score $block.is_cactus retina store result score $block.is_campfire retina store result score $block.is_carpet retina store result score $block.is_cauldron retina store result score $block.is_chest retina store result score $block.is_composter retina store result score $block.is_conduit retina store result score $block.is_door retina store result score $block.is_farmland retina store result score $block.is_fence retina store result score $block.is_fence_gate retina store result score $block.is_grass retina store result score $block.is_mushroom retina store result score $block.is_pressure_plate retina store result score $block.is_saplings retina store result score $block.is_slab retina store result score $block.is_special_rail retina store result score $block.is_stairs retina store result score $block.is_standing_sign_or_banner retina store result score $block.is_trapdoor retina store result score $block.is_wall retina store result score $block.is_wall_sign retina run scoreboard players set $block_found retina 0
+execute store result score $block.is_cubic retina store result score $block.is_anvil retina store result score $block.is_attached_stem retina store result score $block.is_bed retina store result score $block.is_beetroots retina store result score $block.is_brewing_stand retina store result score $block.is_button retina store result score $block.is_cactus retina store result score $block.is_campfire retina store result score $block.is_carpet retina store result score $block.is_cauldron retina store result score $block.is_chain retina store result score $block.is_chest retina store result score $block.is_composter retina store result score $block.is_conduit retina store result score $block.is_door retina store result score $block.is_farmland retina store result score $block.is_fence retina store result score $block.is_fence_gate retina store result score $block.is_grass retina store result score $block.is_iron_bars retina store result score $block.is_ladder retina store result score $is_lantern retina store result score $block.is_mushroom retina store result score $block.is_pressure_plate retina store result score $block.is_saplings retina store result score $block.is_slab retina store result score $block.is_special_rail retina store result score $block.is_sugar_cane retina store result score $block.is_stairs retina store result score $block.is_standing_sign_or_banner retina store result score $block.is_torch retina store result score $block.is_trapdoor retina store result score $block.is_wall retina store result score $block.is_wall_sign retina store result score $block.is_wall_torch retina run scoreboard players set $block_found retina 0
 
 # Anvils
 execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_anvil retina if block ~ ~ ~ #minecraft:anvil
@@ -61,6 +61,10 @@ execute if score $block.is_carpet retina matches 1 run function retina:get_hitbo
 execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_cauldron retina if block ~ ~ ~ #minecraft:cauldrons
 execute if score $block.is_cauldron retina matches 1 run function retina:get_hitbox/block/cauldrons
 
+# Chains
+execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_chain retina if block ~ ~ ~ minecraft:chain
+execute if score $block.is_chain retina matches 1 run function retina:get_hitbox/block/chain
+
 # Chests, trapped chests
 execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_chest retina if block ~ ~ ~ #retina:chests
 execute if score $block.is_chest retina matches 1 run function retina:get_hitbox/block/chest
@@ -93,6 +97,18 @@ execute if score $block.is_fence_gate retina matches 1 run function retina:get_h
 execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_grass retina if block ~ ~ ~ #retina:grass_shaped
 execute if score $block.is_grass retina matches 1 run function retina:get_hitbox/block/grass
 
+# Iron bars, glass panes
+execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_iron_bars retina if block ~ ~ ~ #retina:iron_bars_and_glass_panes
+execute if score $block.is_iron_bars retina matches 1 run function retina:get_hitbox/block/iron_bars
+
+# Ladders
+execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_ladder retina if block ~ ~ ~ minecraft:ladder
+execute if score $block.is_ladder retina matches 1 run function retina:get_hitbox/block/ladders
+
+# Lanterns, soul lanterns
+execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_lantern retina if block ~ ~ ~ #retina:lanterns
+execute if score $block.is_lantern retina matches 1 run function retina:get_hitbox/block/lanterns
+
 # Brown mushrooms, red mushrooms, flower pots, potted plants
 execute if score $block.found retina matches 0 store success score $block_found retina store success score $block.is_mushroom retina if block ~ ~ ~ #retina:mushroom_shaped
 execute if score $block.is_mushroom retina matches 1 run function retina:get_hitbox/block/mushrooms
@@ -121,6 +137,14 @@ execute if score $block.is_special_rail retina matches 1 run function retina:get
 execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_standing_sign_or_banner retina if block ~ ~ ~ #retina:standing_signs_and_banners
 execute if score $block.is_standing_sign_or_banner retina matches 1 run function retina:get_hitbox/block/standing_signs_and_banners
 
+# Sugar cane, tall seagrass
+execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_sugar_cane retina if block ~ ~ ~ #retina:sugar_cane_like
+execute if score $block.is_sugar_cane retina matches 1 run function retina:get_hitbox/block/sugar_cane
+
+# Torches, redstone torches, soul torches placed on the ground
+execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_torch retina if block ~ ~ ~ #retina:torches
+execute if score $block.is_torch retina matches 1 run function retina:get_hitbox/block/torches
+
 # Trapdoors
 execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_trapdoor retina if block ~ ~ ~ #minecraft:trapdoors
 execute if score $block.is_trapdoor retina matches 1 run function retina:get_hitbox/block/trapdoors
@@ -132,6 +156,11 @@ execute if score $block.is_wall retina matches 1 run function retina:get_hitbox/
 # Wall signs
 execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_wall_sign retina if block ~ ~ ~ #minecraft:wall_signs
 execute if score $block.is_wall_sign retina matches 1 run function retina:get_hitbox/block/wall_signs
+
+
+# Wall torches, redstone torches, soul torches
+execute if score $block_found retina matches 0 store success score $block_found retina store success score $block.is_wall_torch retina if block ~ ~ ~ #retina:wall_torches
+execute if score $block.is_wall_torch retina matches 1 run function retina:get_hitbox/block/wall_torches
 
 # 1x1x1 cubic blocks (all other blocks)
 execute if score $block_found retina matches 0 store success score $block_found retina run scoreboard players set $block.is_cubic retina 1
