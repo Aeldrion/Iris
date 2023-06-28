@@ -1,7 +1,8 @@
 #> iris:get_target
 #
 # Returns the position of the block targeted
-# To tell where a player is looking, anchoring to the eye position is needed: execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target_block
+# To tell where a player is looking, anchoring to the eye position is needed: execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
+# Targeted block/entity information is sent to storage (see output below) but a marker with tag 'iris.ray' is also present in the targeted block after running this function
 #
 # @public
 # @context a position and a rotation
@@ -48,11 +49,11 @@ scoreboard players set $ray_hits_block iris 0
 scoreboard players set $ray_hits_entity iris 0
 scoreboard players set $ray_hits_surface iris 0
 
-# Get coordinates and rotation of the initial position
-function iris:get_coordinates/main
-summon minecraft:marker ~ ~ ~ {Tags: ["iris", "iris.ray"]}
+# Get initial position/rotation
+execute summon minecraft:marker at @s run function iris:get_coordinates/main
 
 # Start the loop
+summon minecraft:marker ~ ~ ~ {Tags: ["iris", "iris.ray"]}
 tag @s add iris.executing
 execute store result score $max_depth iris run data get storage iris:input MaxRecursionDepth
 execute as @e[type=minecraft:marker, tag=iris.ray] at @s run function iris:raycast/loop

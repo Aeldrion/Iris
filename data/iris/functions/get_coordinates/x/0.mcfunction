@@ -4,7 +4,7 @@
 # It is not possible to retrieve position with high precision with only a few commands due to overflows. This method compares the executing position - aligned to the block grid - to the executing entity
 #
 # @context a marker entity, and its position after alignment to the x axis
-# @within iris:get_coordinates/as_marker
+# @within iris:get_coordinates/main
 
 execute store success score $get_coordinates.within_524288 iris if entity @s[distance=..0.524288]
 
