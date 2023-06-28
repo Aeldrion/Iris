@@ -2,9 +2,13 @@
 
 **Iris** is a utility data pack for Minecraft: Java Edition 1.17+ designed to determine what block or entity the player is looking at, with micrometric precision and taking into account unusual block geometries.
 
-Iris is still in development and does not yet support all blocks and entities.
+## Top 5 reasons you shouldn't be using Iris right now (Number 3 will surprise you)
 
----
+1. It is work in progress and heavy refactoring should be common
+2. There's a ton of optimizations I have yet left to make
+3. Far from all blocks are supported at the moment
+4. What's Iris anyway, isn't that a shader thing
+5. I don't even know how well it works in 1.20
 
 # How to use
 
