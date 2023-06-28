@@ -1,0 +1,12 @@
+{
+    "values": [
+        "#minecraft:fences",
+        "#minecraft:fence_gates",
+        "#iris:grass_shaped",
+        "#iris:iron_bars_and_glass_panes",
+        "minecraft:ladder",
+        "#iris:lanterns",
+        "#iris:mushroom_shaped",
+        "#minecraft:pressure_plates"
+    ]
+}

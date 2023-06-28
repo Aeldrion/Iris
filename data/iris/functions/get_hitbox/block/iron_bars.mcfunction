@@ -1,6 +1,6 @@
 #> iris:get_hitbox/block/iron_bars
 #
-# @within iris:get_hitbox/block
+# @within iris:get_hitbox/block/tree/2
 
 data modify storage iris:data Surfaces set value {Top: [[437500, 1000000, 437500, 562500, 1000000, 562500]], Bottom: [[437500, 0, 437500, 562500, 0, 562500]], West: [[437500, 0, 437500, 437500, 1000000, 562500]], East: [[562500, 0, 437500, 562500, 1000000, 562500]], south: [[437500, 0, 437500, 562500, 1000000, 437500]], South: [[437500, 0, 562500, 562500, 1000000, 562500]]}
 

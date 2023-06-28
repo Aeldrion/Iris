@@ -1,6 +1,6 @@
 #> iris:get_hitbox/block/beetroots
 #
-# @within iris:get_hitbox/block
+# @within iris:get_hitbox/block/tree/0
 
 execute if block ~ ~ ~ minecraft:beetroots[age=0] run data modify storage iris:data Surfaces set value {Top: [[0, 125000, 0, 1000000, 125000, 1000000]], Bottom: [[0, 0, 0, 1000000, 0, 1000000]], West: [[0, 0, 0, 0, 125000, 1000000]], East: [[1000000, 0, 0, 1000000, 125000, 1000000]], North: [[0, 0, 0, 1000000, 125000, 0]], South: [[0, 0, 1000000, 1000000, 125000, 1000000]]}
 execute if block ~ ~ ~ minecraft:beetroots[age=1] run data modify storage iris:data Surfaces set value {Top: [[0, 250000, 0, 1000000, 250000, 1000000]], Bottom: [[0, 0, 0, 1000000, 0, 1000000]], West: [[0, 0, 0, 0, 250000, 1000000]], East: [[1000000, 0, 0, 1000000, 250000, 1000000]], North: [[0, 0, 0, 1000000, 250000, 0]], South: [[0, 0, 1000000, 1000000, 250000, 1000000]]}

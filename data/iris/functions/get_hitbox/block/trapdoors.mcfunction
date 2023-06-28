@@ -1,6 +1,6 @@
 #> iris:get_hitbox/block/trapdoors
 #
-# @within iris:get_hitbox/block
+# @within iris:get_hitbox/block/tree/3
 
 # open=false
 execute if block ~ ~ ~ #minecraft:trapdoors[half=bottom, open=false] run data modify storage iris:data Surfaces set value {Top: [[0, 187500, 0, 1000000, 187500, 1000000]], Bottom: [[0, 0, 0, 1000000, 0, 1000000]], West: [[0, 0, 0, 0, 187500, 1000000]], East: [[1000000, 0, 0, 1000000, 187500, 1000000]], North: [[0, 0, 0, 1000000, 187500, 0]], South: [[0, 0, 1000000, 1000000, 187500, 1000000]]}
