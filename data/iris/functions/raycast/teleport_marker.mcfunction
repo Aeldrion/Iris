@@ -6,12 +6,8 @@
 # @within iris:raycast/loop
 # @context a marker
 # @input
-#	score $[x] iris
-#		The integer x coordinate
-#	score $[y] iris
-#		The integer y coordinate
-#	score $[z] iris
-#		The integer z coordinate
+#   score $[x] iris
+#       The next x coordinate (likewise for y, z)
 
 # Save to storage
 data modify storage iris:data EntityTag.Pos set value [0.0d, 0.0d, 0.0d]
