@@ -1,24 +1,22 @@
 # Iris Raycasting
 
-**Iris** is a utility data pack for Minecraft: Java Edition 1.17+ designed to determine what block or entity the player is looking at, with micrometric precision and taking into account unusual block geometries.
+**Iris** is a work-in-progress utility data pack for Minecraft: Java Edition 1.20.3+ designed to determine what block or entity a player is looking at, with micrometric precision and taking into account individual block geometries.
 
-## Top 5 reasons you shouldn't be using Iris right now (Number 3 will surprise you)
+## Building
 
-1. It is work in progress and heavy refactoring should be common
-2. There's a ton of optimizations I have yet left to make
-3. Far from all blocks are supported at the moment
-4. What's Iris anyway, isn't that a shader thing
-5. I don't even know how well it works in 1.20
+The `gen_files.py` script in the `build` folder can be used to generate functions and block tags for block hitboxes, using block data pulled from [ArticData](https://github.com/Articdive/ArticData). Generated files are created in the `generated` folder and should be merged with the rest of the data pack.
 
-# How to use
+Working versions of Iris (with everything built) will be made available in GitHub releases.
 
 ## Using Iris
 
-Iris provides two functions for other data packs to use: `iris:get_target` and `iris:set_coordinates`.
+/!\ Note that **Iris is currently unreleased**. Some features are not properly tested out and some features are not yet deployed. Packaging Iris in your data packs is not recommended as it may not be fully compatible with eventual releases.
 
-### Get target
+Iris provides two functions for other data packs to use: `iris:get_target` and `iris_set_coordinates`.
 
-The `iris:get_target` function casts a ray from the current position, oriented with the current rotation, and returns coordinates of the block or entity that is found. To tell where a player is facing, anchoring to the eye position is needed:
+### `iris:get_target`
+
+Casts a ray from the current position, oriented with the current rotation, and returns coordinates of the block or entity that is found. To tell where a player is facing, anchoring to the eye position is needed:
 
 ```mcfunction
 execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
@@ -40,103 +38,46 @@ execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_t
 effect give @e[type=minecraft:cow, tag=iris.target] minecraft:levitation 1 0
 ```
 
-### Set coordinates
+Settings of the function can be modified in the `iris:settings` storage:
 
-The `iris:set_coordinates` function teleports the executing entity to the exact position where the ray lands after running `iris:get_target`.
+| Tag                 | Description                                         | Default value |
+|---------------------|-----------------------------------------------------|---------------|
+| `MaxRecursionDepth` | How many blocks to traverse before giving up        | 16            |
+| `TargetEntities`    | Whether or not to look for collisions with entities | `false`       |
+| `Blacklist`         | Which blocks to ignore during block traversal       | `"#iris:air"` |
+
+Return and success values and exact storage output of the function are further documented in the header of the function itself (`data/iris/functions/get_target.mcfunction`).
+
+### `iris:set_coordinates`
+
+Teleports the executing entity to a position provided by six scores on the `iris` objective: `$[x]`, `$[y]`, `$[z]` for integer coordinates, `${x}`, `${y}`, `${z}` for fractional coordinates (with a scale of 1,000,000). After running `iris:get_target`, the six scores are set to the exact position where the ray lands and so `iris:get_target` and `iris:set_coordinates` can easily be used in conjunction:
 
 ```mcfunction
-# Play a particle effect where the player is looking
+# Teleport the player where they are looking
 execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
-execute as @e[type=minecraft:marker, tag=iris.ray] run function iris:set_coordinates
-execute at @e[type=minecraft:marker, tag=iris.ray] run particle minecraft:flame
+execute as <player> run function iris:set_coordinates
 ```
 
-## Settings
 
-### Target entities
+## Including Iris in your data pack
 
-By default, the ray will ignore entities and will only attempt to find blocks. If you want to account for entities the player might be looking at, set `TargetEntities` to `true` (`1b`):
+To include Iris in your own data pack:
+- Copy the `iris` folder and its contents in the `data` folder of your data pack
+- Make sure the `#minecraft:load` function tag includes `iris:setup/load`
 
-```mcfunction
-data modify storage iris:input TargetEntities set value true
-```
+If you are redistributing modified versions of Iris as a part of your own data packs, it is recommended to change the `iris` namespace to avoid conflicts with other data packs using Iris. To do so, you may simply rename the `iris` folder to e.g. `iris_mypack` and every instance of `iris` in the contents of data pack files to `iris_mypack` (including storage names, objectives, entity tags...)
 
-If `TargetEntities` is true, the ray will stop if it hits an entity. Entities through which a block can be placed are ignored. For example, mobs, minecarts or falling blocks may be detected, but items and arrows are ignored. The executing entity itself is ignored as well.
-
-### Maximum recursion depth
-
-By default, the ray will traverse up to 16 blocks and give up if no block or entity is found. This limit can be modified by changing the value of `MaxRecursionDepth`:
-
-```mcfunction
-data modify storage iris:input MaxRecursionDepth set value 40
-```
-
-Values under 10 may fail to detect blocks that are within arm reach of the player.
-
-## Output
-
-Below is a list of all the information that Iris will save to storage every time `iris:get_target` is executed.
-
-### Target
-
-`Target` is a string that indicates what the ray hits. Set to `"BLOCK"` if a block is found, `"ENTITY"` if an entity is found, `"NONE"` if the maximum recursion depth is reached without finding a block or an entity.
-
-### Distance
-
-`Distance` is a double corresponding to the distance the ray needs to travel before hitting a solid surface. Distance is also stored to the `$total_distance iris` score with a scale of 1,000,000.
-Only exists if `Target` is `"BLOCK"` or `"ENTITY"`.
-
-### Targeted block
-
-`TargetedBlock` is a list of three integers, corresponding to the world coordinates of the block that the ray hits.
-Only exists if `Target` is `"BLOCK"`.
-
-### Targeted entity
-
-`TargetedEntity` is an array of four integers, corresponding to the UUID of the entity that the ray hits.
-Only exists if `Target` is `"ENTITY"`.
-
-### Placed position
-
-`PlacedPosition` is a list of three integers, corresponding to the world coordinates of the block the ray was in before entering the tile it hit. In other words, if a player were to place a block, this is the position where the block would be placed, unless the player is placing a block behind them (e.g. placing a block against a climbed ladder).
-Only exists if `Target` is `"BLOCK"`.
-
-### Contact coordinates
-
-`ContactCoordinates` is a list of three doubles between 0.0 and 1.0d, corresponding to the coordinates where the ray hits. Origin is the West, North, bottom corner of the 1x1x1 tile that is hit.
-Only exists if `Target` is `"BLOCK"` or `"ENTITY"`.
-
-### Contact surface
-
-`ContactSurface` is a list of six doubles between 0.0d and 1.0d. The first three numbers and the last three numbers are the coordinates of two opposite corners of the surface area the ray hits. Origin is the West, North, bottom corner of the 1x1x1 tile that is hit.
-Only exists if `Target` is `"BLOCK"` or `"ENTITY"`.
-
----
-
-# Including Iris in your data pack
-
-## How to
-
-To add Iris to your data pack, copy the `iris` namespace folder to your own data pack folder. Also copy the `minecraft` namespace folder or, if your pack uses the `#minecraft:load` function tag, make sure to include `iris:setup/load`.
-
-## Publishing modified versions of Iris
-
-You are free to redistribute Iris or modified versions of Iris as a part of your own data packs. The latter can be useful, for example, if you want to detect where one specific block is being placed and want to avoid running unnecessary commands when raycasting. However, since multiple data packs might be using Iris on the same world, it is recommended to distribute modified versions of Iris with a modified namespace as well (e.g. `iris_mypack`) to avoid conflicts with other data packs. You can do so by replacing all occurrences of `iris:` with `iris_mypack:` in the data pack using a code editor's "Replace in folder" feature for example, then renaming the `iris` namespace folder to `iris_mypack`.
-
-As an example of how to make a data pack with a modified version of Iris, see [Banners on beds](https://www.planetminecraft.com/data-pack/banners-on-beds/). Some functions were modified to remove unnecessary checks, and the `iris` namespace was replaced with `iris_bob`.
-
----
-
-# How does it work?
+## How it works
 
 Since this will most likely be used mostly by other data pack nerds, here is a summary of how Iris operates.
 
-## Getting the coordinates/rotation
+### Getting the coordinates/rotation
 
-`execute store` can be used to get an entity's position, however any scale over 70 is unusable for X and Z coordinates due to overflowing. To get the current position with enough detail, a marker is summoned and multiple distance checks from the edge of the current block are done using `align x` and `align z`.
+`execute store` can be used to get an entity's position, however any scale over 70 is unusable for X and Z coordinates due to overflowing. To get the current position with enough detail, string manipulation is done with macro functions to cut and read everything past the decimal point in any position coordinate. From then on, the starting position is saved as six scores: the integer part (`$[x]`, `$[y]`, `$[z]`) and the fractional part (`${x}`, `${y}`, `${z}`).
+
+
 To get the rotation, a marker is summoned 1,000,000 blocks forward starting from `0.0`, `0.0`, `0.0` using the executing rotation. The marker's position is a steering vector that can be used in later calculations.
 
-## Raycasting
+### Raycasting
 
-The data pack solves simple linear equations to figure out which tile it hits next (ray/surface intersection), instead of progressing by a fixed length at every iteration like most raycasting functions do. Upon hitting a block other than air (or an entity, if `TargetEntities` is true), it gets a list of its collision surfaces and again checks which ones it hits. Some of these surfaces might not be candidates at all, for example if the ray is going North but the surface can only be hit from the South.
-The raycasting function recursively calls itself for every new block it enters, until a surface is hit or until the maximum depth is reached.
+The data pack solves simple linear equations to figure out which tile it hits next (ray/plane intersections), instead of progressing by a fixed length at every iteration like most raycasting functions do. Upon hitting a block other than air (or an entity, if `TargetEntities` is true), it gets its shape as a list of axis-aligned bounding boxes (AABB) and checks which faces it hits. For every AABB, there are three surfaces to check, and the three others (back-faces) are culled.
