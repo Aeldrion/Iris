@@ -6,20 +6,21 @@
 # @within iris:get_target
 # @within iris:raycast/loop
 
-# See if there is a non transparent block or an entity at the current position
-execute at @s unless block ~ ~ ~ #iris:air run function iris:raycast/on_block_found
-execute at @s if data storage iris:input {TargetEntities: true} if entity @e[type=!#iris:ignore, tag=!iris.executing, dx=0, dy=0, dz=0] run function iris:raycast/on_entity_found
+# Test for collisions
+execute store success score $block_hit iris store result score $block_distance iris run function iris:raycast/test_for_block
+execute store success score $entity_hit iris store result score $entity_distance iris run function iris:raycast/test_for_entity
+execute if score $block_hit iris matches 1 run return run function iris:raycast/on_hit
+execute if score $entity_hit iris matches 1 run return run function iris:raycast/on_hit
 
-# If the ray hit something, break the loop and return relevant information
-execute if score $ray_hits_block iris matches 1 run function iris:raycast/hit_block
-execute if score $ray_hits_entity iris matches 1 run function iris:raycast/hit_entity
-data remove storage iris:data Surfaces
+# Proceed to the next block
+execute store result score $to_next_block iris run function iris:raycast/find_next_block
+scoreboard players operation $total_distance iris += $to_next_block iris
+function iris:raycast/teleport_marker
 
-# Otherwise, proceed to the next block
-execute unless score $ray_hits_block iris matches 1 unless score $ray_hits_entity iris matches 1 run function iris:find_next_block/main
-execute unless score $ray_hits_block iris matches 1 unless score $ray_hits_entity iris matches 1 run function iris:raycast/teleport_marker
-
-# Loop this function, if the maximum recursion depth has not been reached yet
+# Loop this function until a collision happens or the maximum recursion depth is reached
 scoreboard players add $depth iris 1
-execute if score $depth iris < $max_depth iris at @s run function iris:raycast/loop
-execute if score $depth iris = $max_depth iris run scoreboard players reset $total_distance iris
+execute if score $depth iris < $max_depth iris at @s run return run function iris:raycast/loop
+
+# If nothing was found, fail
+tag @s remove iris.executing
+return fail

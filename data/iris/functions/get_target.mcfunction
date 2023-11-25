@@ -5,56 +5,60 @@
 # Targeted block/entity information is sent to storage (see output below) but a marker with tag 'iris.ray' is also present in the targeted block after running this function
 #
 # @public
-# @context a position and a rotation
-# @input
-#	storage iris:input
-#		TargetEntities: byte
-#			Whether or not to look for entities. Defaults to false.
-#		MaxRecursionDepth: int
-#			How many blocks to traverse before giving up. Defaults to 16.
+# @context an entity, their eye position, and their rotation
+# @reads
+#   storage iris:settings
+#       TargetEntities: byte
+#           Whether or not to look for entities
+#           Defaults to false
+#       MaxRecursionDepth: int
+#           How many blocks to traverse before giving up
+#           Defaults to 16
+#       Blacklist: string
+#           A block or a block tag to ignore
+#           Defaults to "#iris:air"
+# @writes
+#   storage iris:output
+#       TargetType: string
+#           What the ray hits
+#           One of "BLOCK", "ENTITY", or "NONE"
+#       TargetedBlock: int[]
+#           The integer coordinates of the block that is hit
+#           Corresponds to the "Targeted Block" field in the debug screen
+#           Unset if the ray hits an entity or if no block is found
+#       TargetedEntity: int
+#           The ID of the targeted entity on objective iris.entity_id
+#           The entity executing this function cannot be targeted
+#           Unset if the ray first hits a block or if no entity is found
+#       Distance: double
+#           How long the ray travels before hitting an obstacle
+#           Unset if no block or entity is found
+#   score $total_distance iris
+#       The distance (in µm) travelled by the ray before it hits a block
+#       Unset if no block or entity is found
 # @output
-#	score $total_distance iris
-#		The distance travelled by the ray before it hits a block. 1,000,000 corresponds to one block. Unset if the maximum recursion depth is reached (i.e. if the ray travels at least 20 blocks).
-#	storage iris:output
-#		Target: string
-#			"BLOCK" if the ray hits a block, "ENTITY" if the ray hits an entity, "NONE" if the ray hits nothing.
-#		Distance: double
-#			How long the ray travels before hitting an obstacle.
-#		TargetedBlock: int[]
-#			The integer coordinates of the block that the ray finds itself in when it hits something (i.e. the "targeted block"). Unset if the ray hits an entity or if no block is found.
-#		TargetedEntity.Pos: float[]
-#			The position of the targeted entity. Unset if the ray hits a block or if no entity is found.
-#		TargetedEntity.UUID: int[]
-#			The UUID of the targeted entity. Unset if the ray hits a block or if no entity is found.
-#		ContactSurface: double[]
-#			The surface of the block or entity the ray hits (six coordinates between 0 and 1000000, where 0 0 0 and 1000000 1000000 1000000 are opposite corners of the block). Unset if no block or entity is found.
-#		ContactCoordinates: double[]
-#			The exact position where the ray hits something within the targeted block (three coordinates between 0 and 1000000, where 0 0 0 and 1000000 1000000 1000000 are opposite corners of the block). Unset if no block or entity is found.
-#		PlacingPosition: int[]
-#			The integer coordinates of the block before the ray hits something (i.e. where a block would be placed, if a player were to place a block). Unset if the ray hits an entity or if no block is found.
+#   Result: The distance (in blocks, rounded up) before an obstacle is hit, 0 if no block or entity is found
+#   Success: 1 if a block or entity was hit, 0 otherwise
 
 # Reset tags, scores and storage
 kill @e[type=minecraft:marker, tag=iris.ray]
 tag @e[type=!#iris:ignore] remove iris.target
-data modify storage iris:output Target set value "NONE"
-data remove storage iris:output Distance
+
+data modify storage iris:output TargetType set value "NONE"
 data remove storage iris:output TargetedBlock
 data remove storage iris:output TargetedEntity
-data remove storage iris:output ContactSurface
-data remove storage iris:output ContactCoordinates
-data remove storage iris:output PlacingPosition
+data remove storage iris:output Distance
+
 scoreboard players set $depth iris 0
+scoreboard players set $min_distance iris 2147483647
+scoreboard players set $max_entity_id iris 0
 scoreboard players set $total_distance iris 0
-scoreboard players set $ray_hits_block iris 0
-scoreboard players set $ray_hits_entity iris 0
-scoreboard players set $ray_hits_surface iris 0
 
 # Get initial position/rotation
-execute summon minecraft:marker at @s run function iris:get_coordinates/main
+execute summon minecraft:marker run function iris:get_coordinates/main
 
 # Start the loop
 summon minecraft:marker ~ ~ ~ {Tags: ["iris", "iris.ray"]}
 tag @s add iris.executing
-execute store result score $max_depth iris run data get storage iris:input MaxRecursionDepth
-execute as @e[type=minecraft:marker, tag=iris.ray] at @s run function iris:raycast/loop
-tag @s remove iris.executing
+execute store result score $max_depth iris run data get storage iris:settings MaxRecursionDepth
+execute as @e[type=minecraft:marker, tag=iris.ray] at @s run return run function iris:raycast/loop
