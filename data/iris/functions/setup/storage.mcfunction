@@ -1,10 +1,13 @@
 #> iris:setup/storage
 #
-# @context any
+# Sets up storage for Iris
+#
 # @within iris:setup/load
-# @writes
-#	storage iris:data
-#		is_setup: bool Whether storage has already been setup
 
 data merge storage iris:data {is_setup: 1b}
-data merge storage iris:input {TargetEntities: false, MaxRecursionDepth: 16}
+
+# Set default settings
+data merge storage iris:settings {\
+    TargetEntities: false,\
+    MaxRecursionDepth: 16\
+}
