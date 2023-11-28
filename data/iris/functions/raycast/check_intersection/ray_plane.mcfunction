@@ -31,7 +31,8 @@ execute if data storage iris:data {SurfaceDirection: "UP_DOWN"} if score ${y} ir
 execute if data storage iris:data {SurfaceDirection: "NORTH_SOUTH"} if score ${z} iris = $z0 iris if score ${x} iris >= $x0 iris if score ${x} iris <= $x1 iris if score ${y} iris >= $y0 iris if score ${y} iris <= $y1 iris run return 0
 
 # If it is not, see where the intersection between the plane and the ray would be
-    # Get distance to the plane, i.e. how long the ray should extend before it hits the ray
+    # Get distance (in mm) to the plane, i.e. how long the ray should extend before it hits the plane
+    # This value should be at most sqrt(3)*1000; if it's more than 2000, we fail (otherwise we risk overflow errors)
 execute if data storage iris:data {SurfaceDirection: "WEST_EAST"} run scoreboard players operation $distance iris = $x0 iris
 execute if data storage iris:data {SurfaceDirection: "WEST_EAST"} run scoreboard players operation $distance iris -= ${x} iris
 execute if data storage iris:data {SurfaceDirection: "UP_DOWN"} run scoreboard players operation $distance iris = $y0 iris
@@ -43,6 +44,7 @@ execute if data storage iris:data {SurfaceDirection: "WEST_EAST"} run scoreboard
 execute if data storage iris:data {SurfaceDirection: "UP_DOWN"} run scoreboard players operation $distance iris /= $dy iris
 execute if data storage iris:data {SurfaceDirection: "NORTH_SOUTH"} run scoreboard players operation $distance iris /= $dz iris
 execute if score $distance iris matches ..-1 run return fail
+execute if score $distance iris matches 2000.. run return fail
 
     # Get x position of the ray/plane intersection
 scoreboard players operation $x_intersection iris = $distance iris
