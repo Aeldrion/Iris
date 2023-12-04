@@ -1,0 +1,14 @@
+{
+    "values": [
+        "minecraft:creeper",
+        "minecraft:dolphin",
+        "minecraft:donkey",
+        "minecraft:elder_guardian",
+        "minecraft:end_crystal",
+        "minecraft:enderman",
+        "#iris:endermite_like",
+        "#iris:falling_block_like",
+        "minecraft:ghast",
+        "minecraft:giant"
+    ]
+}

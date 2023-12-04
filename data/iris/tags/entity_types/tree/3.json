@@ -1,0 +1,14 @@
+{
+    "values": [
+        "minecraft:pufferfish",
+        "#iris:player_like",
+        "minecraft:polar_bear",
+        "minecraft:rabbit",
+        "minecraft:ravager",
+        "minecraft:salmon",
+        "#iris:sheep_like",
+        "minecraft:shulker",
+        "minecraft:skeleton",
+        "#iris:slime_like"
+    ]
+}

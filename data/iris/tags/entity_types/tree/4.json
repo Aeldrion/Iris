@@ -1,0 +1,15 @@
+{
+    "values": [
+        "minecraft:snow_golem",
+        "minecraft:strider",
+        "#iris:squids",
+        "minecraft:spider",
+        "minecraft:tropical_fish",
+        "minecraft:turtle",
+        "minecraft:vex",
+        "minecraft:wither",
+        "minecraft:wither_skeleton",
+        "minecraft:wolf",
+        "#iris:zombie_like"
+    ]
+}

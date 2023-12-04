@@ -10,6 +10,7 @@
 #           Every surface is written as six coordinates, from one corner to the other. For example, the bottom of a shulker can be described as
 #           [0, 0, 0, 1000000, 0, 1000000]
 
+scoreboard players set $entity_found iris 0
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/0] run function iris:get_hitbox/entity/tree/0
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/1] run function iris:get_hitbox/entity/tree/1
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/2] run function iris:get_hitbox/entity/tree/2
@@ -71,13 +72,13 @@ scoreboard players operation $entity_z1 iris += $entity_half_width iris
 execute if score $entity_z1 iris matches 1000000.. run scoreboard players set $entity_z1 iris 1000000
 
 # Store these coordinates to storage
-data modify storage iris:data Shape append value {type: "ENTITY"}
-execute store result storage iris:data Shape[-1].min[0] float 0.000001 run scoreboard players get $entity_x0 iris
-execute store result storage iris:data Shape[-1].min[1] float 0.000001 run scoreboard players get $entity_y0 iris
-execute store result storage iris:data Shape[-1].min[2] float 0.000001 run scoreboard players get $entity_z0 iris
-execute store result storage iris:data Shape[-1].max[0] float 0.000001 run scoreboard players get $entity_x1 iris
-execute store result storage iris:data Shape[-1].max[1] float 0.000001 run scoreboard players get $entity_y1 iris
-execute store result storage iris:data Shape[-1].max[2] float 0.000001 run scoreboard players get $entity_z1 iris
+data modify storage iris:data Shape append value {type: "ENTITY", min: [0.0, 0.0, 0.0], max: [0.0, 0.0, 0.0]}
+execute store result storage iris:data Shape[-1].min[0] double 0.000001 run scoreboard players get $entity_x0 iris
+execute store result storage iris:data Shape[-1].min[1] double 0.000001 run scoreboard players get $entity_y0 iris
+execute store result storage iris:data Shape[-1].min[2] double 0.000001 run scoreboard players get $entity_z0 iris
+execute store result storage iris:data Shape[-1].max[0] double 0.000001 run scoreboard players get $entity_x1 iris
+execute store result storage iris:data Shape[-1].max[1] double 0.000001 run scoreboard players get $entity_y1 iris
+execute store result storage iris:data Shape[-1].max[2] double 0.000001 run scoreboard players get $entity_z1 iris
 
 # Special case for item frames and paintings which are annoying
 execute if score $entity_found iris matches 0 store success score $entity_found iris store success score $entity.is_item_frame iris if entity @s[type=#iris:item_frames]
