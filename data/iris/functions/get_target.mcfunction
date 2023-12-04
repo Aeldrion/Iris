@@ -10,13 +10,18 @@
 #   storage iris:settings
 #       TargetEntities: byte
 #           Whether or not to look for entities
-#           Defaults to false
+#           Defaults to false (0b)
 #       MaxRecursionDepth: int
 #           How many blocks to traverse before giving up
 #           Defaults to 16
 #       Blacklist: string
 #           A block or a block tag to ignore
 #           Defaults to "#iris:air"
+#           Should be reset if unused, not set to an empty string
+#       Whitelist: string
+#           A block or a block tag to look for (all other blocks are ignored)
+#           Unset by default
+#           Should be reset if unused, not set to an empty string
 # @writes
 #   storage iris:output
 #       TargetType: string
@@ -43,6 +48,7 @@
 # Reset tags, scores and storage
 kill @e[type=minecraft:marker, tag=iris.ray]
 tag @e[type=!#iris:ignore] remove iris.target
+scoreboard players reset * iris.id
 
 data modify storage iris:output TargetType set value "NONE"
 data remove storage iris:output TargetedBlock
