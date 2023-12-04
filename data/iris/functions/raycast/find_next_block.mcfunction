@@ -51,7 +51,7 @@ execute if score $to_next_z iris <= $to_next_x iris if score $to_next_z iris <= 
 execute if data storage iris:data {NextCoordinateChange: "x"} run data modify storage iris:args {} merge value {a: "x", b: "y", c: "z"}
 execute if data storage iris:data {NextCoordinateChange: "y"} run data modify storage iris:args {} merge value {a: "y", b: "z", c: "x"}
 execute if data storage iris:data {NextCoordinateChange: "z"} run data modify storage iris:args {} merge value {a: "z", b: "x", c: "y"}
-function iris:raycast/find_next_block_aux with storage iris:args
+function iris:raycast/macro_functions/find_next_block_aux with storage iris:args
 
 # Return the added distance
 return run scoreboard players operation $to_next_block iris *= $1000 iris
