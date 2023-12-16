@@ -6,7 +6,7 @@
 
 ## Building
 
-The `gen_files.py` script in the `build` folder can be used to generate functions and block tags for block hitboxes, using block data pulled from [ArticData](https://github.com/Articdive/ArticData). Generated files are created in the `generated` folder and should be merged with the rest of the data pack.
+The `gen_files.py` script in the `build` folder can be used to generate functions and block tags for block hitboxes, using block data pulled from [ArticData](https://github.com/Articdive/ArticData). The script should be executed directly in the root directory of this repository.
 
 Working versions of Iris (with everything built) will be made available in GitHub releases.
 

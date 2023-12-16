@@ -6,8 +6,8 @@ import json, os, sys
 
 LINK_LOCAL = "1_20_1_blocks.json"
 LINK_HTTPS = "https://raw.githubusercontent.com/Articdive/ArticData/1.20.1/1_20_1_blocks.json" #TODO replace this link with something more permanent and more up to date
-BLOCK_TAG_PATH = "generated/data/iris/tags/blocks"
-FUNCTION_PATH = "generated/data/iris/functions/get_hitbox"
+BLOCK_TAG_PATH = "data/iris/tags/blocks"
+FUNCTION_PATH = "data/iris/functions/get_hitbox"
 DIRS = [f"{BLOCK_TAG_PATH}/tree", f"{FUNCTION_PATH}/block/tree"]
 OVERRIDES = {"minecraft:grass": "minecraft:short_grass"} # A quick hack for outdated block info until I have something cleaner
 
@@ -151,14 +151,14 @@ if __name__ == "__main__":
         print(f"Writing commands to {function_file.name}")
 
         HEADER = """#> iris:get_hitbox/block
-        #
-        # Returns a list of surfaces of the current blockg
-        #
-        # @within iris:raycast/on_block_found
-        # @output
-        #	storage iris:data Shape: compound[]
-        #       A list of cuboids given by two corners in the format {min: [x, y, z], max: [x, y z]}
-        """
+#
+# Returns a list of surfaces of the current blockg
+#
+# @within iris:raycast/on_block_found
+# @output
+#	storage iris:data Shape: compound[]
+#       A list of cuboids given by two corners in the format {min: [x, y, z], max: [x, y z]}
+"""
 
         commands = []
         for i in range(PARTITION_SUBSETS):
