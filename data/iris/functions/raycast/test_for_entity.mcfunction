@@ -5,6 +5,6 @@
 #   Success: 1 if an entity was hit, 0 otherwise
 
 execute unless data storage iris:settings {TargetEntities: true} run return fail
-execute unless entity @e[type=!#iris:ignore, dx=0, dy=0, dz=0, tag=!iris.ray, tag=!iris.executing] run return fail
-execute as @e[type=!#iris:ignore, dx=0, dy=0, dz=0, tag=!iris.ray, tag=!iris.executing] run function iris:get_hitbox/entity
+execute align xyz unless entity @e[type=!#iris:ignore, dx=0, dy=0, dz=0, tag=!iris.executing] run return fail
+execute align xyz as @e[type=!#iris:ignore, dx=0, dy=0, dz=0, tag=!iris.executing] run function iris:get_hitbox/entity
 return run function iris:raycast/check_intersection/loop
