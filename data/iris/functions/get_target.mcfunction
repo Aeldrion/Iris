@@ -46,8 +46,9 @@
 #   Success: 1 if a block or entity was hit, 0 otherwise
 
 # Reset tags, scores and storage
-kill @e[type=minecraft:marker, tag=iris.ray]
-tag @e[type=!#iris:ignore] remove iris.target
+tag @e remove iris.targeted_entity
+tag @e remove iris.potential_target
+kill @e[type=minecraft:marker, tag=iris.targeted_block]
 scoreboard players reset * iris.id
 
 data modify storage iris:output TargetType set value "NONE"
@@ -64,7 +65,6 @@ scoreboard players set $total_distance iris 0
 execute summon minecraft:marker run function iris:get_coordinates/main
 
 # Start the loop
-summon minecraft:marker ~ ~ ~ {Tags: ["iris", "iris.ray"]}
 tag @s add iris.executing
 execute store result score $max_depth iris run data get storage iris:settings MaxRecursionDepth
-execute as @e[type=minecraft:marker, tag=iris.ray] at @s run return run function iris:raycast/loop
+return run function iris:raycast/loop

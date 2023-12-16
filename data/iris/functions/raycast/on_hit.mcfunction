@@ -17,7 +17,12 @@ execute if data storage iris:output {TargetType: "BLOCK"} run data modify storag
 execute if data storage iris:output {TargetType: "BLOCK"} store result storage iris:output TargetedBlock[0] int 1 run scoreboard players get $[x] iris
 execute if data storage iris:output {TargetType: "BLOCK"} store result storage iris:output TargetedBlock[1] int 1 run scoreboard players get $[y] iris
 execute if data storage iris:output {TargetType: "BLOCK"} store result storage iris:output TargetedBlock[2] int 1 run scoreboard players get $[z] iris
+execute if data storage iris:output {TargetType: "BLOCK"} align xyz run summon minecraft:marker ~0.5 ~0.5 ~0.5 {Tags: ["iris", "iris.targeted_block"]}
+
 execute if data storage iris:output {TargetType: "ENTITY"} run data modify storage iris:output TargetedEntity set from storage iris:data TargetedBox.entity_id
+execute if data storage iris:output {TargetType: "ENTITY"} store result score $entity_id iris run data get storage iris:output TargetedEntity
+execute if data storage iris:output {TargetType: "ENTITY"} as @e[tag=iris.possible_target] if score @s iris.id = $entity_id iris run tag @s add iris.targeted_entity
+tag @e remove iris.possible_target
 
 # Write total distance
 execute store result storage iris:output Distance double 0.000001 run scoreboard players get $total_distance iris
