@@ -131,18 +131,18 @@ if __name__ == "__main__":
     # Generate block tags and functions for faster shape group lookup
     groups_per_tag = - (-len(block_shape_groups) // PARTITION_SUBSETS)
     for i in range(PARTITION_SUBSETS):
-        tag_contents = []
+        tag_values = []
         commands = []
         for group in block_shape_groups[i*groups_per_tag : (i+1)*groups_per_tag]:
             if len(group) > 1:
                 repr = get_representative(group)
-                tag_contents.append(f"#iris:{repr}")
+                tag_values.append(f"#iris:{repr}")
                 commands.append(f"execute if block ~ ~ ~ #iris:{repr} run function iris:get_hitbox/block/{repr}")
             else:
-                tag_contents.append(group[0])
+                tag_values.append(group[0])
                 commands.append(f"execute if block ~ ~ ~ {group[0]} run function iris:get_hitbox/block/{get_representative(group)}")
         with open(f"{BLOCK_TAG_PATH}/tree/{i}.json", mode='w') as block_tag_file:
-            json.dump({"values": tag_contents}, block_tag_file, indent=4)
+            json.dump({"values": [{"id": value, "required": False} for value in tag_values]}, block_tag_file, indent=4)
         with open(f"{FUNCTION_PATH}/block/tree/{i}.mcfunction", mode='w') as function_file:
             function_file.write('\n'.join(commands))
 
