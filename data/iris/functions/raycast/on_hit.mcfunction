@@ -25,6 +25,8 @@ execute if data storage iris:output {TargetType: "ENTITY"} as @e[tag=iris.possib
 tag @e remove iris.possible_target
 
 # Write total distance
+execute if data storage iris:output {TargetType: "BLOCK"} run scoreboard players operation $total_distance iris += $block_distance iris
+execute if data storage iris:output {TargetType: "ENTITY"} run scoreboard players operation $total_distance iris += $entity_distance iris
 execute store result storage iris:output Distance double 0.000001 run scoreboard players get $total_distance iris
 
-return 1
+return run scoreboard players get $total_distance iris

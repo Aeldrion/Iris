@@ -26,4 +26,5 @@ execute if score $is_hit iris matches 1 run scoreboard players operation $min_di
 # Loop this function until all boxes have been analyzed
 execute if data storage iris:data Shape[-1] run return run function iris:raycast/check_intersection/loop
 execute if score $min_distance iris matches 2147483647 run return fail
+scoreboard players operation $min_distance iris *= $1000 iris
 return run scoreboard players get $min_distance iris
