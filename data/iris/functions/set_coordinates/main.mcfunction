@@ -13,6 +13,8 @@
 #   score ${x} iris
 #       The fractional value of the new X position, as a number between 0 and 1000000
 
+execute unless entity @s run return fail
+
 # Get integer coordinates for the first teleport command (absolute coordinates)
 execute store result storage iris:args x int 1 run scoreboard players get $[x] iris
 execute store result storage iris:args y int 1 run scoreboard players get $[y] iris
