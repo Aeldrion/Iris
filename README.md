@@ -86,7 +86,7 @@ execute at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
 execute if data storage iris:output {TargetType: "BLOCK"} at @e[type=minecraft:marker, tag=iris.targeted_block] run playsound minecraft:block.note_block.bell block
 ```
 
-```json
+```jsonc
 // data/mypack/tags/blocks/diamond_ores.json
 {
     "values": [
@@ -131,4 +131,7 @@ To get the rotation, a marker is summoned 1,000,000 blocks forward starting from
 ### Raycasting
 
 The data pack solves simple linear equations to figure out which tile it hits next (ray/plane intersections), instead of progressing by a fixed length at every iteration like most raycasting functions do. Upon hitting a block other than air (or an entity, if `TargetEntities` is true), it gets its shape as a list of axis-aligned bounding boxes (AABB) and checks which faces it hits. For every AABB, there are three surfaces to check, and the three others (back-faces) are culled.
-Block hitbox information is pulled from [ArticData](https://github.com/Articdive/ArticData).
+
+### Getting the hitbox of a block
+
+Block hitbox information is pulled from [ArticData](https://github.com/Articdive/ArticData). Blocks with the same set of block state properties and corresponding hitboxes are grouped together in block tags. Iris also accounts for the random horizontal offset on the hitbox of a few blocks, namely flowers, bamboo, and mangrove propagules.
