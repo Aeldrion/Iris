@@ -134,4 +134,4 @@ The data pack solves simple linear equations to figure out which tile it hits ne
 
 ### Getting the hitbox of a block
 
-Block hitbox information is pulled from [ArticData](https://github.com/Articdive/ArticData). Blocks with the same set of block state properties and corresponding hitboxes are grouped together in block tags. Iris also accounts for the random horizontal offset on the hitbox of a few blocks, namely flowers, bamboo, and mangrove propagules.
+Block hitbox information is pulled from [ArticData](https://github.com/Articdive/ArticData). Blocks with the same set of block state properties and corresponding hitboxes are grouped together in block tags. Iris also accounts for the random horizontal offset on the hitbox of a few blocks, namely flowers, bamboo, pointed dripstone, and mangrove propagules.
