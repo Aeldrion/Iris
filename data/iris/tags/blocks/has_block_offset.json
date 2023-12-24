@@ -1,7 +1,8 @@
 {
     "values": [
-        "#iris:allium",
+        "#iris:shape_groups/allium",
         "minecraft:mangrove_propagule",
-        "minecraft:pointed_dripstone"
+        "minecraft:pointed_dripstone",
+        "minecraft:bamboo"
     ]
 }
