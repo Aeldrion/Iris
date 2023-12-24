@@ -8,7 +8,7 @@ LINK_LOCAL = "1_20_1_blocks.json"
 LINK_HTTPS = "https://raw.githubusercontent.com/Articdive/ArticData/1.20.1/1_20_1_blocks.json" #TODO replace this link with something more permanent and more up to date
 BLOCK_TAG_PATH = "data/iris/tags/blocks"
 FUNCTION_PATH = "data/iris/functions/get_hitbox"
-DIRS = [f"{BLOCK_TAG_PATH}/tree", f"{FUNCTION_PATH}/block/tree"]
+DIRS = [f"{BLOCK_TAG_PATH}/tree", f"{BLOCK_TAG_PATH}/shape_groups", f"{FUNCTION_PATH}/block/tree"]
 OVERRIDES = {"minecraft:grass": "minecraft:short_grass"} # A quick hack for outdated block info until I have something cleaner
 
 ONLINE = True
@@ -99,13 +99,13 @@ if __name__ == "__main__":
             "id": OVERRIDES.get(id_) or id_,
             "required": False
         } for id_ in group]
-        with open(f"{BLOCK_TAG_PATH}/{get_representative(group)}.json", mode='w') as block_tag_file:
+        with open(f"{BLOCK_TAG_PATH}/shape_groups/{get_representative(group)}.json", mode='w') as block_tag_file:
             json.dump({"values": values}, block_tag_file, indent=4)
 
     # Generate function files for every shape group
     for group in block_shape_groups:
         namespaced_representative = group[0]
-        block_id = ("#iris:" + get_representative(group)) if len(group)>1 else namespaced_representative
+        block_id = ("#iris:shape_groups/" + get_representative(group)) if len(group)>1 else namespaced_representative
         mcfunction_file_path = f"{FUNCTION_PATH}/block/{get_representative(group)}.mcfunction"
         with open(mcfunction_file_path, mode='w') as mcfunction_file:
             for state in block_data[namespaced_representative]["states"]:
@@ -136,8 +136,8 @@ if __name__ == "__main__":
         for group in block_shape_groups[i*groups_per_tag : (i+1)*groups_per_tag]:
             if len(group) > 1:
                 repr = get_representative(group)
-                tag_values.append(f"#iris:{repr}")
-                commands.append(f"execute if block ~ ~ ~ #iris:{repr} run function iris:get_hitbox/block/{repr}")
+                tag_values.append(f"#iris:shape_groups/{repr}")
+                commands.append(f"execute if block ~ ~ ~ #iris:shape_groups/{repr} run function iris:get_hitbox/block/{repr}")
             else:
                 tag_values.append(group[0])
                 commands.append(f"execute if block ~ ~ ~ {group[0]} run function iris:get_hitbox/block/{get_representative(group)}")
