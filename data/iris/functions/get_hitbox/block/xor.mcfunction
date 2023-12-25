@@ -1,9 +1,9 @@
-#> iris:get_hitbox/xor
+#> iris:get_hitbox/block/xor
 #
 # Compute bitwise XOR (^) on two scores
 #
 # @private
-# @within iris:get_hitbox/block_offset
+# @within iris:get_hitbox/block/offset
 # @reads
 #   score $a iris
 #       The first operand

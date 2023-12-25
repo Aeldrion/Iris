@@ -1,4 +1,4 @@
-#> iris:get_hitbox/block_offset
+#> iris:get_hitbox/block/offset
 #
 # Computes seeded block offset for e.g. flowers, assuming the shape comprises a single box
 #
@@ -11,7 +11,7 @@ scoreboard players operation $a iris = $[x] iris
 scoreboard players operation $a iris *= $3129871 iris
 scoreboard players operation $b iris = $[z] iris
 scoreboard players operation $b iris *= $116129781 iris
-execute store result score $a^b iris run function iris:get_hitbox/xor
+execute store result score $a^b iris run function iris:get_hitbox/block/xor
 
 scoreboard players operation $(a^b)² iris = $a^b iris
 scoreboard players operation $(a^b)² iris *= $a^b iris

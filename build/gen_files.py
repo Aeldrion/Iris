@@ -8,7 +8,7 @@ LINK_LOCAL = "1_20_1_blocks.json"
 LINK_HTTPS = "https://raw.githubusercontent.com/Articdive/ArticData/1.20.1/1_20_1_blocks.json" #TODO replace this link with something more permanent and more up to date
 BLOCK_TAG_PATH = "data/iris/tags/blocks"
 FUNCTION_PATH = "data/iris/functions/get_hitbox"
-DIRS = [f"{BLOCK_TAG_PATH}/tree", f"{BLOCK_TAG_PATH}/shape_groups", f"{FUNCTION_PATH}/block/tree"]
+DIRS = [f"{BLOCK_TAG_PATH}/tree", f"{BLOCK_TAG_PATH}/shape_groups", f"{FUNCTION_PATH}/block/tree", f"{FUNCTION_PATH}/block/shape_groups"]
 OVERRIDES = {"minecraft:grass": "minecraft:short_grass"} # A quick hack for outdated block info until I have something cleaner
 
 ONLINE = True
@@ -106,7 +106,7 @@ if __name__ == "__main__":
     for group in block_shape_groups:
         namespaced_representative = group[0]
         block_id = ("#iris:shape_groups/" + get_representative(group)) if len(group)>1 else namespaced_representative
-        mcfunction_file_path = f"{FUNCTION_PATH}/block/{get_representative(group)}.mcfunction"
+        mcfunction_file_path = f"{FUNCTION_PATH}/block/shape_groups/{get_representative(group)}.mcfunction"
         with open(mcfunction_file_path, mode='w') as mcfunction_file:
             for state in block_data[namespaced_representative]["states"]:
                 # Write 'execute if block' condition, unless there is no state to observe
@@ -137,10 +137,10 @@ if __name__ == "__main__":
             if len(group) > 1:
                 repr = get_representative(group)
                 tag_values.append(f"#iris:shape_groups/{repr}")
-                commands.append(f"execute if block ~ ~ ~ #iris:shape_groups/{repr} run function iris:get_hitbox/block/{repr}")
+                commands.append(f"execute if block ~ ~ ~ #iris:shape_groups/{repr} run function iris:get_hitbox/block/shape_groups/{repr}")
             else:
                 tag_values.append(group[0])
-                commands.append(f"execute if block ~ ~ ~ {group[0]} run function iris:get_hitbox/block/{get_representative(group)}")
+                commands.append(f"execute if block ~ ~ ~ {group[0]} run function iris:get_hitbox/block/shape_groups/{get_representative(group)}")
         with open(f"{BLOCK_TAG_PATH}/tree/{i}.json", mode='w') as block_tag_file:
             json.dump({"values": [{"id": value, "required": False} for value in tag_values]}, block_tag_file, indent=4)
         with open(f"{FUNCTION_PATH}/block/tree/{i}.mcfunction", mode='w') as function_file:
@@ -154,7 +154,7 @@ if __name__ == "__main__":
 #
 # Returns the shape of the current block
 #
-# @within iris:raycast/on_block_found
+# @within iris:raycast/test_for_block
 # @output
 #	storage iris:data Shape: compound[]
 #       A list of cuboids given by two corners in the format {min: [x, y, z], max: [x, y z]}
