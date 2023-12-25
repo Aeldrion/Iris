@@ -24,6 +24,10 @@ execute if data storage iris:output {TargetType: "ENTITY"} store result score $e
 execute if data storage iris:output {TargetType: "ENTITY"} as @e[tag=iris.possible_target] if score @s iris.id = $entity_id iris run tag @s add iris.targeted_entity
 tag @e remove iris.possible_target
 
+# Write targeted box/face
+execute if data storage iris:output {TargetType: "BLOCK"} run data modify storage iris:output TargetedBox set from storage iris:data TargetedBox
+execute if data storage iris:output {TargetType: "BLOCK"} run data modify storage iris:output TargetedFace set from storage iris:data TargetedFace
+
 # Write total distance
 execute if data storage iris:output {TargetType: "BLOCK"} run scoreboard players operation $total_distance iris += $block_distance iris
 execute if data storage iris:output {TargetType: "ENTITY"} run scoreboard players operation $total_distance iris += $entity_distance iris
