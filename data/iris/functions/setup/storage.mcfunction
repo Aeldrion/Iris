@@ -10,5 +10,5 @@ data merge storage iris:data {is_setup: 1b}
 data merge storage iris:settings {\
     TargetEntities: false,\
     MaxRecursionDepth: 16,\
-    Blacklist: "#iris:air"\
+    Blacklist: "#iris:shape_groups/air"\
 }
