@@ -5,7 +5,7 @@
 # @reads
 #   storage iris:data Face: compound
 #       Direction: string
-#           The direction this face is perpendicular with 
+#           The axis that is perpendicular to this face
 #           One of WEST_EAST, UP_DOWN, NORTH_SOUTH
 #       min: float[]
 #       max: float[]

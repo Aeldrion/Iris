@@ -16,7 +16,7 @@
 #           Defaults to 16
 #       Blacklist: string
 #           A block or a block tag to ignore
-#           Defaults to "#iris:air"
+#           Defaults to "#iris:shape_groups/air"
 #           Should be reset if unused, not set to an empty string
 #       Whitelist: string
 #           A block or a block tag to look for (all other blocks are ignored)
@@ -38,6 +38,19 @@
 #       Distance: double
 #           How long the ray travels before hitting an obstacle
 #           Unset if no block or entity is found
+#       TargetedBox: compound
+#           The axis-aligned bounding box that was hit within the targeted block, as six coordinates between 0 and 1
+#           Unset if the ray first hits an entity or if no block is found
+#           min: double[]
+#           max: double[]
+#       TargetedFace: compound
+#           The face ŧhat was hit within the targeted block, as six coordinates between 0 and 1
+#           Unset if the ray first hits an entity or if no block is found
+#           min: double[]
+#           max: double[]
+#           Direction: string
+#              The axis that is perpendicular to this face
+#              One of WEST_EAST, UP_DOWN, NORTH_SOUTH
 #   score $total_distance iris
 #       The distance (in µm) travelled by the ray before it hits a block
 #       Unset if no block or entity is found
@@ -55,6 +68,8 @@ data modify storage iris:output TargetType set value "NONE"
 data remove storage iris:output TargetedBlock
 data remove storage iris:output TargetedEntity
 data remove storage iris:output Distance
+data remove storage iris:output TargetedBox
+data remove storage iris:output TargetedFace
 
 scoreboard players set $depth iris 0
 scoreboard players set $min_distance iris 2147483647
