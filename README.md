@@ -1,8 +1,6 @@
 # Iris Raycasting
 
-**Iris** is a work-in-progress utility data pack for Minecraft: Java Edition 1.20.3+ designed to determine what block or entity a player is looking at, with micrometric precision and taking into account individual block geometries.
-
-> ⚠️ Note that **Iris is currently unreleased**. Some features are not properly tested out and some features are not yet deployed. Packaging Iris in your data packs is not recommended as it may not be fully compatible with eventual releases.
+**Iris** is a utility data pack for Minecraft: Java Edition 1.20.3+ designed to determine what block or entity a player is looking at, with micrometric precision and taking into account individual block geometries.
 
 ## Building
 
@@ -15,7 +13,7 @@ cd Iris
 ./build/gen_files.py
 ```
 
-Working versions of Iris (with everything built) will be made available in GitHub releases.
+Working versions of Iris (with everything built) are made available in GitHub releases.
 
 ## Documentation
 
