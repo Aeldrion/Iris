@@ -152,7 +152,7 @@ if __name__ == "__main__":
 
         HEADER = """#> iris:get_hitbox/block
 #
-# Returns a list of surfaces of the current blockg
+# Returns the shape of the current block
 #
 # @within iris:raycast/on_block_found
 # @output

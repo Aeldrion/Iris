@@ -130,7 +130,7 @@ To get the rotation, a marker is summoned 1,000,000 blocks forward starting from
 
 ### Raycasting
 
-The data pack solves simple linear equations to figure out which tile it hits next (ray/plane intersections), instead of progressing by a fixed length at every iteration like most raycasting functions do. Upon hitting a block other than air (or an entity, if `TargetEntities` is true), it gets its shape as a list of axis-aligned bounding boxes (AABB) and checks which faces it hits. For every AABB, there are three surfaces to check, and the three others (back-faces) are culled.
+The data pack solves simple linear equations to figure out which tile it hits next (ray/plane intersections), instead of progressing by a fixed length at every iteration like most raycasting functions do. Upon hitting a block other than air (or an entity, if `TargetEntities` is true), it gets its shape as a list of axis-aligned bounding boxes (AABB) and checks which faces it hits. For every AABB, there are three faces to check, and the three others (back-faces) are culled.
 
 ### Getting the hitbox of a block
 

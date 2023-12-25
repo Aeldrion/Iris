@@ -1,14 +1,11 @@
 #> iris:get_hitbox/entity
 #
-# Returns a list of surfaces of the executing entity
+# Returns the shape of the executing entity
 #
 # @within iris:raycast/test_for_entity
 # @writes
-#   storage iris:data
-#       Surfaces: int[][]
-#           A list of potential surfaces for which to test intersections.
-#           Every surface is written as six coordinates, from one corner to the other. For example, the bottom of a shulker can be described as
-#           [0, 0, 0, 1000000, 0, 1000000]
+#	storage iris:data Shape: compound[]
+#       A list of cuboids given by two corners in the format {min: [x, y, z], max: [x, y z]}
 
 scoreboard players set $entity_found iris 0
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/0] run function iris:get_hitbox/entity/tree/0

@@ -1,6 +1,6 @@
 #> iris:raycast/check_intersection/ray_box
 #
-# Converts an axis-aligned bounding box into three surfaces (the other tree faces are occluded) and tests for ray-plane intersections with any of the surfaces
+# Converts an axis-aligned bounding box into three faces (the other tree faces are occluded) and tests for ray-plane intersections with any of them
 #
 # @reads
 #   storage iris:data Box
@@ -10,11 +10,11 @@
 #           The max corner of the box, as three coordinates between 0 and 1
 # @output
 #   Success: 1 if any face of the box is hit, 0 otherwise
-#   Result: the distance, in mm, before the first surface that is hit
+#   Result: the distance, in mm, before the first face that is hit
 # @private
 # @within iris:raycast/check_intersection/loop
 
-# Decompose the box as three surfaces
+# Decompose the box as three faces
 data modify storage iris:data Faces set value [{}, {}, {}]
 data modify storage iris:data Faces[0] set from storage iris:data Box
 execute if score $dx iris matches 0.. run data modify storage iris:data Faces[0].max[0] set from storage iris:data Box.min[0]
@@ -27,15 +27,15 @@ execute if score $dz iris matches 0.. run data modify storage iris:data Faces[2]
 execute if score $dz iris matches ..-1 run data modify storage iris:data Faces[2].min[2] set from storage iris:data Box.max[2]
 
 # Check for ray-plane intersection with west or east bound face
-data modify storage iris:data Surface set from storage iris:data Faces[0]
+data modify storage iris:data Face set from storage iris:data Faces[0]
 execute store success score $hits_x_face iris store result score $to_x_face iris run function iris:raycast/check_intersection/ray_plane
 
 # Check for ray-plane intersection with up or down bound face
-data modify storage iris:data Surface set from storage iris:data Faces[1]
+data modify storage iris:data Face set from storage iris:data Faces[1]
 execute store success score $hits_y_face iris store result score $to_y_face iris run function iris:raycast/check_intersection/ray_plane
 
 # Check for ray-plane intersection with north or south bound face
-data modify storage iris:data Surface set from storage iris:data Faces[2]
+data modify storage iris:data Face set from storage iris:data Faces[2]
 execute store success score $hits_z_face iris store result score $to_z_face iris run function iris:raycast/check_intersection/ray_plane
 
 # If no face was hit, fail; otherwise, return the shortest distance to any face that is hit

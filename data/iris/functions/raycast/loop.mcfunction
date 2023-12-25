@@ -1,6 +1,6 @@
 #> iris:raycast/loop
 #
-# Loops forward until a contact surface is found or until the maximum recursion depth has been reached
+# Loops forward until an obstacle is hit or until the maximum recursion depth has been reached
 #
 # @context a marker and the current ray position
 # @within iris:get_target
