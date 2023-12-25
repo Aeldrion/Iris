@@ -18,4 +18,5 @@ execute if data storage iris:settings Blacklist if score $is_blacklisted iris ma
 
 # See if the block is hit
 function iris:get_hitbox/block
+execute unless data storage iris:data Shape[0] run return fail
 return run function iris:raycast/check_intersection/loop
