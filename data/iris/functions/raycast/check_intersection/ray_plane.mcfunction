@@ -4,6 +4,9 @@
 #
 # @reads
 #   storage iris:data Face: compound
+#       Direction: string
+#           The direction this face is perpendicular with 
+#           One of WEST_EAST, UP_DOWN, NORTH_SOUTH
 #       min: float[]
 #       max: float[]
 # @output
@@ -20,29 +23,24 @@ execute store result score $x1 iris run data get storage iris:data Face.max[0] 1
 execute store result score $y1 iris run data get storage iris:data Face.max[1] 1000000
 execute store result score $z1 iris run data get storage iris:data Face.max[2] 1000000
 
-# Identify the direction of the face ("WEST_EAST" means that the face extends in all directions except west and east)
-execute if score $x0 iris = $x1 iris run data modify storage iris:data FaceDirection set value "WEST_EAST"
-execute if score $y0 iris = $y1 iris run data modify storage iris:data FaceDirection set value "UP_DOWN"
-execute if score $z0 iris = $z1 iris run data modify storage iris:data FaceDirection set value "NORTH_SOUTH"
-
 # Test if the ray is already inside the face
-execute if data storage iris:data {FaceDirection: "WEST_EAST"} if score ${x} iris = $x0 iris if score ${y} iris >= $y0 iris if score ${y} iris <= $y1 iris if score ${z} iris >= $z0 iris if score ${z} iris <= $z1 iris run return 0
-execute if data storage iris:data {FaceDirection: "UP_DOWN"} if score ${y} iris = $y0 iris if score ${x} iris >= $x0 iris if score ${x} iris <= $x1 iris if score ${z} iris >= $z0 iris if score ${z} iris <= $z1 iris run return 0
-execute if data storage iris:data {FaceDirection: "NORTH_SOUTH"} if score ${z} iris = $z0 iris if score ${x} iris >= $x0 iris if score ${x} iris <= $x1 iris if score ${y} iris >= $y0 iris if score ${y} iris <= $y1 iris run return 0
+execute if data storage iris:data {Face: {Direction: "WEST_EAST"}} if score ${x} iris = $x0 iris if score ${y} iris >= $y0 iris if score ${y} iris <= $y1 iris if score ${z} iris >= $z0 iris if score ${z} iris <= $z1 iris run return 0
+execute if data storage iris:data {Face: {Direction: "UP_DOWN"}} if score ${y} iris = $y0 iris if score ${x} iris >= $x0 iris if score ${x} iris <= $x1 iris if score ${z} iris >= $z0 iris if score ${z} iris <= $z1 iris run return 0
+execute if data storage iris:data {Face: {Direction: "NORTH_SOUTH"}} if score ${z} iris = $z0 iris if score ${x} iris >= $x0 iris if score ${x} iris <= $x1 iris if score ${y} iris >= $y0 iris if score ${y} iris <= $y1 iris run return 0
 
 # If it is not, see where the intersection between the plane and the ray would be
     # Get distance (in mm) to the plane, i.e. how long the ray should extend before it hits the plane
     # This value should be at most sqrt(3)*1000; if it's more than 2000, we fail (otherwise we risk overflow errors)
-execute if data storage iris:data {FaceDirection: "WEST_EAST"} run scoreboard players operation $distance iris = $x0 iris
-execute if data storage iris:data {FaceDirection: "WEST_EAST"} run scoreboard players operation $distance iris -= ${x} iris
-execute if data storage iris:data {FaceDirection: "UP_DOWN"} run scoreboard players operation $distance iris = $y0 iris
-execute if data storage iris:data {FaceDirection: "UP_DOWN"} run scoreboard players operation $distance iris -= ${y} iris
-execute if data storage iris:data {FaceDirection: "NORTH_SOUTH"} run scoreboard players operation $distance iris = $z0 iris
-execute if data storage iris:data {FaceDirection: "NORTH_SOUTH"} run scoreboard players operation $distance iris -= ${z} iris
+execute if data storage iris:data {Face: {Direction: "WEST_EAST"}} run scoreboard players operation $distance iris = $x0 iris
+execute if data storage iris:data {Face: {Direction: "WEST_EAST"}} run scoreboard players operation $distance iris -= ${x} iris
+execute if data storage iris:data {Face: {Direction: "UP_DOWN"}} run scoreboard players operation $distance iris = $y0 iris
+execute if data storage iris:data {Face: {Direction: "UP_DOWN"}} run scoreboard players operation $distance iris -= ${y} iris
+execute if data storage iris:data {Face: {Direction: "NORTH_SOUTH"}} run scoreboard players operation $distance iris = $z0 iris
+execute if data storage iris:data {Face: {Direction: "NORTH_SOUTH"}} run scoreboard players operation $distance iris -= ${z} iris
 scoreboard players operation $distance iris *= $1000 iris
-execute if data storage iris:data {FaceDirection: "WEST_EAST"} run scoreboard players operation $distance iris /= $dx iris
-execute if data storage iris:data {FaceDirection: "UP_DOWN"} run scoreboard players operation $distance iris /= $dy iris
-execute if data storage iris:data {FaceDirection: "NORTH_SOUTH"} run scoreboard players operation $distance iris /= $dz iris
+execute if data storage iris:data {Face: {Direction: "WEST_EAST"}} run scoreboard players operation $distance iris /= $dx iris
+execute if data storage iris:data {Face: {Direction: "UP_DOWN"}} run scoreboard players operation $distance iris /= $dy iris
+execute if data storage iris:data {Face: {Direction: "NORTH_SOUTH"}} run scoreboard players operation $distance iris /= $dz iris
 execute if score $distance iris matches ..-1 run return fail
 execute if score $distance iris matches 2000.. run return fail
 
@@ -51,21 +49,21 @@ scoreboard players operation $x_intersection iris = $distance iris
 scoreboard players operation $x_intersection iris *= $dx iris
 scoreboard players operation $x_intersection iris /= $1000 iris
 scoreboard players operation $x_intersection iris += ${x} iris
-execute if data storage iris:data {FaceDirection: "WEST_EAST"} run scoreboard players operation $x_intersection iris = $x0 iris
+execute if data storage iris:data {Face: {Direction: "WEST_EAST"}} run scoreboard players operation $x_intersection iris = $x0 iris
 
     # Get y position of the ray/plane intersection
 scoreboard players operation $y_intersection iris = $distance iris
 scoreboard players operation $y_intersection iris *= $dy iris
 scoreboard players operation $y_intersection iris /= $1000 iris
 scoreboard players operation $y_intersection iris += ${y} iris
-execute if data storage iris:data {FaceDirection: "UP_DOWN"} run scoreboard players operation $y_intersection iris = $y0 iris
+execute if data storage iris:data {Face: {Direction: "UP_DOWN"}} run scoreboard players operation $y_intersection iris = $y0 iris
 
     # Get z position of the ray/plane intersection
 scoreboard players operation $z_intersection iris = $distance iris
 scoreboard players operation $z_intersection iris *= $dz iris
 scoreboard players operation $z_intersection iris /= $1000 iris
 scoreboard players operation $z_intersection iris += ${z} iris
-execute if data storage iris:data {FaceDirection: "NORTH_SOUTH"} run scoreboard players operation $z_intersection iris = $z0 iris
+execute if data storage iris:data {Face: {Direction: "NORTH_SOUTH"}} run scoreboard players operation $z_intersection iris = $z0 iris
 
 # See if that intersection falls within the face
 execute if score $x_intersection iris >= $x0 iris if score $x_intersection iris <= $x1 iris \

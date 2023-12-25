@@ -15,26 +15,22 @@
 # @within iris:raycast/check_intersection/loop
 
 # Decompose the box as three faces
-data modify storage iris:data Faces set value [{}, {}, {}]
-data modify storage iris:data Faces[0] set from storage iris:data Box
+data modify storage iris:data Faces set value [{Direction: "WEST_EAST"}, {Direction: "UP_DOWN"}, {Direction: "NORTH_SOUTH"}]
+data modify storage iris:data Faces[0] merge from storage iris:data Box
 execute if score $dx iris matches 0.. run data modify storage iris:data Faces[0].max[0] set from storage iris:data Box.min[0]
 execute if score $dx iris matches ..-1 run data modify storage iris:data Faces[0].min[0] set from storage iris:data Box.max[0]
-data modify storage iris:data Faces[1] set from storage iris:data Box
+data modify storage iris:data Faces[1] merge from storage iris:data Box
 execute if score $dy iris matches 0.. run data modify storage iris:data Faces[1].max[1] set from storage iris:data Box.min[1]
 execute if score $dy iris matches ..-1 run data modify storage iris:data Faces[1].min[1] set from storage iris:data Box.max[1]
-data modify storage iris:data Faces[2] set from storage iris:data Box
+data modify storage iris:data Faces[2] merge from storage iris:data Box
 execute if score $dz iris matches 0.. run data modify storage iris:data Faces[2].max[2] set from storage iris:data Box.min[2]
 execute if score $dz iris matches ..-1 run data modify storage iris:data Faces[2].min[2] set from storage iris:data Box.max[2]
 
-# Check for ray-plane intersection with west or east bound face
+# Check for ray-plane intersections
 data modify storage iris:data Face set from storage iris:data Faces[0]
 execute store success score $hits_x_face iris store result score $to_x_face iris run function iris:raycast/check_intersection/ray_plane
-
-# Check for ray-plane intersection with up or down bound face
 data modify storage iris:data Face set from storage iris:data Faces[1]
 execute store success score $hits_y_face iris store result score $to_y_face iris run function iris:raycast/check_intersection/ray_plane
-
-# Check for ray-plane intersection with north or south bound face
 data modify storage iris:data Face set from storage iris:data Faces[2]
 execute store success score $hits_z_face iris store result score $to_z_face iris run function iris:raycast/check_intersection/ray_plane
 
