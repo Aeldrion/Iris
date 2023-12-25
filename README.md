@@ -96,6 +96,25 @@ execute if data storage iris:output {TargetType: "BLOCK"} at @e[type=minecraft:m
 }
 ```
 
+#### Predicting where a block will be placed
+
+In the following example, the direction of the targeted face (`TargetedFace.Direction` in storage `iris:output`) and the direction of the player (scores `$dx`, `$dy`, `$dz` on objective `iris`) is used to predict where a block would be placed if the player attempted to place one. If no block is targeted, the function fails early; otherwise, the `iris.targeted_block` marker that is summoned by `iris:get_target` is teleported, and a block is placed at its new position.
+
+```mcfunction
+execute at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
+execute unless data storage iris:output {TargetType: "BLOCK"} run return fail
+execute if data storage iris:output TargetedFace{Direction: "WEST_EAST"} if score $dx iris matches 0.. as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~-1 ~ ~
+execute if data storage iris:output TargetedFace{Direction: "WEST_EAST"} if score $dx iris matches ..-1 as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~1 ~ ~
+execute if data storage iris:output TargetedFace{Direction: "UP_DOWN"} if score $dy iris matches 0.. as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~ ~-1 ~
+execute if data storage iris:output TargetedFace{Direction: "UP_DOWN"} if score $dy iris matches ..-1 as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~ ~1 ~
+execute if data storage iris:output TargetedFace{Direction: "NORTH_SOUTH"} if score $dz iris matches 0.. as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~ ~ ~-1
+execute if data storage iris:output TargetedFace{Direction: "NORTH_SOUTH"} if score $dz iris matches ..-1 as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~ ~ ~1
+execute at @e[type=minecraft:marker, tag=iris.targeted_block] if block ~ ~ ~ minecraft:air run playsound minecraft:block.stone.place block @a ~ ~ ~
+execute at @e[type=minecraft:marker, tag=iris.targeted_block] if block ~ ~ ~ minecraft:air run setblock ~ ~ ~ minecraft:cobblestone
+```
+
+**Note:** Here, we check that the placing position is not occupied (`if block ~ ~ ~ minecraft:air`). A better approach would be to test for any replaceable block (including water, tall gras...) with a block tag check.
+
 ### `iris:set_coordinates`
 
 Teleports the executing entity to a position provided by six scores on the `iris` objective: `$[x]`, `$[y]`, `$[z]` for integer coordinates, `${x}`, `${y}`, `${z}` for fractional coordinates (with a scale of 1,000,000). After running `iris:get_target`, the six scores are set to the exact position where the ray lands and so `iris:get_target` and `iris:set_coordinates` can easily be used in conjunction:
