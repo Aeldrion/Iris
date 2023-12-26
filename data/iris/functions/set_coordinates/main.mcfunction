@@ -15,6 +15,14 @@
 
 execute unless entity @s run return fail
 
+# Clamp to 0..999999
+execute if score ${x} iris matches ..0 run scoreboard players set ${x} iris 0
+execute if score ${y} iris matches ..0 run scoreboard players set ${y} iris 0
+execute if score ${z} iris matches ..0 run scoreboard players set ${z} iris 0
+execute if score ${x} iris matches 1000000.. run scoreboard players set ${x} iris 999999
+execute if score ${y} iris matches 1000000.. run scoreboard players set ${y} iris 999999
+execute if score ${z} iris matches 1000000.. run scoreboard players set ${z} iris 999999
+
 # Get integer coordinates for the first teleport command (absolute coordinates)
 execute store result storage iris:args x int 1 run scoreboard players get $[x] iris
 execute store result storage iris:args y int 1 run scoreboard players get $[y] iris

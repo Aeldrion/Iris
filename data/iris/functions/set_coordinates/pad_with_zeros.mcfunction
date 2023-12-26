@@ -11,4 +11,4 @@
 #   storage iris:data String
 #       The resulting string
 
-$data modify storage iris:data String set value "000000"$(value)
+$data modify storage iris:data String set value "000000$(value)"
