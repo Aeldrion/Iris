@@ -30,22 +30,28 @@
 #       TargetedBlock: int[]
 #           The integer coordinates of the block that is hit
 #           Corresponds to the "Targeted Block" field in the debug screen
-#           Unset if the ray hits an entity or if no block is found
+#           Unset if TargetType is not BLOCK
 #       TargetedEntity: int
 #           The ID of the targeted entity on objective iris.entity_id
 #           The entity executing this function cannot be targeted
-#           Unset if the ray first hits a block or if no entity is found
+#           Unset if TargetType is not ENTITY
+#       TargetPosition
+#           Unset if TargetType is NONE
+#           tile: int[]
+#               The integer coordinates of the last traversed tile
+#           point: double[]
+#               Where exactly the ray hits an obstacle within the last traversed tile, as three coordinates between 0 and 1
 #       Distance: double
 #           How long the ray travels before hitting an obstacle
-#           Unset if no block or entity is found
+#           Unset if TargetType is NONE
 #       TargetedBox: compound
-#           The axis-aligned bounding box that was hit within the targeted block, as six coordinates between 0 and 1
-#           Unset if the ray first hits an entity or if no block is found
+#           The axis-aligned bounding box that was hit within the last traversed tile, as six coordinates between 0 and 1
+#           Unset if TargetType is NONE
 #           min: double[]
 #           max: double[]
 #       TargetedFace: compound
-#           The face ŧhat was hit within the targeted block, as six coordinates between 0 and 1
-#           Unset if the ray first hits an entity or if no block is found
+#           The face ŧhat was hit within the last traversed tile, as six coordinates between 0 and 1
+#           Unset if TargetType is NONE
 #           min: double[]
 #           max: double[]
 #           Direction: string
@@ -67,6 +73,7 @@ scoreboard players reset * iris.id
 data modify storage iris:output TargetType set value "NONE"
 data remove storage iris:output TargetedBlock
 data remove storage iris:output TargetedEntity
+data remove storage iris:output TargetPosition
 data remove storage iris:output Distance
 data remove storage iris:output TargetedBox
 data remove storage iris:output TargetedFace
