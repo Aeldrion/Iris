@@ -101,12 +101,12 @@ In the following example, the direction of the targeted face (`TargetedFace.Dire
 ```mcfunction
 execute at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
 execute unless data storage iris:output {TargetType: "BLOCK"} run return fail
-execute if data storage iris:output TargetedFace{Direction: "WEST_EAST"} if score $dx iris matches 0.. as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~-1 ~ ~
-execute if data storage iris:output TargetedFace{Direction: "WEST_EAST"} if score $dx iris matches ..-1 as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~1 ~ ~
-execute if data storage iris:output TargetedFace{Direction: "UP_DOWN"} if score $dy iris matches 0.. as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~ ~-1 ~
-execute if data storage iris:output TargetedFace{Direction: "UP_DOWN"} if score $dy iris matches ..-1 as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~ ~1 ~
-execute if data storage iris:output TargetedFace{Direction: "NORTH_SOUTH"} if score $dz iris matches 0.. as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~ ~ ~-1
-execute if data storage iris:output TargetedFace{Direction: "NORTH_SOUTH"} if score $dz iris matches ..-1 as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~ ~ ~1
+execute if data storage iris:output TargetedFace{Direction: "WEST"} as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~-1 ~ ~
+execute if data storage iris:output TargetedFace{Direction: "EAST"} as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~1 ~ ~
+execute if data storage iris:output TargetedFace{Direction: "DOWN"} as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~ ~-1 ~
+execute if data storage iris:output TargetedFace{Direction: "UP"} as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~ ~1 ~
+execute if data storage iris:output TargetedFace{Direction: "NORTH"} as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~ ~ ~-1
+execute if data storage iris:output TargetedFace{Direction: "SOUTH"} as @e[type=minecraft:marker, tag=iris.targeted_block] at @s run teleport @s ~ ~ ~1
 execute at @e[type=minecraft:marker, tag=iris.targeted_block] if block ~ ~ ~ minecraft:air run playsound minecraft:block.stone.place block @a ~ ~ ~
 execute at @e[type=minecraft:marker, tag=iris.targeted_block] if block ~ ~ ~ minecraft:air run setblock ~ ~ ~ minecraft:cobblestone
 ```

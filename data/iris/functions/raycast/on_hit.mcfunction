@@ -28,20 +28,26 @@ execute if data storage iris:output {TargetType: "ENTITY"} as @e[tag=iris.possib
 execute if data storage iris:output {TargetType: "ENTITY"} run tag @e remove iris.possible_target
 
 # Write target position
-execute unless data storage iris:output {TargetType: "NONE"} run data modify storage iris:output TargetPosition.tile set value [0, 0, 0]
-execute unless data storage iris:output {TargetType: "NONE"} store result storage iris:output TargetPosition.tile[0] int 1 run scoreboard players get $[x] iris
-execute unless data storage iris:output {TargetType: "NONE"} store result storage iris:output TargetPosition.tile[1] int 1 run scoreboard players get $[y] iris
-execute unless data storage iris:output {TargetType: "NONE"} store result storage iris:output TargetPosition.tile[2] int 1 run scoreboard players get $[z] iris
-execute unless data storage iris:output {TargetType: "NONE"} run data modify storage iris:output TargetPosition.point set from storage iris:data TargetPoint
-execute unless data storage iris:output {TargetType: "NONE"} store result score ${x} iris run data get storage iris:output TargetPosition.point[0] 1000000
-execute unless data storage iris:output {TargetType: "NONE"} store result score ${y} iris run data get storage iris:output TargetPosition.point[1] 1000000
-execute unless data storage iris:output {TargetType: "NONE"} store result score ${z} iris run data get storage iris:output TargetPosition.point[2] 1000000
+data modify storage iris:output TargetPosition.tile set value [0, 0, 0]
+execute store result storage iris:output TargetPosition.tile[0] int 1 run scoreboard players get $[x] iris
+execute store result storage iris:output TargetPosition.tile[1] int 1 run scoreboard players get $[y] iris
+execute store result storage iris:output TargetPosition.tile[2] int 1 run scoreboard players get $[z] iris
+execute run data modify storage iris:output TargetPosition.point set from storage iris:data TargetPoint
+execute store result score ${x} iris run data get storage iris:output TargetPosition.point[0] 1000000
+execute store result score ${y} iris run data get storage iris:output TargetPosition.point[1] 1000000
+execute store result score ${z} iris run data get storage iris:output TargetPosition.point[2] 1000000
 
 # Write targeted box
-execute unless data storage iris:output {TargetType: "NONE"} run data modify storage iris:output TargetedBox set from storage iris:data TargetedBox
+data modify storage iris:output TargetedBox set from storage iris:data TargetedBox
 
 # Write targeted face
-execute unless data storage iris:output {TargetType: "NONE"} run data modify storage iris:output TargetedFace set from storage iris:data TargetedFace
+data modify storage iris:output TargetedFace set from storage iris:data TargetedFace
+execute if data storage iris:output TargetedFace{Direction: "WEST_EAST"} if score $dx iris matches 0.. run data modify storage iris:output TargetedFace.Direction set value "WEST"
+execute if data storage iris:output TargetedFace{Direction: "WEST_EAST"} if score $dx iris matches ..-1 run data modify storage iris:output TargetedFace.Direction set value "EAST"
+execute if data storage iris:output TargetedFace{Direction: "UP_DOWN"} if score $dy iris matches 0.. run data modify storage iris:output TargetedFace.Direction set value "DOWN"
+execute if data storage iris:output TargetedFace{Direction: "UP_DOWN"} if score $dy iris matches ..-1 run data modify storage iris:output TargetedFace.Direction set value "UP"
+execute if data storage iris:output TargetedFace{Direction: "NORTH_SOUTH"} if score $dz iris matches 0.. run data modify storage iris:output TargetedFace.Direction set value "NORTH"
+execute if data storage iris:output TargetedFace{Direction: "NORTH_SOUTH"} if score $dz iris matches ..-1 run data modify storage iris:output TargetedFace.Direction set value "SOUTH"
 
 # Write total distance
 execute if data storage iris:output {TargetType: "BLOCK"} run scoreboard players operation $total_distance iris += $block_distance iris
