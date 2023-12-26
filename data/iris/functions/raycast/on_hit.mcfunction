@@ -32,7 +32,7 @@ data modify storage iris:output TargetPosition.tile set value [0, 0, 0]
 execute store result storage iris:output TargetPosition.tile[0] int 1 run scoreboard players get $[x] iris
 execute store result storage iris:output TargetPosition.tile[1] int 1 run scoreboard players get $[y] iris
 execute store result storage iris:output TargetPosition.tile[2] int 1 run scoreboard players get $[z] iris
-execute run data modify storage iris:output TargetPosition.point set from storage iris:data TargetPoint
+data modify storage iris:output TargetPosition.point set from storage iris:data TargetPoint
 execute store result score ${x} iris run data get storage iris:output TargetPosition.point[0] 1000000
 execute store result score ${y} iris run data get storage iris:output TargetPosition.point[1] 1000000
 execute store result score ${z} iris run data get storage iris:output TargetPosition.point[2] 1000000
@@ -53,5 +53,9 @@ execute if data storage iris:output TargetedFace{Direction: "NORTH_SOUTH"} if sc
 execute if data storage iris:output {TargetType: "BLOCK"} run scoreboard players operation $total_distance iris += $block_distance iris
 execute if data storage iris:output {TargetType: "ENTITY"} run scoreboard players operation $total_distance iris += $entity_distance iris
 execute store result storage iris:output Distance double 0.000001 run scoreboard players get $total_distance iris
+
+# Run callback
+execute if data storage iris:settings Callback run data modify storage iris:args function set from storage iris:settings Callback
+execute if data storage iris:settings Callback run function iris:raycast/macro_functions/callback with storage iris:args
 
 return run scoreboard players get $total_distance iris
