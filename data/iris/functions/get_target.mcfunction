@@ -55,8 +55,8 @@
 #           min: double[]
 #           max: double[]
 #           Direction: string
-#              The axis that is perpendicular to this face
-#              One of WEST_EAST, UP_DOWN, NORTH_SOUTH
+#              Which face of the obstacle is hit
+#              One of WEST, EAST, UP, DOWN, NORTH, SOUTH
 #   score $total_distance iris
 #       The distance (in µm) travelled by the ray before it hits a block
 #       Unset if no block or entity is found
