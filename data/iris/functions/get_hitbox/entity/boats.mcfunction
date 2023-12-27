@@ -1,4 +1,4 @@
-#> iris:get_hitbox/entity/boat
+#> iris:get_hitbox/entity/boats
 #
 # @within iris:get_hitbox/entity
 

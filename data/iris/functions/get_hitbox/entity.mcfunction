@@ -13,6 +13,7 @@ execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/1] ru
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/2] run function iris:get_hitbox/entity/tree/2
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/3] run function iris:get_hitbox/entity/tree/3
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/4] run function iris:get_hitbox/entity/tree/4
+execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/5] run function iris:get_hitbox/entity/tree/5
 
 # Get the entity's coordinates
 scoreboard players operation $entity_[x] iris = $[x] iris
