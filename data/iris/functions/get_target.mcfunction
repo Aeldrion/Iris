@@ -84,7 +84,7 @@ scoreboard players set $max_entity_id iris 0
 scoreboard players set $total_distance iris 0
 
 # Get initial position/rotation
-execute summon minecraft:marker run function iris:get_coordinates/main
+execute summon minecraft:marker run function iris:get_position/main
 
 # Start the loop
 tag @s add iris.executing

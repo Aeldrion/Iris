@@ -22,19 +22,13 @@ scoreboard players operation $entity_[z] iris = $[z] iris
 scoreboard players operation $entity_{x} iris = ${x} iris
 scoreboard players operation $entity_{y} iris = ${y} iris
 scoreboard players operation $entity_{z} iris = ${z} iris
-scoreboard players operation $save_dx iris = $dx iris
-scoreboard players operation $save_dy iris = $dy iris
-scoreboard players operation $save_dz iris = $dz iris
-execute at @s run function iris:get_coordinates/main
+execute at @s summon minecraft:marker run function iris:get_position/get_coordinates
 scoreboard players operation $entity_[x] iris >< $[x] iris
 scoreboard players operation $entity_[y] iris >< $[y] iris
 scoreboard players operation $entity_[z] iris >< $[z] iris
 scoreboard players operation $entity_{x} iris >< ${x} iris
 scoreboard players operation $entity_{y} iris >< ${y} iris
 scoreboard players operation $entity_{z} iris >< ${z} iris
-scoreboard players operation $dx iris = $save_dx iris
-scoreboard players operation $dy iris = $save_dy iris
-scoreboard players operation $dz iris = $save_dz iris
 
 # Save how many blocks away the entity is from the block origin
 scoreboard players operation $entity_dx iris = $entity_[x] iris
