@@ -19,7 +19,7 @@ Working versions of Iris (with everything built) are made available in GitHub re
 
 ### `iris:get_target`
 
-Casts a ray from the current position, oriented with the current rotation, and returns data on the block or entity that is found. To tell where a player is facing, starting at the eye position is needed.
+Casts a ray from the current position, oriented with the current rotation, and returns data on the block or entity that is found. To tell where a player is facing, starting at the eye position is needed. Entities with the `iris.ignore` tag are ignored.
 
 ```mcfunction
 execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
