@@ -7,6 +7,7 @@
 #	storage iris:data Shape: compound[]
 #       A list of cuboids given by two corners in the format {min: [x, y, z], max: [x, y z]}
 
+# Get entity dimensions
 scoreboard players set $entity_found iris 0
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/0] run function iris:get_hitbox/entity/tree/0
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/1] run function iris:get_hitbox/entity/tree/1
@@ -14,6 +15,9 @@ execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/2] ru
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/3] run function iris:get_hitbox/entity/tree/3
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/4] run function iris:get_hitbox/entity/tree/4
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/5] run function iris:get_hitbox/entity/tree/5
+
+# Scale
+function iris:get_hitbox/entity/scale
 
 # Get the entity's coordinates
 scoreboard players operation $entity_[x] iris = $[x] iris
