@@ -1,6 +1,6 @@
 {
     "values": [
-        "minecraft:creeper",
+        "#iris:creeper_like",
         "minecraft:dolphin",
         "minecraft:donkey",
         "minecraft:elder_guardian",

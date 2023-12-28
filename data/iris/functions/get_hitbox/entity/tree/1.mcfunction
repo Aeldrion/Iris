@@ -1,6 +1,6 @@
 scoreboard players set $entity_found iris 1
 
-execute if entity @s[type=minecraft:creeper] run return run function iris:get_hitbox/entity/shape_groups/creeper
+execute if entity @s[type=#iris:creeper_like] run return run function iris:get_hitbox/entity/shape_groups/creeper
 execute if entity @s[type=minecraft:dolphin] run return run function iris:get_hitbox/entity/shape_groups/dolphin
 execute if entity @s[type=minecraft:donkey] run return run function iris:get_hitbox/entity/shape_groups/donkey
 execute if entity @s[type=minecraft:elder_guardian] run return run function iris:get_hitbox/entity/shape_groups/elder_guardian

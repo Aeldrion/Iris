@@ -1,0 +1,9 @@
+{
+    "values": [
+        "minecraft:creeper",
+        {
+            "id": "minecraft:breeze",
+            "required": false
+        }
+    ]
+}
