@@ -6,3 +6,4 @@ execute if entity @s[type=minecraft:frog] run return run function iris:get_hitbo
 execute if entity @s[type=minecraft:interaction] run return run function iris:get_hitbox/entity/shape_groups/interaction
 execute if entity @s[type=minecraft:sniffer] run return run function iris:get_hitbox/entity/shape_groups/sniffer
 execute if entity @s[type=minecraft:warden] run return run function iris:get_hitbox/entity/shape_groups/warden
+execute if entity @s[type=minecraft:armadillo] run return run function iris:get_hitbox/entity/shape_groups/armadillo
