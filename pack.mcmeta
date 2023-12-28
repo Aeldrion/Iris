@@ -1,6 +1,6 @@
 {
 	"pack": {
-		"pack_format": 27,
+		"pack_format": 26,
 		"description": "A utility data pack to determine what block or entity a player is looking at"
 	}
 }
