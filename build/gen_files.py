@@ -155,11 +155,11 @@ def generate_entity_hitboxes(filename:str) -> None:
             if len(group) > 1:
                 tag_values.append(f"#iris:shape_groups/{representative}")
                 commands.append(f"execute if entity @s[type=#iris:shape_groups/{representative}] "
-                                f"run function iris:get_hitbox/block/shape_groups/{representative}")
+                                f"run function iris:get_hitbox/entity/shape_groups/{representative}")
             else:
                 tag_values.append(group[0])
                 commands.append(f"execute if entity @s[type={group[0]}] "
-                                f"run function iris:get_hitbox/block/shape_groups/{representative}")
+                                f"run function iris:get_hitbox/entity/shape_groups/{representative}")
         make_function(commands, f"{FUNCTION_PATH}/entity/tree", str(i))
         make_tag(tag_values, f"{ENTITY_TAG_PATH}/tree", name=str(i), required=False)
 
