@@ -33,7 +33,7 @@ execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_t
 
 #### Output
 
-The `result` of this function is the distance (in blocks, rounded up) before an obstacle is hit, or 0 if no block or entity is found before the maximum recursion depth is reached.
+The `result` of this function is the distance (in micrometers) before an obstacle is hit, or 0 if no block or entity is found before the maximum recursion depth is reached.
 
 The `success` is 1 if a block or entity was hit, 0 otherwise.
 
@@ -63,8 +63,7 @@ In the following example, it is assumed that the function is executed as each pl
 
 ```mcfunction
 # Detect when the player is looking at a block that is within reach
-execute if entity @s[gamemode=survival] run scoreboard players set $max_distance mypack 4500000
-execute if entity @s[gamemode=creative] run scoreboard players set $max_distance mypack 5000000
+execute store result score $max_distance mypack run attribute @s minecraft:player.block_interaction_range get 1000000
 execute at @s anchored eyes positioned ^ ^ ^ store result score $distance mypack run function iris:get_target
 title @s actionbar ""
 execute if score $distance mypack <= $max_distance mypack at @e[type=minecraft:marker, tag=iris.targeted_block] run title @s actionbar "Looking at a block"
