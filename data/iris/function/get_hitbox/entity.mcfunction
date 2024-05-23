@@ -18,6 +18,8 @@ execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/5] ru
 
 # Scale
 function iris:get_hitbox/entity/scale
+execute if predicate iris:baby run scoreboard players operation $entity_half_width iris /= $2 iris
+execute if predicate iris:baby run scoreboard players operation $entity_height iris /= $2 iris
 
 # Get the entity's coordinates
 scoreboard players operation $entity_[x] iris = $[x] iris
