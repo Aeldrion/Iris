@@ -18,7 +18,7 @@ execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/5] ru
 
 # Scale
 function iris:get_hitbox/entity/scale
-execute if predicate iris:baby run scoreboard players operation $entity_half_width iris /= $2 iris
+execute if predicate iris:baby run scoreboard players operation $entity_width iris /= $2 iris
 execute if predicate iris:baby run scoreboard players operation $entity_height iris /= $2 iris
 
 # Get the entity's coordinates
@@ -51,6 +51,8 @@ scoreboard players operation $entity_dz iris *= $1000000 iris
 scoreboard players operation $entity_dz iris += $entity_{z} iris
 
 # Get the coordinates of the bounding box
+scoreboard players operation $entity_half_width iris = $entity_width iris
+scoreboard players operation $entity_half_width iris /= $2 iris
 scoreboard players operation $entity_x0 iris = $entity_dx iris
 scoreboard players operation $entity_x0 iris -= $entity_half_width iris
 execute if score $entity_x0 iris matches ..0 run scoreboard players set $entity_x0 iris 0
