@@ -108,9 +108,13 @@ def generate_block_hitboxes(filename:str) -> None:
 #	storage iris:data Shape: compound[]
 #       A list of cuboids given by two corners in the format {min: [x, y, z], max: [x, y z]}
 """
+
     commands = []
     for i in range(PARTITION_SUBSETS):
         commands.append(f"execute if block ~ ~ ~ #iris:tree/{i} run return run function iris:get_hitbox/block/tree/{i}")
+    commands.append(
+        "execute if block ~ ~ ~ #iris:has_block_offset run function iris:get_hitbox/block/offset"
+    )
     make_function(commands, FUNCTION_PATH, "block", header=HEADER)
 
 def generate_entity_hitboxes(filename:str) -> None:
