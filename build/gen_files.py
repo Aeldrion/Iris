@@ -1,6 +1,14 @@
 #!/usr/bin/python3
 
-import json, sys, getopt
+import json
+import sys
+import getopt
+
+try:
+    from tqdm import tqdm
+except ImportError:
+    tqdm = lambda f, _: f
+
 from util import unnamespace, group_dict_keys, make_tag, make_function, shape_to_snbt
 
 ONLINE = True
@@ -61,7 +69,7 @@ def generate_block_hitboxes(filename: str) -> None:
             make_tag(group, f"{BLOCK_TAG_PATH}/shape_groups")
 
     # Generate function files for every shape group
-    for group in block_shape_groups:
+    for group in tqdm(block_shape_groups, "Generating block functions"):
         representative = group[0]
         block_id = (
             ("#iris:shape_groups/" + unnamespace(representative))
@@ -139,7 +147,7 @@ def generate_block_hitboxes(filename: str) -> None:
     commands = []
     for i in range(PARTITION_SUBSETS):
         commands.append(
-            f"execute if block ~ ~ ~ #iris:tree/{i} run return run function iris:get_hitbox/block/tree/{i}"
+            f"execute if block ~ ~ ~ #iris:tree/{i} run function iris:get_hitbox/block/tree/{i}"
         )
     commands.append(
         "execute if block ~ ~ ~ #iris:has_block_offset run function iris:get_hitbox/block/offset"
@@ -163,7 +171,6 @@ def generate_entity_hitboxes(filename: str) -> None:
         f"Found {len(entity_data)} entities with {len(entity_hitbox_groups)} unique hitboxes"
     )
     entity_data = {group[0]: entity_data[group[0]] for group in entity_hitbox_groups}
-    print(entity_hitbox_groups)
 
     # Generate entity type tag files for every hitbox group with at least two entities
     for group in entity_hitbox_groups:
@@ -171,7 +178,7 @@ def generate_entity_hitboxes(filename: str) -> None:
             make_tag(group, f"{ENTITY_TAG_PATH}/shape_groups")
 
     # Generate function files for every hitbox group
-    for group in entity_hitbox_groups:
+    for group in tqdm(entity_hitbox_groups, "Generating entity functions"):
         if any([id_ in SPECIAL_ENTITIES for id_ in group]):
             continue
         width = entity_data[group[0]]["width"]
