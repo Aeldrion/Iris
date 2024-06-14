@@ -1,156 +1,140 @@
 #!/usr/bin/python3
 
-from urllib.request import urlopen
-from collections import defaultdict
-import json, os, sys
+import json
+import sys
+import getopt
 
-LINK_LOCAL = "1_20_1_blocks.json"
-LINK_HTTPS = "https://raw.githubusercontent.com/Articdive/ArticData/1.20.1/1_20_1_blocks.json" #TODO replace this link with something more permanent and more up to date
-BLOCK_TAG_PATH = "data/iris/tags/blocks"
-FUNCTION_PATH = "data/iris/functions/get_hitbox"
-DIRS = [f"{BLOCK_TAG_PATH}/tree", f"{BLOCK_TAG_PATH}/shape_groups", f"{FUNCTION_PATH}/block/tree", f"{FUNCTION_PATH}/block/shape_groups"]
-OVERRIDES = {"minecraft:grass": "minecraft:short_grass"} # A quick hack for outdated block info until I have something cleaner
+try:
+    from tqdm import tqdm
+except ImportError:
+    tqdm = lambda f, _: f
+
+from util import unnamespace, group_dict_keys, make_tag, make_function, shape_to_snbt
 
 ONLINE = True
 PARTITION_SUBSETS = 5
+SPECIAL_ENTITIES = [
+    "minecraft:armor_stand",
+    "minecraft:magma_cube",
+    "minecraft:phantom",
+    "minecraft:pufferfish",
+    "minecraft:slime",
+]
 
-def group_keys_by_value(d: dict) -> list[list]:
-    """
-    Creates a 2D array where all keys with the same value in d are grouped together
-    Values are not guaranteed to be hashable
-    """
-    groups = defaultdict(list)
 
-    for key, value in d.items():
-        hash = json.dumps(value)
-        groups[hash].append(key)
-
-    return [sorted(group) for group in groups.values()]
-
-def get_relevant_block_information(block_info: dict) -> dict:
-    """Remove all block information not related to hitboxes"""
-
-    # Only remember block states and corresponding shapes
-    new_block_info = {}
-    new_block_info["states"] = []
-    for state in block_info["states"]:
-        new_block_info["states"].append({
-            "properties": state["properties"],
-            "shape": state["shape"]
-        })
-    
-    # Ignore block state properties that do not affect block shape
-    # A property = age/facing/half... - a block state = a map of properties and their values, and the information for the shape of the corresponding block
-    block_state_properties = list(block_info["states"][0]["properties"].keys())
-    for property in block_state_properties:
-        property_values = set(state["properties"][property] for state in new_block_info["states"])
+def remove_useless_properties(block: dict) -> dict:
+    """Remove block state properties that do not affect the shape of a block, e.g. waterlogged"""
+    properties = list(block["states"][0]["properties"].keys())
+    for property in properties:
+        values = set(state["properties"][property] for state in block["states"])
         shapes = {}
-        for value in property_values:
-            shapes[value] = [state["shape"] for state in new_block_info["states"] if state["properties"][property] == value]
+        for value in values:
+            shapes[value] = [
+                state["shape"]
+                for state in block["states"]
+                if state["properties"][property] == value
+            ]
         first_shape = next(iter(shapes.values()))
         if all(shape == first_shape for shape in shapes.values()):
-            # If this property does not affect block shape, remove this property from states but remove duplicates
-            property_value_representative = list(property_values)[0]
-            new_block_info["states"] = [state for state in new_block_info["states"] if state["properties"][property] == property_value_representative]
-            for state in new_block_info["states"]:
+            # If this property does not affect block shape, remove this property from states, and remove duplicates
+            first_value = list(values)[0]
+            block["states"] = [
+                state
+                for state in block["states"]
+                if state["properties"][property] == first_value
+            ]
+            for state in block["states"]:
                 state["properties"].pop(property)
 
-    return new_block_info
+    return block
 
-def get_representative(list) -> str:
-    """Returns the unnamespaced representative of a shape group"""
-    return group[0][len("minecraft:"):]
 
-def to_snbt(s: str):
-    """Converts a shape of the form [AABB[x, y, z] -> [x, y, z]] into the SNBT string of the form [{min: [x, y, z], max: [x, y, z]}]"""
-    bounding_boxes = eval(s
-                            .replace("AABB", '(')
-                            .replace(', (', '), (')
-                            .replace(' ->', ',')
-                            .replace(']]', '])]')
-                        )
-    snbt_string = ','.join([
-        f"{{min: {min_corner}, max: {max_corner}}}" for min_corner, max_corner in bounding_boxes
-    ])
-    return f"[{snbt_string}]"
-
-if __name__ == "__main__":
-    # Create required data pack directories
-    for dir in DIRS:
-        os.makedirs(dir, exist_ok=True)
-
-    # Read block data
+def generate_block_hitboxes(filename: str) -> None:
     print("Reading block data...")
-    with (urlopen(LINK_HTTPS) if ONLINE else open(LINK_LOCAL)) as file:
+    with open(filename) as file:
         block_data = json.load(file)
     for block in block_data:
-        block_data[block] = get_relevant_block_information(block_data[block])
+        block_data[block] = remove_useless_properties(block_data[block])
 
     # Group blocks with identical shapes together
-    block_shape_groups = group_keys_by_value(block_data)
-    print(f"Found {len(block_data)} blocks with {len(block_shape_groups)} unique shapes")
+    block_shape_groups = group_dict_keys(block_data)
+    print(
+        f"Found {len(block_data)} blocks with {len(block_shape_groups)} unique shapes"
+    )
     block_data = {group[0]: block_data[group[0]] for group in block_shape_groups}
 
     # Generate block tag files for every shape group with at least two blocks
     for group in block_shape_groups:
-        if len(group)==1:
-            continue
-        values = [{
-            "id": OVERRIDES.get(id_) or id_,
-            "required": False
-        } for id_ in group]
-        with open(f"{BLOCK_TAG_PATH}/shape_groups/{get_representative(group)}.json", mode='w') as block_tag_file:
-            json.dump({"values": values}, block_tag_file, indent=4)
+        if len(group) > 1:
+            make_tag(group, f"{BLOCK_TAG_PATH}/shape_groups")
 
     # Generate function files for every shape group
-    for group in block_shape_groups:
-        namespaced_representative = group[0]
-        block_id = ("#iris:shape_groups/" + get_representative(group)) if len(group)>1 else namespaced_representative
-        mcfunction_file_path = f"{FUNCTION_PATH}/block/shape_groups/{get_representative(group)}.mcfunction"
-        with open(mcfunction_file_path, mode='w') as mcfunction_file:
-            for state in block_data[namespaced_representative]["states"]:
-                # Write 'execute if block' condition, unless there is no state to observe
-                block_state = state["properties"]
-                if block_state != {}:
-                    block_state_predicate = '[' + ', '.join(
-                            map(lambda prop: "{}={}".format(prop, str(block_state[prop]).lower()), block_state.keys())
-                        ) + ']'
-                    block_predicate = f"{block_id}{block_state_predicate}"
-                    execute_command = f"execute if block ~ ~ ~ {block_predicate} run "
-                else:
-                    execute_command = ""
+    for group in tqdm(block_shape_groups, "Generating block functions"):
+        representative = group[0]
+        block_id = (
+            ("#iris:shape_groups/" + unnamespace(representative))
+            if len(group) > 1
+            else representative
+        )
 
-                # Write 'data modify' command
-                snbt = to_snbt(state["shape"])
-                data_command = f"data modify storage iris:data Shape set value {snbt}"
+        commands = []
+        for state in block_data[group[0]]["states"]:
+            # Write 'execute if block' condition, unless there is no state to observe
+            block_state = state["properties"]
+            if block_state != {}:
+                block_state_predicate = (
+                    "["
+                    + ", ".join(
+                        map(
+                            lambda prop: "{}={}".format(
+                                prop, str(block_state[prop]).lower()
+                            ),
+                            block_state.keys(),
+                        )
+                    )
+                    + "]"
+                )
+                block_predicate = f"{block_id}{block_state_predicate}"
+                execute_command = f"execute if block ~ ~ ~ {block_predicate} run "
+            else:
+                execute_command = ""
 
-                # Write full command to function
-                command = f"{execute_command}{data_command}\n"
-                mcfunction_file.write(command)
+            # Write 'data modify' command
+            snbt = shape_to_snbt(state["shape"])
+            data_command = f"data modify storage iris:data Shape set value {snbt}"
+
+            # Write full command to function
+            command = f"{execute_command}{data_command}"
+            commands.append(command)
+
+        make_function(
+            commands, f"{FUNCTION_PATH}/block/shape_groups", unnamespace(representative)
+        )
 
     # Generate block tags and functions for faster shape group lookup
-    groups_per_tag = - (-len(block_shape_groups) // PARTITION_SUBSETS)
+    groups_per_tag = -(-len(block_shape_groups) // PARTITION_SUBSETS)
     for i in range(PARTITION_SUBSETS):
-        tag_values = []
+        values = []
         commands = []
-        for group in block_shape_groups[i*groups_per_tag : (i+1)*groups_per_tag]:
+        for group in block_shape_groups[i * groups_per_tag : (i + 1) * groups_per_tag]:
             if len(group) > 1:
-                repr = get_representative(group)
-                tag_values.append(f"#iris:shape_groups/{repr}")
-                commands.append(f"execute if block ~ ~ ~ #iris:shape_groups/{repr} run function iris:get_hitbox/block/shape_groups/{repr}")
+                representative = unnamespace(group[0])
+                values.append(f"#iris:shape_groups/{representative}")
+                commands.append(
+                    f"execute if block ~ ~ ~ #iris:shape_groups/{representative} "
+                    f"run function iris:get_hitbox/block/shape_groups/{representative}"
+                )
             else:
-                tag_values.append(group[0])
-                commands.append(f"execute if block ~ ~ ~ {group[0]} run function iris:get_hitbox/block/shape_groups/{get_representative(group)}")
-        with open(f"{BLOCK_TAG_PATH}/tree/{i}.json", mode='w') as block_tag_file:
-            json.dump({"values": [{"id": value, "required": False} for value in tag_values]}, block_tag_file, indent=4)
-        with open(f"{FUNCTION_PATH}/block/tree/{i}.mcfunction", mode='w') as function_file:
-            function_file.write('\n'.join(commands))
+                values.append(group[0])
+                commands.append(
+                    f"execute if block ~ ~ ~ {group[0]} run "
+                    f"function iris:get_hitbox/block/shape_groups/{unnamespace(group[0])}"
+                )
+        make_tag(values, f"{BLOCK_TAG_PATH}/tree", name=str(i), required=False)
+        make_function(commands, f"{FUNCTION_PATH}/block/tree", str(i))
 
     # Generate master function
-    with open(f"{FUNCTION_PATH}/block.mcfunction", mode='w') as function_file:
-        print(f"Writing commands to {function_file.name}")
-
-        HEADER = """#> iris:get_hitbox/block
+    HEADER = """#> iris:get_hitbox/block
 #
 # Returns the shape of the current block
 #
@@ -160,17 +144,121 @@ if __name__ == "__main__":
 #       A list of cuboids given by two corners in the format {min: [x, y, z], max: [x, y z]}
 """
 
-        commands = []
-        for i in range(PARTITION_SUBSETS):
-            commands.append(f"execute if block ~ ~ ~ #iris:tree/{i} run return run function iris:get_hitbox/block/tree/{i}")
-        function_file.write(HEADER + '\n')
-        function_file.write('\n'.join(commands) + '\n')
+    commands = []
+    for i in range(PARTITION_SUBSETS):
+        commands.append(
+            f"execute if block ~ ~ ~ #iris:tree/{i} run function iris:get_hitbox/block/tree/{i}"
+        )
+    commands.append(
+        "execute if block ~ ~ ~ #iris:has_block_offset run function iris:get_hitbox/block/offset"
+    )
+    make_function(commands, FUNCTION_PATH, "block", header=HEADER)
 
-    if "--debug" in sys.argv:
-        for group in block_shape_groups:
-            if len(group)==1:
-                continue
-            block_data[group[0]]["aliases"] = group[1:]
-        with open("block_hitboxes.json", mode='w') as block_hitbox_file:
-            print(f"Writing hitbox information to {block_hitbox_file.name}")
-            json.dump(block_data, block_hitbox_file, indent=2)
+
+def generate_entity_hitboxes(filename: str) -> None:
+    print("Reading entity data...")
+    with open(filename) as file:
+        entity_data = json.load(file)
+    entity_data = {
+        key: entity_data[key]
+        for key in entity_data
+        if entity_data[key]["width"] > 0 and entity_data[key]["height"] > 0
+    }
+
+    # Group entities with identical hitboxes together
+    entity_hitbox_groups = group_dict_keys(entity_data)
+    print(
+        f"Found {len(entity_data)} entities with {len(entity_hitbox_groups)} unique hitboxes"
+    )
+    entity_data = {group[0]: entity_data[group[0]] for group in entity_hitbox_groups}
+
+    # Generate entity type tag files for every hitbox group with at least two entities
+    for group in entity_hitbox_groups:
+        if len(group) > 1:
+            make_tag(group, f"{ENTITY_TAG_PATH}/shape_groups")
+
+    # Generate function files for every hitbox group
+    for group in tqdm(entity_hitbox_groups, "Generating entity functions"):
+        if any([id_ in SPECIAL_ENTITIES for id_ in group]):
+            continue
+        width = entity_data[group[0]]["width"]
+        height = entity_data[group[0]]["height"]
+        commands = [
+            f"scoreboard players set $entity_width iris {int(1e6*width)}",
+            f"scoreboard players set $entity_height iris {int(1e6*height)}",
+        ]
+        make_function(
+            commands, f"{FUNCTION_PATH}/entity/shape_groups", unnamespace(group[0])
+        )
+
+    # Generate block tags and functions for faster shape group lookup
+    groups_per_tag = -(-len(entity_hitbox_groups) // PARTITION_SUBSETS)
+    for i in range(PARTITION_SUBSETS):
+        tag_values = []
+        commands = []
+        for group in entity_hitbox_groups[
+            i * groups_per_tag : (i + 1) * groups_per_tag
+        ]:
+            representative = unnamespace(group[0])
+            if len(group) > 1:
+                tag_values.append(f"#iris:shape_groups/{representative}")
+                commands.append(
+                    f"execute if entity @s[type=#iris:shape_groups/{representative}] "
+                    f"run function iris:get_hitbox/entity/shape_groups/{representative}"
+                )
+            else:
+                tag_values.append(group[0])
+                commands.append(
+                    f"execute if entity @s[type={group[0]}] "
+                    f"run function iris:get_hitbox/entity/shape_groups/{representative}"
+                )
+        make_function(commands, f"{FUNCTION_PATH}/entity/tree", str(i))
+        make_tag(tag_values, f"{ENTITY_TAG_PATH}/tree", name=str(i), required=False)
+
+
+if __name__ == "__main__":
+    namespace = "iris"
+    entity_shapes_path = ""
+    block_shapes_path = ""
+    version = None
+
+    options, args = getopt.getopt(
+        sys.argv[1:], "b:e:n:v:", ["blocks=", "entities=", "namespace=", "version="]
+    )
+
+    for name, value in options:
+        if name in ["-e", "--entities"]:
+            entity_shapes_path = value
+        elif name in ["-b", "--blocks"]:
+            block_shapes_path = value
+        elif name in ["-v", "--version"]:
+            try:
+                version = int(value)
+                assert version >= 26
+            except:
+                print("Invalid or unsupported data pack format")
+                exit()
+        elif name in ["-n", "--namespace"]:
+            namespace = value
+
+    if version is None:
+        print("Missing data pack format")
+        exit()
+
+    if not (block_shapes_path or entity_shapes_path):
+        print("Missing shape information")
+        exit()
+
+    TAG_PATH = f"data/{namespace}/tags"
+    BLOCK_TAG_PATH = f"{TAG_PATH}/block" + ("s" if version < 43 else "")
+    ENTITY_TAG_PATH = f"{TAG_PATH}/entity_type" + ("s" if version < 43 else "")
+    FUNCTION_PATH = (
+        f"data/{namespace}/function" + ("s" if version < 45 else "") + "/get_hitbox"
+    )
+
+    if block_shapes_path:
+        generate_block_hitboxes(block_shapes_path)
+    if entity_shapes_path:
+        generate_entity_hitboxes(entity_shapes_path)
+    if not (block_shapes_path or entity_shapes_path):
+        print("Missing shape information")
