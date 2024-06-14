@@ -147,14 +147,15 @@ Since this will most likely be used mostly by other data pack nerds, here is a s
 
 ### Getting the coordinates/rotation
 
-`execute store` can be used to get an entity's position, however any scale over 70 is unusable for X and Z coordinates due to overflowing. To get the current position with enough detail, string manipulation is done with macro functions to cut and read everything past the decimal point in any position coordinate. From then on, the starting position is saved as six scores: the integer part (`$[x]`, `$[y]`, `$[z]`) and the fractional part (`${x}`, `${y}`, `${z}`).
+`execute store` can be used to get an entity's position, however any scale over 70 is unusable for X and Z coordinates due to possible overflowing. To get the current position with enough detail, string manipulation is done with macro functions to cut and read everything past the decimal point in any position coordinate. From then on, the starting position is saved as six scores: the integer part (`$[x]`, `$[y]`, `$[z]`) and the fractional part (`${x}`, `${y}`, `${z}`).
 
-To get the rotation, a marker is summoned 1,000,000 blocks forward starting from `0.0`, `0.0`, `0.0` using the executing rotation. The marker's position describes the rotation as a steering vector that can be used in later calculations.
+To get the rotation, a marker is summoned 1,000,000 blocks forward starting from world origin (`0.0`, `0.0`, `0.0`) using the executing rotation. The marker's position describes the rotation as a steering vector that can be used in later calculations.
 
 ### Raycasting
 
-The data pack solves simple linear equations to figure out which tile it hits next (ray/plane intersections), instead of progressing by a fixed length at every iteration like most raycasting functions do. Upon hitting a block other than air (or an entity, if `TargetEntities` is true), it gets its shape as a list of axis-aligned bounding boxes (AABB) and checks which faces it hits. For every AABB, there are three faces to check, and the three others (back-faces) are culled.
+Instead of progressing by a fixed length at every iteration like most raycasting functions do, the data pack solves a series of simple linear equations to figure out which tile the ray traverses next (ray/plane intersections). Upon hitting a block other than air (or an entity, if `TargetEntities` is true), it gets its shape as a list of axis-aligned bounding boxes (AABB) and checks which faces the ray hits. For every AABB, there are six candidates; back-face culling narrows it down to three.
 
 ### Getting the hitbox of a block
 
-Block hitbox information is pulled from [ArticData](https://github.com/Articdive/ArticData). Blocks with the same set of block state properties and corresponding hitboxes are grouped together in block tags. Iris also accounts for the random horizontal offset on the hitbox of a few blocks, namely flowers, bamboo, pointed dripstone, and mangrove propagules.
+Block hitbox information is pulled from [IrisDataGen](https://github.com/Aeldrion/IrisDataGen). Blocks with the same set of block state properties and corresponding hitboxes are grouped together in block tags. Iris also accounts for the random horizontal offset on the hitbox of a few blocks, namely flowers, bamboo, pointed dripstone, and mangrove propagules. Minecraft computes this offset with a seeded RNG using the tile's X and Z coordinates; this offset can be identically computed easily on the scoreboard.
+
