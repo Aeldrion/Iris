@@ -2,6 +2,7 @@
 #
 # Computes seeded block offset for e.g. flowers, assuming the shape comprises a single box
 #
+# @within iris:get_hitbox/block
 # @writes
 #	storage iris:data Shape: compound[]
 #       A list of cuboids given by two corners in the format {min: [x, y, z], max: [x, y z]}

@@ -3,6 +3,7 @@
 # Auxiliary command for running macros from find_next_block
 # Note: because there are only three possible input value combinations, they should all be cached and so the overhead from runtime compilation of macro lines should be minimal
 #
+# @within iris:raycast/find_next_block
 # @input
 #   a: The axis along which we are moving (for example, if the ray moves one tile up, this is 'y'). One of 'x', 'y', or 'z'.
 #   b: Another axis. One of 'x', 'y', or 'z'.

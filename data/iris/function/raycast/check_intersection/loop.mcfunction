@@ -2,16 +2,15 @@
 #
 # Tests for ray-box intersections with all axis-aligned bounding boxes of a hitbox
 #
+# @within iris:raycast/test_for_block
+# @within iris:raycast/test_for_entity
+# @within iris:raycast/check_intersection/loop
 # @reads
 #   storage iris:data Shape
 #       A list of axis-aligned bounding boxes of the form {min: [x, y, z], max: [x, y, z]}
 # @output
 #   Success: 1 if a box is hit, 0 otherwise
 #   Result: the distance to the first box that is hit
-# @private
-# @within iris:raycast/test_for_block
-# @within iris:raycast/test_for_entity
-# @within iris:raycast/check_intersection/loop
 
 # Test for intersection with a single bounding box
 data modify storage iris:data Box set from storage iris:data Shape[-1]

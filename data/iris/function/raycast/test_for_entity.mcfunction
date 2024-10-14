@@ -1,5 +1,6 @@
 #> iris:raycast/test_for_entity
 #
+# @within iris:raycast/loop
 # @output
 #   Result: 0
 #   Success: 1 if an entity was hit, 0 otherwise

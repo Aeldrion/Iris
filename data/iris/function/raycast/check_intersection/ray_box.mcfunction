@@ -2,6 +2,7 @@
 #
 # Converts an axis-aligned bounding box into three faces (the other tree faces are occluded) and tests for ray-plane intersections with any of them
 #
+# @within iris:raycast/check_intersection/loop
 # @reads
 #   storage iris:data Box
 #       min: float[]
@@ -11,8 +12,6 @@
 # @output
 #   Success: 1 if any face of the box is hit, 0 otherwise
 #   Result: the distance, in mm, before the first face that is hit
-# @private
-# @within iris:raycast/check_intersection/loop
 
 # Decompose the box as three faces
 data modify storage iris:data Faces set value [{Direction: "WEST_EAST"}, {Direction: "UP_DOWN"}, {Direction: "NORTH_SOUTH"}]

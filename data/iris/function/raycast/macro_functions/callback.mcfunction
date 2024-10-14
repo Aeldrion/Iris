@@ -2,8 +2,8 @@
 #
 # Calls the provided function
 #
+# @within iris:raycast/on_hit
 # @input
 #   function: a function name or function tag name
-# @within iris:raycast/on_hit
 
 $function $(function)

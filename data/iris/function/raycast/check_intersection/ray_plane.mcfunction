@@ -2,6 +2,7 @@
 #
 # Tests for ray-plane intersections with a face
 #
+# @within iris:raycast/check_intersection/ray_box
 # @reads
 #   storage iris:data Face: compound
 #       Direction: string
@@ -12,8 +13,6 @@
 # @output
 #   Success: 1 if the face is hit, 0 otherwise
 #   Result: the distance, in mm, before the face is hit
-# @private
-# @within iris:raycast/check_intersection/ray_box
 
 # Save face coordinates
 execute store result score $x0 iris run data get storage iris:data Face.min[0] 1000000

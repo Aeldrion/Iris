@@ -1,5 +1,6 @@
 #> iris:raycast/test_for_block
 #
+# @within iris:raycast/loop
 # @output
 #   Result: 0
 #   Success: 1 if a block was hit, 0 otherwise
