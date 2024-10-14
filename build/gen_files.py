@@ -13,12 +13,20 @@ from util import unnamespace, group_dict_keys, make_tag, make_function, shape_to
 
 ONLINE = True
 PARTITION_SUBSETS = 5
+
+# Entities with variable sizes, for which not to override functions
 SPECIAL_ENTITIES = [
     "minecraft:armor_stand",
     "minecraft:magma_cube",
     "minecraft:phantom",
     "minecraft:pufferfish",
     "minecraft:slime",
+]
+
+# Blocks locked behind experimental features; only needs to contain blocks that are unique in their own shape groups
+EXPERIMENTAL_BLOCKS = [
+    "minecraft:pale_moss_carpet",
+    "minecraft:pale_hanging_moss"
 ]
 
 
@@ -63,19 +71,25 @@ def generate_block_hitboxes(filename: str) -> None:
     )
     block_data = {group[0]: block_data[group[0]] for group in block_shape_groups}
 
+    def get_group_id(group: list[str]):
+        representative = group[0]
+        name = unnamespace(representative)
+        if len(group) > 1:
+            return f"#iris:shape_groups/{name}"
+        if representative in EXPERIMENTAL_BLOCKS:
+            return f"#iris:experiments/{name}"
+        return representative
+
     # Generate block tag files for every shape group with at least two blocks
     for group in block_shape_groups:
         if len(group) > 1:
             make_tag(group, f"{BLOCK_TAG_PATH}/shape_groups")
+        elif group[0] in EXPERIMENTAL_BLOCKS:
+            make_tag(group, f"{BLOCK_TAG_PATH}/experiments")
 
     # Generate function files for every shape group
     for group in tqdm(block_shape_groups, "Generating block functions"):
-        representative = group[0]
-        block_id = (
-            ("#iris:shape_groups/" + unnamespace(representative))
-            if len(group) > 1
-            else representative
-        )
+        block_id = get_group_id(group)
 
         commands = []
         for state in block_data[group[0]]["states"]:
@@ -108,7 +122,7 @@ def generate_block_hitboxes(filename: str) -> None:
             commands.append(command)
 
         make_function(
-            commands, f"{FUNCTION_PATH}/block/shape_groups", unnamespace(representative)
+            commands, f"{FUNCTION_PATH}/block/shape_groups", unnamespace(group[0])
         )
 
     # Generate block tags and functions for faster shape group lookup
@@ -116,20 +130,15 @@ def generate_block_hitboxes(filename: str) -> None:
     for i in range(PARTITION_SUBSETS):
         values = []
         commands = []
+
         for group in block_shape_groups[i * groups_per_tag : (i + 1) * groups_per_tag]:
-            if len(group) > 1:
-                representative = unnamespace(group[0])
-                values.append(f"#iris:shape_groups/{representative}")
-                commands.append(
-                    f"execute if block ~ ~ ~ #iris:shape_groups/{representative} "
-                    f"run function iris:get_hitbox/block/shape_groups/{representative}"
-                )
-            else:
-                values.append(group[0])
-                commands.append(
-                    f"execute if block ~ ~ ~ {group[0]} run "
-                    f"function iris:get_hitbox/block/shape_groups/{unnamespace(group[0])}"
-                )
+            block_id = get_group_id(group)
+            values.append(block_id)
+            commands.append(
+                f"execute if block ~ ~ ~ {block_id} "
+                f"run function iris:get_hitbox/block/shape_groups/{unnamespace(group[0])}"
+            )
+
         make_tag(values, f"{BLOCK_TAG_PATH}/tree", name=str(i), required=False)
         make_function(commands, f"{FUNCTION_PATH}/block/tree", str(i))
 
