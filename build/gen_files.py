@@ -19,15 +19,13 @@ SPECIAL_ENTITIES = [
     "minecraft:armor_stand",
     "minecraft:magma_cube",
     "minecraft:phantom",
+    "minecraft:player",
     "minecraft:pufferfish",
     "minecraft:slime",
 ]
 
 # Blocks locked behind experimental features; only needs to contain blocks that are unique in their own shape groups
-EXPERIMENTAL_BLOCKS = [
-    "minecraft:pale_moss_carpet",
-    "minecraft:pale_hanging_moss"
-]
+EXPERIMENTAL_BLOCKS = []
 
 
 def remove_useless_properties(block: dict) -> dict:
@@ -171,7 +169,9 @@ def generate_entity_hitboxes(filename: str) -> None:
     entity_data = {
         key: entity_data[key]
         for key in entity_data
-        if entity_data[key]["width"] > 0 and entity_data[key]["height"] > 0
+        if key not in SPECIAL_ENTITIES
+        and entity_data[key]["width"] > 0
+        and entity_data[key]["height"] > 0
     }
 
     # Group entities with identical hitboxes together
@@ -188,8 +188,6 @@ def generate_entity_hitboxes(filename: str) -> None:
 
     # Generate function files for every hitbox group
     for group in tqdm(entity_hitbox_groups, "Generating entity functions"):
-        if any([id_ in SPECIAL_ENTITIES for id_ in group]):
-            continue
         width = entity_data[group[0]]["width"]
         height = entity_data[group[0]]["height"]
         commands = [
