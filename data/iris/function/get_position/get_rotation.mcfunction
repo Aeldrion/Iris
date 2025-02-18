@@ -2,8 +2,8 @@
 #
 # Returns the context rotation as a vector
 #
-# @within iris:get_position/main
 # @context A marker and a rotation
+# @within iris:get_position/main
 
 execute positioned 0.0 0.0 0.0 run teleport @s ^ ^ ^1000000
 data modify storage iris:data Pos set from entity @s Pos

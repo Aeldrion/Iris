@@ -3,7 +3,6 @@
 # Writes all available information about the encountered block or entity
 # See iris:get_target for full documentation
 #
-# @private
 # @within iris:raycast/loop
 
 # Write target type (one of BLOCK, ENTITY)

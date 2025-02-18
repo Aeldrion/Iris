@@ -66,7 +66,7 @@
 
 # Reset tags, scores and storage
 tag @e remove iris.targeted_entity
-tag @e remove iris.potential_target
+tag @e remove iris.possible_target
 kill @e[type=minecraft:marker, tag=iris.targeted_block]
 scoreboard players reset * iris.id
 

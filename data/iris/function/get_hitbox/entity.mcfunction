@@ -14,7 +14,6 @@ execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/1] ru
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/2] run function iris:get_hitbox/entity/tree/2
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/3] run function iris:get_hitbox/entity/tree/3
 execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/4] run function iris:get_hitbox/entity/tree/4
-execute if score $entity_found iris matches 0 if entity @s[type=#iris:tree/5] run function iris:get_hitbox/entity/tree/5
 
 # Scale
 function iris:get_hitbox/entity/scale
@@ -29,6 +28,7 @@ scoreboard players operation $entity_{x} iris = ${x} iris
 scoreboard players operation $entity_{y} iris = ${y} iris
 scoreboard players operation $entity_{z} iris = ${z} iris
 execute at @s summon minecraft:marker run function iris:get_position/get_coordinates
+kill @e[type=minecraft:marker, tag=iris.coordinate_getter]
 scoreboard players operation $entity_[x] iris >< $[x] iris
 scoreboard players operation $entity_[y] iris >< $[y] iris
 scoreboard players operation $entity_[z] iris >< $[z] iris
@@ -81,8 +81,8 @@ execute store result storage iris:data Shape[-1].max[1] double 0.000001 run scor
 execute store result storage iris:data Shape[-1].max[2] double 0.000001 run scoreboard players get $entity_z1 iris
 
 # Special case for item frames and paintings which are annoying
-execute if score $entity_found iris matches 0 store success score $entity_found iris store success score $entity.is_item_frame iris if entity @s[type=#iris:item_frames]
-execute if score $entity.is_item_frame iris matches 1 run function iris:get_hitbox/entity/item_frame
+#execute if score $entity_found iris matches 0 store success score $entity_found iris store success score $entity.is_item_frame iris if entity @s[type=#iris:item_frames]
+#execute if score $entity.is_item_frame iris matches 1 run function iris:get_hitbox/entity/item_frame
 
 # Give this entity a tag and an ID, and store the ID in the hitbox
 tag @s add iris.possible_target
