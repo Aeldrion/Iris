@@ -81,8 +81,8 @@ execute store result storage iris:data Shape[-1].max[1] double 0.000001 run scor
 execute store result storage iris:data Shape[-1].max[2] double 0.000001 run scoreboard players get $entity_z1 iris
 
 # Special case for item frames and paintings which are annoying
-execute if score $entity_found iris matches 0 store success score $entity_found iris store success score $entity.is_item_frame iris if entity @s[type=#iris:item_frames]
-execute if score $entity.is_item_frame iris matches 1 run function iris:get_hitbox/entity/item_frame
+#execute if score $entity_found iris matches 0 store success score $entity_found iris store success score $entity.is_item_frame iris if entity @s[type=#iris:item_frames]
+#execute if score $entity.is_item_frame iris matches 1 run function iris:get_hitbox/entity/item_frame
 
 # Give this entity a tag and an ID, and store the ID in the hitbox
 tag @s add iris.possible_target
