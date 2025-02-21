@@ -6,7 +6,6 @@
 #
 # @context a marker
 # @within iris:get_target
-# @within iris:get_hitbox/entity
 # @writes
 #    score $[x] iris
 #        The integer x coordinate of the current position
@@ -27,6 +26,10 @@
 #    score #dz iris
 #        The z coordinate of the steering vector of the ray, represented by an integer between -1000000 and 1000000
 
-function iris:get_position/get_coordinates
-function iris:get_position/get_rotation
+execute if data storage iris:settings OverrideCoordinates run function iris:get_position/override_coordinates
+execute unless data storage iris:settings OverrideCoordinates run function iris:get_position/get_coordinates
+
+execute if data storage iris:settings OverrideSteering run function iris:get_position/override_steering
+execute unless data storage iris:settings OverrideSteering run function iris:get_position/get_rotation
+
 kill @s

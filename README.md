@@ -45,13 +45,16 @@ If a block was hit, a marker with the `iris.targeted_block` tag is summoned in t
 
 Settings of the function can be modified in the `iris:settings` storage:
 
-| Tag                 | Description                                              | Default value |
-|---------------------|----------------------------------------------------------|---------------|
-| `MaxRecursionDepth` | How many blocks to traverse before giving up             | 16            |
-| `TargetEntities`    | Whether or not to look for collisions with entities      | `false`       |
-| `Callback`          | A function or function tag to run where the raycast ends | Unset         |
-| `Blacklist`         | Which blocks to ignore during block traversal            | `"#iris:air"` |
-| `Whitelist`         | The only blocks to look for during traversal             | Unset         |
+| Tag                   | Description                                                    | Default value |
+|-----------------------|----------------------------------------------------------------|---------------|
+| `MaxRecursionDepth`   | How many blocks to traverse before giving up                   | 16            |
+| `TargetEntities`      | Whether or not to look for collisions with entities            | `false`       |
+| `Callback`            | A function or function tag to run where the raycast ends       | Unset         |
+| `Blacklist`           | Which blocks to ignore during block traversal                  | `"#iris:air"` |
+| `Whitelist`           | The only blocks to look for during traversal                   | Unset         |
+| `OverrideCoordinates` | Force raycast to start at coordinates different than executor  | Unset         |
+| `OverrideSteering`    | Force raycast to use steering vector different than executor   | Unset         |
+	
 
 If both `Blacklist` and `Whitelist` are set, all blocks outside of the whitelist or in the blacklist will be ignored. If both `Blacklist` and `Whitelist` are unset, collisions will be tested for all tiles traversed. It is recommended that blocks with no outline (e.g. `air`) be blacklisted, or that a whitelist be set up to ignore them.
 
