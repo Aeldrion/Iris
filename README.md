@@ -119,14 +119,14 @@ execute at @e[type=minecraft:marker, tag=iris.targeted_block] if block ~ ~ ~ min
 
 **Note:** Here, we check that the placing position is not occupied (`if block ~ ~ ~ minecraft:air`). A better approach would be to test for any replaceable block (including water, tall gras...) with a block tag check.
 
-### `iris:set_coordinates`
+### `iris:set_coordinates/main`
 
-Teleports the executing entity to a position provided by six scores on the `iris` objective: `$[x]`, `$[y]`, `$[z]` for integer coordinates, `${x}`, `${y}`, `${z}` for fractional coordinates (with a scale of 1,000,000). After running `iris:get_target`, the six scores are set to the exact position where the ray lands and so `iris:get_target` and `iris:set_coordinates` can easily be used in conjunction:
+Teleports the executing entity to a position provided by six scores on the `iris` objective: `$[x]`, `$[y]`, `$[z]` for integer coordinates, `${x}`, `${y}`, `${z}` for fractional coordinates (with a scale of 1,000,000). After running `iris:get_target`, the six scores are set to the exact position where the ray lands and so `iris:get_target` and `iris:set_coordinates/main` can easily be used in conjunction:
 
 ```mcfunction
 # Teleport the player where they are looking
 execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
-execute as <player> run function iris:set_coordinates
+execute as <player> run function iris:set_coordinates/main
 ```
 
 #### Output
