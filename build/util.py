@@ -1,5 +1,6 @@
 from collections import defaultdict
-import json, os
+import json
+import os
 
 
 def shape_to_snbt(s: str) -> str:

@@ -7,7 +7,10 @@ import getopt
 try:
     from tqdm import tqdm
 except ImportError:
-    tqdm = lambda f, _: f
+
+    def tqdm(f, _):
+        return f
+
 
 from util import unnamespace, group_dict_keys, make_tag, make_function, shape_to_snbt
 
@@ -15,13 +18,12 @@ ONLINE = True
 PARTITION_SUBSETS = 5
 
 # Entities with variable sizes, for which not to override functions
-SPECIAL_ENTITIES = [
-    "minecraft:armor_stand",
-    "minecraft:magma_cube",
-    "minecraft:phantom",
-    "minecraft:player",
-    "minecraft:pufferfish",
-    "minecraft:slime",
+SPECIAL_ENTITY_GROUPS = [
+    ["minecraft:armor_stand"],
+    ["minecraft:magma_cube", "minecraft:slime"],
+    ["minecraft:phantom"],
+    ["minecraft:player"],
+    ["minecraft:pufferfish"],
 ]
 
 # Blocks locked behind experimental features; only needs to contain blocks that are unique in their own shape groups
@@ -169,7 +171,7 @@ def generate_entity_hitboxes(filename: str) -> None:
     entity_data = {
         key: entity_data[key]
         for key in entity_data
-        if key not in SPECIAL_ENTITIES
+        if all(key not in group for group in SPECIAL_ENTITY_GROUPS)
         and entity_data[key]["width"] > 0
         and entity_data[key]["height"] > 0
     }
@@ -182,7 +184,7 @@ def generate_entity_hitboxes(filename: str) -> None:
     entity_data = {group[0]: entity_data[group[0]] for group in entity_hitbox_groups}
 
     # Generate entity type tag files for every hitbox group with at least two entities
-    for group in entity_hitbox_groups:
+    for group in entity_hitbox_groups + SPECIAL_ENTITY_GROUPS:
         if len(group) > 1:
             make_tag(group, f"{ENTITY_TAG_PATH}/shape_groups")
 
@@ -191,14 +193,15 @@ def generate_entity_hitboxes(filename: str) -> None:
         width = entity_data[group[0]]["width"]
         height = entity_data[group[0]]["height"]
         commands = [
-            f"scoreboard players set $entity_width iris {int(1e6*width)}",
-            f"scoreboard players set $entity_height iris {int(1e6*height)}",
+            f"scoreboard players set $entity_width iris {int(1e6 * width)}",
+            f"scoreboard players set $entity_height iris {int(1e6 * height)}",
         ]
         make_function(
             commands, f"{FUNCTION_PATH}/entity/shape_groups", unnamespace(group[0])
         )
 
-    # Generate block tags and functions for faster shape group lookup
+    # Generate entity type tags and functions for faster shape group lookup
+    entity_hitbox_groups += SPECIAL_ENTITY_GROUPS
     groups_per_tag = -(-len(entity_hitbox_groups) // PARTITION_SUBSETS)
     for i in range(PARTITION_SUBSETS):
         tag_values = []
@@ -242,8 +245,11 @@ if __name__ == "__main__":
             try:
                 version = int(value)
                 assert version >= 26
-            except:
-                print("Invalid or unsupported data pack format")
+            except ValueError:
+                print("Invalid data pack format")
+                exit()
+            except AssertionError:
+                print("Unsupported data pack format")
                 exit()
         elif name in ["-n", "--namespace"]:
             namespace = value
