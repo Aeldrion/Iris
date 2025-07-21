@@ -17,11 +17,11 @@
 #       Blacklist: string
 #           A block or a block tag to ignore
 #           Defaults to "#iris:shape_groups/air"
-#           Should be reset if unused, not set to an empty string
+#           Should be reset or set to an empty string if unused
 #       Whitelist: string
 #           A block or a block tag to look for (all other blocks are ignored)
 #           Unset by default
-#           Should be reset if unused, not set to an empty string
+#           Should be reset or set to an empty string if unused
 # @writes
 #   storage iris:output
 #       TargetType: string
@@ -58,30 +58,14 @@
 #              Which face of the obstacle is hit
 #              One of WEST, EAST, UP, DOWN, NORTH, SOUTH
 #   score $total_distance iris
-#       The distance (in µm) travelled by the ray before it hits a block
+#       The distance (in millionths of a block) travelled by the ray before it hits a block
 #       Unset if no block or entity is found
 # @output
 #   Result: The distance (in blocks, rounded up) before an obstacle is hit, 0 if no block or entity is found
 #   Success: 1 if a block or entity was hit, 0 otherwise
 
 # Reset tags, scores and storage
-tag @e remove iris.targeted_entity
-tag @e remove iris.possible_target
-kill @e[type=minecraft:marker, tag=iris.targeted_block]
-scoreboard players reset * iris.id
-
-data modify storage iris:output TargetType set value "NONE"
-data remove storage iris:output TargetedBlock
-data remove storage iris:output TargetedEntity
-data remove storage iris:output TargetPosition
-data remove storage iris:output Distance
-data remove storage iris:output TargetedBox
-data remove storage iris:output TargetedFace
-
-scoreboard players set $depth iris 0
-scoreboard players set $min_distance iris 2147483647
-scoreboard players set $max_entity_id iris 0
-scoreboard players set $total_distance iris 0
+function iris:setup/cleanup
 
 # Get initial position/rotation
 execute summon minecraft:marker run function iris:get_position/main
