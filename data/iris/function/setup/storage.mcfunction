@@ -4,11 +4,13 @@
 #
 # @within iris:setup/load
 
-data merge storage iris:data {is_setup: 1b}
+data merge storage iris:data {\
+    pack_version: 2\
+}
 
 # Set default settings
 data merge storage iris:settings {\
-    TargetEntities: false,\
-    MaxRecursionDepth: 16,\
-    Blacklist: "#iris:shape_groups/air"\
+    target_entities: false,\
+    max_distance: 5.0,\
+    blacklist: "#iris:shape_groups/air"\
 }

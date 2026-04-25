@@ -4,12 +4,7 @@
 #
 # @handles #minecraft:load
 
-# IDE storage definitions for Spyglass
-#define storage iris:data
-#define storage iris:args
-#define storage iris:settings
-#define storage iris:output
-
 # Setup scoreboard and storage
 function iris:setup/scoreboard
-execute unless data storage iris:data is_setup run function iris:setup/storage
+execute store result score $storage_format iris run data get storage iris:data pack_version
+execute if score $storage_format iris < $iris_format iris run function iris:setup/storage

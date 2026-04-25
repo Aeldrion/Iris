@@ -8,55 +8,53 @@
 # @context an entity, their eye position, and their rotation
 # @reads
 #   storage iris:settings
-#       TargetEntities: byte
+#       target_entities: byte
 #           Whether or not to look for entities
 #           Defaults to false (0b)
-#       MaxRecursionDepth: int
-#           How many blocks to traverse before giving up
-#           Defaults to 16
-#       Blacklist: string
+#       max_distance: float
+#           What distance to traverse before giving up
+#           Defaults to 5
+#       blacklist: string
 #           A block or a block tag to ignore
 #           Defaults to "#iris:shape_groups/air"
 #           Should be reset or set to an empty string if unused
-#       Whitelist: string
+#       whitelist: string
 #           A block or a block tag to look for (all other blocks are ignored)
 #           Unset by default
 #           Should be reset or set to an empty string if unused
+#       callback: string
+#           A function or a function tag to run wherever the ray hits
+#           If the raycast fails, the callback is never called
+#           Can include anything that works in the function command, e.g. "foo:bar {arg: 1}" or "foo:bar with storage baz:qux"
 # @writes
 #   storage iris:output
-#       TargetType: string
-#           What the ray hits
-#           One of "BLOCK", "ENTITY", or "NONE"
-#       TargetedBlock: int[]
-#           The integer coordinates of the block that is hit
-#           Corresponds to the "Targeted Block" field in the debug screen
-#           Unset if TargetType is not BLOCK
-#       TargetedEntity: int
-#           The ID of the targeted entity on objective iris.entity_id
-#           The entity executing this function cannot be targeted
-#           Unset if TargetType is not ENTITY
-#       TargetPosition
-#           Unset if TargetType is NONE
-#           tile: int[]
-#               The integer coordinates of the last traversed tile
-#           point: double[]
-#               Where exactly the ray hits an obstacle within the last traversed tile, as three coordinates between 0 and 1
-#       Distance: double
-#           How long the ray travels before hitting an obstacle
-#           Unset if TargetType is NONE
-#       TargetedBox: compound
-#           The axis-aligned bounding box that was hit within the last traversed tile, as six coordinates between 0 and 1
-#           Unset if TargetType is NONE
-#           min: double[]
-#           max: double[]
-#       TargetedFace: compound
-#           The face ŧhat was hit within the last traversed tile, as six coordinates between 0 and 1
-#           Unset if TargetType is NONE
-#           min: double[]
-#           max: double[]
-#           Direction: string
-#              Which face of the obstacle is hit
-#              One of WEST, EAST, UP, DOWN, NORTH, SOUTH
+#       type: string
+#           What the ray hit
+#           One of "block", "entity" or "none"
+#       distance: double
+#           How long the ray traveled before hitting an obstacle
+#           Unset if type is "none"
+#       block: int[]
+#           The integer coordinates of the tile that was hit
+#           Set only if type is "block"
+#       UUID: int[]
+#           The UUID of the entity that was hit
+#           Set only if type is "entity"
+#       target
+#           position: double[]
+#               The exact position where the ray hit an obstacle
+#           normal: int[]
+#               The face normal at the point of collision; for example, if a block is being looked from above, this should be [0, 1, 0]
+#           box
+#               min: double[]
+#                   The lower coordinates within the target tile (between 0.0 and 1.0) of the AABB that the ray hit
+#               max: double[]
+#                   The greater coordinates within the target tile of the AABB that the ray hit
+#           face
+#               min: double[]
+#                   The lower coordinates within the target tile (between 0.0 and 1.0) of the face that the ray hit
+#               max: double[]
+#                   The greater coordinates within the target tile (between 0.0 and 1.0) of the face that the ray hit
 #   score $total_distance iris
 #       The distance (in millionths of a block) travelled by the ray before it hits a block
 #       Unset if no block or entity is found
@@ -68,9 +66,9 @@
 function iris:setup/cleanup
 
 # Get initial position/rotation
-execute summon minecraft:marker run function iris:get_position/main
+function iris:get_position/main
 
 # Start the loop
 tag @s add iris.executing
-execute store result score $max_depth iris run data get storage iris:settings MaxRecursionDepth
+execute store result score $max_distance iris run data get storage iris:settings max_distance 1000000
 return run function iris:raycast/loop

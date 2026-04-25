@@ -1,6 +1,6 @@
 #> iris:raycast/loop
 #
-# Loops forward until an obstacle is hit or until the maximum recursion depth has been reached
+# Loops forward until an obstacle is hit or until the maximum distance has been reached
 #
 # @context a marker and the current ray position
 # @within iris:get_target
@@ -16,10 +16,9 @@ execute if score $entity_hit iris matches 1 run return run function iris:raycast
 execute store result score $to_next_block iris run function iris:raycast/find_next_block
 scoreboard players operation $total_distance iris += $to_next_block iris
 
-# Fail if the maximum recursion depth is reached and nothing was found
-scoreboard players add $depth iris 1
-execute if score $depth iris = $max_depth iris run tag @s remove iris.executing
-execute if score $depth iris = $max_depth iris run return fail
+# If the maximum distance is reached and nothing was found, fail
+execute if score $total_distance iris > $max_distance iris run tag @s remove iris.executing
+execute if score $total_distance iris > $max_distance iris run return fail
 
 # Otherwise, loop this function at the next block
 execute if data storage iris:data {NextCoordinateChange: "x"} if score $dx iris matches 0.. positioned ~1 ~ ~ run return run function iris:raycast/loop
