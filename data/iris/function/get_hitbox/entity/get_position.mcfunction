@@ -16,8 +16,6 @@ scoreboard players operation $entity_{x} iris = ${x} iris
 scoreboard players operation $entity_{y} iris = ${y} iris
 scoreboard players operation $entity_{z} iris = ${z} iris
 execute at @s summon minecraft:marker run function iris:get_position/get_coordinates
-teleport @e[type=minecraft:marker, tag=iris.coordinate_getter] ~ ~1000 ~
-kill @e[type=minecraft:marker, tag=iris.coordinate_getter]
 scoreboard players operation $entity_[x] iris >< $[x] iris
 scoreboard players operation $entity_[y] iris >< $[y] iris
 scoreboard players operation $entity_[z] iris >< $[z] iris
