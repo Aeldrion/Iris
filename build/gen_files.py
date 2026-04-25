@@ -7,7 +7,10 @@ import getopt
 try:
     from tqdm import tqdm
 except ImportError:
-    tqdm = lambda f, _: f
+
+    def tqdm(f, x):
+        return f
+
 
 from util import unnamespace, group_dict_keys, make_tag, make_function, shape_to_snbt
 
@@ -30,26 +33,24 @@ EXPERIMENTAL_BLOCKS = []
 
 def remove_useless_properties(block: dict) -> dict:
     """Remove block state properties that do not affect the shape of a block, e.g. waterlogged"""
-    properties = list(block["states"][0]["properties"].keys())
+    properties = list(block[0]["properties"].keys())
     for property in properties:
-        values = set(state["properties"][property] for state in block["states"])
+        values = set(state["properties"][property] for state in block)
         shapes = {}
         for value in values:
             shapes[value] = [
                 state["shape"]
-                for state in block["states"]
+                for state in block
                 if state["properties"][property] == value
             ]
         first_shape = next(iter(shapes.values()))
         if all(shape == first_shape for shape in shapes.values()):
             # If this property does not affect block shape, remove this property from states, and remove duplicates
             first_value = list(values)[0]
-            block["states"] = [
-                state
-                for state in block["states"]
-                if state["properties"][property] == first_value
+            block = [
+                state for state in block if state["properties"][property] == first_value
             ]
-            for state in block["states"]:
+            for state in block:
                 state["properties"].pop(property)
 
     return block
@@ -90,7 +91,7 @@ def generate_block_hitboxes(filename: str) -> None:
         block_id = get_group_id(group)
 
         commands = []
-        for state in block_data[group[0]]["states"]:
+        for state in block_data[group[0]]:
             # Write 'execute if block' condition, unless there is no state to observe
             block_state = state["properties"]
             if block_state != {}:
@@ -191,8 +192,8 @@ def generate_entity_hitboxes(filename: str) -> None:
         width = entity_data[group[0]]["width"]
         height = entity_data[group[0]]["height"]
         commands = [
-            f"scoreboard players set $entity_width iris {int(1e6*width)}",
-            f"scoreboard players set $entity_height iris {int(1e6*height)}",
+            f"scoreboard players set $entity_width iris {int(1e6 * width)}",
+            f"scoreboard players set $entity_height iris {int(1e6 * height)}",
         ]
         make_function(
             commands, f"{FUNCTION_PATH}/entity/shape_groups", unnamespace(group[0])
@@ -242,8 +243,11 @@ if __name__ == "__main__":
             try:
                 version = int(value)
                 assert version >= 26
-            except:
-                print("Invalid or unsupported data pack format")
+            except AssertionError:
+                print("Unsupported data pack format")
+                exit()
+            except ValueError:
+                print("Invalid data pack format")
                 exit()
         elif name in ["-n", "--namespace"]:
             namespace = value
@@ -267,5 +271,3 @@ if __name__ == "__main__":
         generate_block_hitboxes(block_shapes_path)
     if entity_shapes_path:
         generate_entity_hitboxes(entity_shapes_path)
-    if not (block_shapes_path or entity_shapes_path):
-        print("Missing shape information")
