@@ -9,6 +9,8 @@ scoreboard objectives add iris.id dummy {"text": "Iris entity IDs", "color": "go
 
 scoreboard players set $-1 iris -1
 scoreboard players set $2 iris 2
+scoreboard players set $10 iris 10
+scoreboard players set $100 iris 100
 scoreboard players set $256 iris 256
 scoreboard players set $1000 iris 1000
 scoreboard players set $33333 iris 33333
