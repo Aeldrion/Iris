@@ -33,7 +33,7 @@ execute if data storage iris:args {sign: "-"} if score $fractional_part iris mat
 execute if data storage iris:args {sign: "-"} if score $fractional_part iris matches 1.. run scoreboard players operation $dec iris -= $fractional_part iris
 execute store result storage iris:args value int 1 run scoreboard players get $dec iris
 function iris:raycast/macro_functions/pad_with_zeros with storage iris:args
-data modify storage iris:args dec set from storage iris:data String
+data modify storage iris:args dec set from storage iris:data string
 
 # Combine everything
 function iris:raycast/macro_functions/compute_endpoint_helper with storage iris:args

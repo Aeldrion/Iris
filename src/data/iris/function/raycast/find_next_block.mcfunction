@@ -42,14 +42,14 @@ scoreboard players operation $to_next_z iris -= ${z}*1000 iris
 scoreboard players operation $to_next_z iris /= $dz iris
 
 # Determine which distance is the shortest
-execute if score $to_next_x iris <= $to_next_y iris if score $to_next_x iris <= $to_next_z iris run data merge storage iris:data {NextCoordinateChange: "x"}
-execute if score $to_next_y iris <= $to_next_x iris if score $to_next_y iris <= $to_next_z iris run data merge storage iris:data {NextCoordinateChange: "y"}
-execute if score $to_next_z iris <= $to_next_x iris if score $to_next_z iris <= $to_next_y iris run data merge storage iris:data {NextCoordinateChange: "z"}
+execute if score $to_next_x iris <= $to_next_y iris if score $to_next_x iris <= $to_next_z iris run data merge storage iris:data {move_along: "x"}
+execute if score $to_next_y iris <= $to_next_x iris if score $to_next_y iris <= $to_next_z iris run data merge storage iris:data {move_along: "y"}
+execute if score $to_next_z iris <= $to_next_x iris if score $to_next_z iris <= $to_next_y iris run data merge storage iris:data {move_along: "z"}
 
 # Calculate the new coordinates when the ray reaches the next tile
-execute if data storage iris:data {NextCoordinateChange: "x"} run data modify storage iris:args {} merge value {a: "x", b: "y", c: "z"}
-execute if data storage iris:data {NextCoordinateChange: "y"} run data modify storage iris:args {} merge value {a: "y", b: "z", c: "x"}
-execute if data storage iris:data {NextCoordinateChange: "z"} run data modify storage iris:args {} merge value {a: "z", b: "x", c: "y"}
+execute if data storage iris:data {move_along: "x"} run data modify storage iris:args {} merge value {a: "x", b: "y", c: "z"}
+execute if data storage iris:data {move_along: "y"} run data modify storage iris:args {} merge value {a: "y", b: "z", c: "x"}
+execute if data storage iris:data {move_along: "z"} run data modify storage iris:args {} merge value {a: "z", b: "x", c: "y"}
 function iris:raycast/macro_functions/find_next_block_helper with storage iris:args
 
 # Return the added distance

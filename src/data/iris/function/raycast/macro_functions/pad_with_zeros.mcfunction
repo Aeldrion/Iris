@@ -15,8 +15,8 @@
 #   value
 #       A numeric value between 0 and 999999
 # @writes
-#   storage iris:data String
+#   storage iris:data string
 #       The resulting string
 
-$data modify storage iris:data String set value "000000$(value)"
-data modify storage iris:data String set string storage iris:data String -6
+$data modify storage iris:data string set value "000000$(value)"
+data modify storage iris:data string set string storage iris:data string -6

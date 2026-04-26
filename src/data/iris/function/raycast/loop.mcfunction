@@ -21,9 +21,9 @@ execute if score $total_distance iris > $max_distance iris run tag @s remove iri
 execute if score $total_distance iris > $max_distance iris run return fail
 
 # Otherwise, loop this function at the next block
-execute if data storage iris:data {NextCoordinateChange: "x"} if score $dx iris matches 0.. positioned ~1 ~ ~ run return run function iris:raycast/loop
-execute if data storage iris:data {NextCoordinateChange: "x"} if score $dx iris matches ..-1 positioned ~-1 ~ ~ run return run function iris:raycast/loop
-execute if data storage iris:data {NextCoordinateChange: "y"} if score $dy iris matches 0.. positioned ~ ~1 ~ run return run function iris:raycast/loop
-execute if data storage iris:data {NextCoordinateChange: "y"} if score $dy iris matches ..-1 positioned ~ ~-1 ~ run return run function iris:raycast/loop
-execute if data storage iris:data {NextCoordinateChange: "z"} if score $dz iris matches 0.. positioned ~ ~ ~1 run return run function iris:raycast/loop
-execute if data storage iris:data {NextCoordinateChange: "z"} if score $dz iris matches ..-1 positioned ~ ~ ~-1 run return run function iris:raycast/loop
+execute if data storage iris:data {move_along: "x"} if score $dx iris matches 0.. positioned ~1 ~ ~ run return run function iris:raycast/loop
+execute if data storage iris:data {move_along: "x"} if score $dx iris matches ..-1 positioned ~-1 ~ ~ run return run function iris:raycast/loop
+execute if data storage iris:data {move_along: "y"} if score $dy iris matches 0.. positioned ~ ~1 ~ run return run function iris:raycast/loop
+execute if data storage iris:data {move_along: "y"} if score $dy iris matches ..-1 positioned ~ ~-1 ~ run return run function iris:raycast/loop
+execute if data storage iris:data {move_along: "z"} if score $dz iris matches 0.. positioned ~ ~ ~1 run return run function iris:raycast/loop
+execute if data storage iris:data {move_along: "z"} if score $dz iris matches ..-1 positioned ~ ~ ~-1 run return run function iris:raycast/loop
