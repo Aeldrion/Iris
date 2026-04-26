@@ -1,0 +1,85 @@
+from dataclasses import asdict
+
+from lib.blockshapes import get_block_data, properties_predicate
+from lib.entitydims import get_entity_dimensions, special_entity_types
+from lib.util import unnamespace
+
+
+BRANCHES = 5
+block_shape_groups, block_data = get_block_data("resources/blocks.json")
+entity_size_groups, entity_data = get_entity_dimensions("resources/entity_types.json")
+
+
+## BLOCKS
+
+branch = 0
+for group in block_shape_groups:
+    block = group[0]
+    
+    # Create block tag for this shape group
+    if len(group) > 1:
+        group_ref = f"#iris:shape_groups/{unnamespace(block)}"
+        block_tag group_ref[1:] {
+            "values": group
+        }
+    else:
+        group_ref = block
+    
+    # Add this shape group to a branch block tag
+    tag = f"iris:tree/branch_{branch}"
+    append block_tag tag {
+        "values": [group_ref]
+    }
+    
+    # Create function for this shape group
+    function f"iris:get_hitbox/block/shape_groups/{unnamespace(block)}":
+        for state in block_data[block]:
+            block_predicate = group_ref + properties_predicate(state.properties)
+            nbt = list(map(asdict, state.shape))
+            
+            if state.properties:
+                execute if block ~ ~ ~ block_predicate run data modify storage iris:data shape set value nbt
+            else:
+                data modify storage iris:data shape set value nbt
+
+    # Add this function to a branch function
+    append function f"iris:get_hitbox/block/tree/branch_{branch}":
+        execute if block ~ ~ ~ group_ref run function f"iris:get_hitbox/block/shape_groups/{unnamespace(block)}"
+
+    branch = (branch + 1) % BRANCHES
+
+
+## ENTITIES
+
+branch = 0
+for group in entity_size_groups:
+    entity_type = group[0]
+
+    # Create entity type tag for this dimension group
+    if len(group) > 1:
+        group_ref = f"#iris:shape_groups/{unnamespace(entity_type)}"
+        entity_type_tag group_ref[1:] {
+            "values": group
+        }
+    else:
+        group_ref = entity_type
+    
+    # Add this dimension group to a branch entity type tag
+    tag = f"iris:tree/branch_{branch}"
+    append entity_type_tag tag {
+        "values": [group_ref]
+    }
+
+    # Create function for this dimension group
+    if not entity_type in special_entity_types:
+        function f"iris:get_hitbox/entity/shape_groups/{unnamespace(entity_type)}":
+            width = int(1e6 * entity_data[entity_type].width)
+            height = int(1e6 * entity_data[entity_type].height)
+            scoreboard players set $entity_width iris width
+            scoreboard players set $entity_height iris width
+
+    # Add this function to a branch function
+    append function f"iris:get_hitbox/entity/tree/branch_{branch}":
+        execute if entity @s[type=group_ref] run function f"iris:get_hitbox/entity/shape_groups/{unnamespace(entity_type)}"
+    
+    branch = (branch + 1) % BRANCHES

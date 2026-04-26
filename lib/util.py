@@ -1,41 +1,36 @@
 from collections import defaultdict
-import json, os
-
-
-def shape_to_snbt(s: str) -> str:
-    """Converts a shape of the form [AABB[x, y, z] -> [x, y, z]] into an SNBT string of the form [{min: [x, y, z], max: [x, y, z]}]"""
-    bounding_boxes = eval(
-        s.replace("AABB", "(")
-        .replace(", (", "), (")
-        .replace(" ->", ",")
-        .replace("]]", "])]")
-    )
-    snbt_string = ",".join(
-        [
-            f"{{min: {min_corner}, max: {max_corner}}}"
-            for min_corner, max_corner in bounding_boxes
-        ]
-    )
-    return f"[{snbt_string}]"
+from dataclasses import asdict
+import json
+import os
 
 
 def group_dict_keys(d: dict) -> list[list]:
     """
-    Creates a 2D array where all keys with the same value in d are grouped together
-    Values are not guaranteed to be hashable
+    Partitions keys in a dict by value, as a list of sorted lists
+    Example: {"a": True, "b": False, "c": True} -> [["a", "c"], ["b"]]
+    Keys must be sortable and values must be serializable as JSON
     """
     groups = defaultdict(list)
 
     for key, value in d.items():
-        hash = json.dumps(value)
+        hash = json.dumps(value, default=asdict)
         groups[hash].append(key)
 
     return [sorted(group) for group in groups.values()]
 
 
-def unnamespace(id_: str) -> str:
-    """Remove the namespace from a Minecraft namespaced ID"""
-    return id_.split(":")[1]
+def unnamespace(resource_id: str) -> str:
+    """
+    Remove the namespace from a namespaced resource ID, and adds it to the
+    front if it's not 'minecraft'
+    Example:
+        minecraft:stone -> stone
+        foo:bar -> foo_bar
+    """
+    namespace, name = resource_id.split(":")
+    if namespace == "minecraft":
+        return name
+    return f"{namespace}_{name}"
 
 
 def make_tag(values: list[str], path: str, name=None, required=True) -> None:
