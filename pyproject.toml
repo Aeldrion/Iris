@@ -7,6 +7,7 @@ requires-python = ">=3.14"
 dependencies = [
     "beet>=0.112.2",
     "bolt>=0.49.2",
+    "ruff>=0.15.12",
 ]
 
 [tool.beet]
