@@ -1,9 +1,9 @@
 #> iris:raycast/macro_functions/callback
 #
-# Calls the provided function
+# Calls the provided command
 #
 # @within iris:raycast/on_hit
 # @input
-#   function: a function name or function tag name
+#   command: the command to run
 
-$function $(function)
+$$(command)

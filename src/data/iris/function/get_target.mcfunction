@@ -1,8 +1,8 @@
 #> iris:get_target
 #
-# Returns the position of the block targeted
+# Returns information about the targeted block or entity
 # To tell where a player is looking, anchoring to the eye position is needed: execute as <player> at @s anchored eyes positioned ^ ^ ^ run function iris:get_target
-# Targeted block/entity information is sent to storage (see output below) but a marker with tag 'iris.ray' is also present in the targeted block after running this function
+# Target information is saved to storage (see output below)
 #
 # @public
 # @context an entity, their eye position, and their rotation
@@ -23,9 +23,8 @@
 #           Unset by default
 #           Should be reset or set to an empty string if unused
 #       callback: string
-#           A function or a function tag to run wherever the ray hits
+#           A command to run wherever the ray hits
 #           If the raycast fails, the callback is never called
-#           Can include anything that works in the function command, e.g. "foo:bar {arg: 1}" or "foo:bar with storage baz:qux"
 # @writes
 #   storage iris:output
 #       type: string
