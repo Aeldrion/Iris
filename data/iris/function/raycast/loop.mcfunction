@@ -27,4 +27,3 @@ execute if data storage iris:data {NextCoordinateChange: "y"} if score $dy iris 
 execute if data storage iris:data {NextCoordinateChange: "y"} if score $dy iris matches ..-1 positioned ~ ~-1 ~ run return run function iris:raycast/loop
 execute if data storage iris:data {NextCoordinateChange: "z"} if score $dz iris matches 0.. positioned ~ ~ ~1 run return run function iris:raycast/loop
 execute if data storage iris:data {NextCoordinateChange: "z"} if score $dz iris matches ..-1 positioned ~ ~ ~-1 run return run function iris:raycast/loop
-execute if score $depth iris < $max_depth iris at @s run return run function iris:raycast/loop
