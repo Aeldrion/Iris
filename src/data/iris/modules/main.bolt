@@ -76,7 +76,7 @@ for group in entity_size_groups:
             width = int(1e6 * entity_data[entity_type].width)
             height = int(1e6 * entity_data[entity_type].height)
             scoreboard players set $entity_width iris width
-            scoreboard players set $entity_height iris width
+            scoreboard players set $entity_height iris height
 
     # Add this function to a branch function
     append function f"iris:get_hitbox/entity/tree/branch_{branch}":
