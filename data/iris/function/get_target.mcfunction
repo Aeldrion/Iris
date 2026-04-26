@@ -71,4 +71,4 @@ function iris:get_position/main
 # Start the loop
 tag @s add iris.executing
 execute store result score $max_distance iris run data get storage iris:settings max_distance 1000000
-return run function iris:raycast/loop
+execute align xyz positioned ~0.5 ~0.5 ~0.5 run return run function iris:raycast/loop
