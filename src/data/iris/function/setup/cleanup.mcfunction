@@ -5,6 +5,7 @@
 # @within iris:get_target
 
 # Reset tags
+tag @e remove iris.executing
 tag @e remove iris.targeted_entity
 tag @e remove iris.possible_target
 
@@ -24,4 +25,3 @@ data remove storage iris:output UUID
 execute if data storage iris:settings {whitelist: ""} run data remove storage iris:settings whitelist
 execute if data storage iris:settings {blacklist: ""} run data remove storage iris:settings blacklist
 execute if data storage iris:settings {callback: ""} run data remove storage iris:settings callback
-

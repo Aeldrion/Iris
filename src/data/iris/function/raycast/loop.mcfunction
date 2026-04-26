@@ -17,7 +17,6 @@ execute store result score $to_next_block iris run function iris:raycast/find_ne
 scoreboard players operation $total_distance iris += $to_next_block iris
 
 # If the maximum distance is reached and nothing was found, fail
-execute if score $total_distance iris > $max_distance iris run tag @s remove iris.executing
 execute if score $total_distance iris > $max_distance iris run return fail
 
 # Otherwise, loop this function at the next block
