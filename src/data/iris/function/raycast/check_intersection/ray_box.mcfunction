@@ -4,6 +4,8 @@
 #
 # @within iris:raycast/check_intersection/loop
 # @reads
+#   score $min_distance iris
+#       The distance (in mm) of the ray to the plane must be less than this for the intersection to count
 #   storage iris:data box
 #       min: float[]
 #           The min corner of the box, as three coordinates between 0 and 1
@@ -36,21 +38,33 @@ data modify storage iris:data face set from storage iris:data faces[0]
 scoreboard players set $face_direction iris 0
 execute store success score $hits_x_face iris store result score $to_x_face iris run function iris:raycast/check_intersection/ray_plane {axis: "x"}
 execute if score $hits_x_face iris matches 0 run scoreboard players set $to_x_face iris 2147483647
-execute if score $hits_x_face iris matches 1 if score $to_x_face iris < $min_distance iris run data modify storage iris:data targeted_face set from storage iris:data face
+execute \
+    if score $hits_x_face iris matches 1 \
+    if score $to_x_face iris < $min_distance iris \
+    run data modify storage iris:data targeted_face set from storage iris:data face
 scoreboard players operation $to_aabb iris = $to_x_face iris
 
 data modify storage iris:data face set from storage iris:data faces[1]
 scoreboard players set $face_direction iris 1
 execute store success score $hits_y_face iris store result score $to_y_face iris run function iris:raycast/check_intersection/ray_plane {axis: "y"}
 execute if score $hits_y_face iris matches 0 run scoreboard players set $to_y_face iris 2147483647
-execute if score $hits_y_face iris matches 1 if score $to_y_face iris < $min_distance iris if score $to_y_face iris < $to_x_face iris run data modify storage iris:data targeted_face set from storage iris:data face
+execute \
+    if score $hits_y_face iris matches 1 \
+    if score $to_y_face iris < $min_distance iris \
+    if score $to_y_face iris < $to_x_face iris \
+    run data modify storage iris:data targeted_face set from storage iris:data face
 scoreboard players operation $to_aabb iris < $to_y_face iris
 
 data modify storage iris:data face set from storage iris:data faces[2]
 scoreboard players set $face_direction iris 2
 execute store success score $hits_z_face iris store result score $to_z_face iris run function iris:raycast/check_intersection/ray_plane {axis: "z"}
 execute if score $hits_z_face iris matches 0 run scoreboard players set $to_z_face iris 2147483647
-execute if score $hits_z_face iris matches 1 if score $to_z_face iris < $min_distance iris if score $to_z_face iris < $to_x_face iris if score $to_z_face iris < $to_y_face iris run data modify storage iris:data targeted_face set from storage iris:data face
+execute \
+    if score $hits_z_face iris matches 1 \
+    if score $to_z_face iris < $min_distance iris \
+    if score $to_z_face iris < $to_x_face iris \
+    if score $to_z_face iris < $to_y_face iris \
+    run data modify storage iris:data targeted_face set from storage iris:data face
 scoreboard players operation $to_aabb iris < $to_z_face iris
 
 # If no face was hit, fail
