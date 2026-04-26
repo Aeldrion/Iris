@@ -31,7 +31,7 @@ scoreboard players operation $entity_z1 iris += $entity_half_width iris
 execute if score $entity_z1 iris matches 1000000.. run scoreboard players set $entity_z1 iris 1000000
 
 # Store to storage
-data modify storage iris:data shape append value {type: "ENTITY", min: [0.0, 0.0, 0.0], max: [0.0, 0.0, 0.0]}
+data modify storage iris:data shape append value {min: [0.0, 0.0, 0.0], max: [0.0, 0.0, 0.0]}
 execute store result storage iris:data shape[-1].min[0] double 0.000001 run scoreboard players get $entity_x0 iris
 execute store result storage iris:data shape[-1].min[1] double 0.000001 run scoreboard players get $entity_y0 iris
 execute store result storage iris:data shape[-1].min[2] double 0.000001 run scoreboard players get $entity_z0 iris

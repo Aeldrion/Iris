@@ -19,6 +19,7 @@ execute if data storage iris:output {type: "block"} store result storage iris:ou
 
 # Write targeted entity
 execute if data storage iris:output {type: "entity"} store result score $entity_id iris run data get storage iris:data targeted_box.entity_id
+execute if data storage iris:output {type: "entity"} run data remove storage iris:data targeted_box.entity_id
 execute if data storage iris:output {type: "entity"} as @e[tag=iris.possible_target] if score @s iris.id = $entity_id iris run tag @s add iris.targeted_entity
 execute if data storage iris:output {type: "entity"} as @e[tag=iris.targeted_entity] run data modify storage iris:output target.UUID set from entity @s UUID
 execute if data storage iris:output {type: "entity"} run tag @e remove iris.possible_target
