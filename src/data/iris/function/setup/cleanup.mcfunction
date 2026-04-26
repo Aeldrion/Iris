@@ -25,6 +25,3 @@ execute if data storage iris:settings {whitelist: ""} run data remove storage ir
 execute if data storage iris:settings {blacklist: ""} run data remove storage iris:settings blacklist
 execute if data storage iris:settings {callback: ""} run data remove storage iris:settings callback
 
-# Kill targeted block marker from previous raycast
-teleport @e[type=minecraft:marker, tag=iris.targeted_block] ~ ~1000 ~
-kill @e[type=minecraft:marker, tag=iris.targeted_block]
