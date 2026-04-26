@@ -48,7 +48,7 @@ execute if data storage iris:output {type: "entity"} run scoreboard players oper
 execute store result storage iris:output distance double 0.000001 run scoreboard players get $total_distance iris
 
 # Run callback
-execute if data storage iris:settings callback run data modify storage iris:args function set from storage iris:settings callback
+execute if data storage iris:settings callback run data modify storage iris:args command set from storage iris:settings callback
 execute if data storage iris:settings callback run function iris:raycast/macro_functions/callback with storage iris:args
 
 return run scoreboard players get $total_distance iris
