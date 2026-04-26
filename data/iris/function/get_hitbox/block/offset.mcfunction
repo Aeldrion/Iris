@@ -4,7 +4,7 @@
 #
 # @within iris:get_hitbox/block
 # @writes
-#	storage iris:data Shape: compound[]
+#	storage iris:data shape: compound[]
 #       A list of cuboids given by two corners in the format {min: [x, y, z], max: [x, y z]}
 
 # Compute seed(x, y, z)
@@ -43,11 +43,11 @@ execute if block ~ ~ ~ minecraft:pointed_dripstone if score $z_offset iris match
 execute if block ~ ~ ~ minecraft:pointed_dripstone if score $z_offset iris matches 250000.. run scoreboard players set $z_offset iris 250000
 
 # Apply offsets to the generated shape
-execute store result score $min_x iris run data get storage iris:data Shape[0].min[0] 1000000
-execute store result storage iris:data Shape[0].min[0] double 0.000001 run scoreboard players operation $min_x iris += $x_offset iris
-execute store result score $min_z iris run data get storage iris:data Shape[0].min[2] 1000000
-execute store result storage iris:data Shape[0].min[2] double 0.000001 run scoreboard players operation $min_z iris += $z_offset iris
-execute store result score $max_x iris run data get storage iris:data Shape[0].max[0] 1000000
-execute store result storage iris:data Shape[0].max[0] double 0.000001 run scoreboard players operation $max_x iris += $x_offset iris
-execute store result score $max_z iris run data get storage iris:data Shape[0].max[2] 1000000
-execute store result storage iris:data Shape[0].max[2] double 0.000001 run scoreboard players operation $max_z iris += $z_offset iris
+execute store result score $min_x iris run data get storage iris:data shape[0].min[0] 1000000
+execute store result storage iris:data shape[0].min[0] double 0.000001 run scoreboard players operation $min_x iris += $x_offset iris
+execute store result score $min_z iris run data get storage iris:data shape[0].min[2] 1000000
+execute store result storage iris:data shape[0].min[2] double 0.000001 run scoreboard players operation $min_z iris += $z_offset iris
+execute store result score $max_x iris run data get storage iris:data shape[0].max[0] 1000000
+execute store result storage iris:data shape[0].max[0] double 0.000001 run scoreboard players operation $max_x iris += $x_offset iris
+execute store result score $max_z iris run data get storage iris:data shape[0].max[2] 1000000
+execute store result storage iris:data shape[0].max[2] double 0.000001 run scoreboard players operation $max_z iris += $z_offset iris
