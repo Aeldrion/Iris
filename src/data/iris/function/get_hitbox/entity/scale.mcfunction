@@ -8,10 +8,10 @@ execute store result score $attribute_scale iris run attribute @s minecraft:scal
 execute if score $attribute_scale iris matches 0 run return fail
 execute if score $attribute_scale iris matches 1000 run return 0
 
-scoreboard players operation $entity_width iris /= $10 iris
+scoreboard players operation $entity_width iris /= $200 iris
 scoreboard players operation $entity_width iris *= $attribute_scale iris
-scoreboard players operation $entity_width iris /= $100 iris
+scoreboard players operation $entity_width iris /= $5 iris
 
-scoreboard players operation $entity_height iris /= $10 iris
+scoreboard players operation $entity_height iris /= $200 iris
 scoreboard players operation $entity_height iris *= $attribute_scale iris
-scoreboard players operation $entity_height iris /= $100 iris
+scoreboard players operation $entity_height iris /= $5 iris
